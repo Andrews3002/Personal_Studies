@@ -1,0 +1,347 @@
+Software Application Types{
+    Stand-alone-applications{
+        - These are applications that run on a local computer and does not require network connection to function.
+    }
+
+    Embedded Systems{
+        - Software applications that are located in, and responsible for controlling, hardware devices
+    }
+
+    Batch processing systems{
+        - These are business systems that are capable of processing large groups of data simultaneously
+    }
+
+    Entertainment Systems{
+        - These are systems created primarily for personal enjoyment purposes
+    }
+
+    Systems for modelling and simulation{
+        - These are systems used by engineers and scientists to test or model specific situations or scenarios usually involving many 
+        interactive objects 
+    }
+
+    Data collection systems{
+        - These are systems that collect data using sensors and send the data to other systems to be processed
+    }
+
+    Systems of systems{
+        - These are systems that are made up of other software systems
+    }
+
+    Interactive transaction-based applications{
+        - These are applications that are accessed on a remote computer for example the user's own pc or terminal but include 
+        applications that utilize a network connection too function for example e-commerce
+    }
+
+    Web based systems{
+        - These are software applications that are only able to be utilized on the internet
+
+        software reuse{
+            - this is a highly used and recommend method in building web-based applications. It entails utilizing pre-existing software 
+            to build the new application intended.
+        }
+    }  
+}
+
+Network{
+    - A network is a connection between 2 or more computers to share resources
+
+    Components of a network{
+        Client and Server Computers{
+            Client computers are devices that request services, resources, or data from other devices over a network. For example, 
+            a laptop browsing the internet.
+
+            Server computers are systems that provide services, resources, or data to clients. Servers typically handle tasks 
+            like hosting websites, managing databases, or providing file storage.
+        }
+
+        Network Interfaces(NICs){
+            - A Network Interface Card (NIC) is a physical card in a device that allows the device to connect to a network.
+            - Its required for both wired and wireless connection.
+            - Each NIC has a unique identifier known as a MAC address.
+        }
+
+        Connection Mediums{
+            This refers to the physical or wireless means through which data travels in a network. 
+
+            Wired mediums{
+                - Fiber Optic Cables:  Uses light for data transmission; fastest, longest range, and immune to electromagnetic interference.
+
+                - Twisted Pair Cables: Uses copper wires twisted together; cost-effective for short to medium-range, prone to 
+                electromagnetic interference. (Mostly seen in ethernet cables)
+
+                - Coaxial Cables: Uses a single copper core with shielding; good for medium distances, slower and bulkier than fiber.
+            }
+            
+            Wireless mediums{
+                Radio waves{
+                    Used By:
+                    - Wi-Fi
+                    - Bluetooth
+                    - Cellular
+                    - Zigbee
+                }
+
+                Microwave{
+                    Used By:
+                    - Satellite
+                    - Cellular
+                    - WiMax
+                }
+
+                Infrared{
+                    Used By:
+                    - Remote Controls
+                    - Certain IoT devices
+                }
+
+                Millimeter Waves{
+                    Used by:
+                    - 5G networks
+                }
+            }
+        }
+
+        Networking Devices{
+            - Hubs are devices that connect multiple devices in a local area network (LAN). They broadcast incoming 
+            data to all connected devices, 
+            
+            - Switches are basically hubs but with the unique ability to take incoming data and transmit it to certain connected devices
+
+            - Routers are devices that forward data between different networks, typically between a local network (like a home network) 
+            and the internet.
+
+            - Modems are devices that convert digital signals from computers to analog signals to be transported through a network and 
+            from analog signals to digital signals for computers to receive and understand.
+        }
+    }      
+
+    Network Ranges{
+        Local Area Network(LAN) - A small network, like within an office
+        Campus Area Network(CAN) - Covers a campus or organization
+        Metropolitan Area Network(MAN) - covers within a single city
+        Wide Area Network(WAN) - Covers larger areas, like multiple cites or even multiple countries
+    }
+
+    Types of Networks{
+        The Internet{
+            - The largest network connecting computers globally where devices are assigned unique IP addresses to identify them.
+
+            Network Providers - Companies that own the main backbone connections. ISPs are a subcategory of network providers but a 
+            network provider may offer more services than just public internet connection like for example VPNs, WANs or telecommunications 
+            infrastructure.
+
+            Internet Service Providers (ISPs) - Organizations that provide Internet access to customers in a specific area or region and 
+            regulates the connection of the regional network to the external network known as the internet.
+
+            Domain Name System(DNS){
+                - Acts like the Internet’s phone book. When you type a domain name like "Google.com" into a browser, 
+                DNS translates it into the IP address of Google’s server.
+
+                basically it translates urls into IP addresses
+
+                Structure of domain names{
+                    eg www.example.com
+
+                    "www" - Subdomain / Third-level Domain
+                    "example" - Main Domain / Second-level Domain
+                    ".com" - Top-level Domain(TLD)
+
+                    Types of top level domains{
+                        ".com" - commercial
+                        ".org" - organization
+                        ".edu" - educational institution
+                    }
+                }
+            }
+        }
+
+        Cellular Systems{
+            This refers to the infrastructure and technologies that provide wireless communication across mobile devices, enabling 
+            voice calls, text messages, and data services. 
+
+            Different standards have evolved over time to improve performance, capacity, and functionality.
+
+            Generations{
+                3G{
+                    - basic web browsing
+                    - email on mobile devices.
+                }
+
+                4G{ 
+                    - video streaming 
+                    - high-definition video capabilities.
+
+                    Key technologies: LTE (Long-Term Evolution), WiMAX.
+                }
+
+                5G{
+                    - ultra-high-speed internet 
+                    - low latency for advanced applications.
+                    - Supports high-bandwidth applications like IoT (Internet of Things) devices, autonomous vehicles, 
+                    virtual reality (VR), augmented reality (AR) etc.
+
+                    Key technologies: NR (New Radio), millimeter-wave frequencies, beamforming.
+                }
+            }
+        }
+
+        Wi-Fi{
+            A wireless networking technology that enables devices to connect to a local area network (LAN) through radio waves and 
+            access points.
+
+            Access Point: An access point (AP) is a hardware device that broadcasts Wi-Fi signals. It acts as a bridge between 
+            the devices and the router, allowing the devices to connect wirelessly to the local network.
+        }
+
+        Bluetooth{
+            A wireless communication standard used for short-range connections between devices.
+
+            Range: About 30 feet (10 meters) but can vary depending on the device's power and environment.
+
+            Use Cases: Commonly used for pairing peripherals to devices or devices to eachother.
+        }
+
+        WiMax{
+            WiMax (Worldwide Interoperability for Microwave Access) is basically the same as Wi-Fi but has far more range (used 
+            for up to WANs). It uses radio waves like Wi-Fi along with base stations which are basically access points but providing 
+            more range. 
+        }
+    }
+}
+
+Systems Security{
+    Types of Hackers{
+        Ethical Hackers{
+            People who find vulnerabilities but for the purpose of removing them or informing the entity at risk and therefore contributing 
+            to securing the system
+        }
+
+        Malicious Hackers{
+            People who find vulnerabilities in a system but for the purpose of exploiting them for personal gain.
+        }
+    }
+
+    Types of Cyber-Attacks/Crimes carried out by hackers{
+        Man-In-The-Middle: involves an attacker eavesdropping or altering the communication between two parties.
+
+        War Driving: Involves driving or moving around with devices to locate unprotected Wi-Fi networks.
+
+        Rogue Access Points: Access points set up by attackers to mimic legitimate networks tricking users into connecting.
+
+        SQL Injection Attacks: involves exploiting vulnerabilities in a web application's database layer by inserting malicious SQL queries. 
+
+        Denial-of-service (DoS){
+            An attempt to overwhelm a system, server, or network by flooding it with excessive traffic.
+
+            The goal is solely to cause it to crash or become inaccessible. 
+        } 
+
+        Distributed DoS (DDoS){
+            This is basically the same as DoS except the attack is coming from multiple sources, not just one source like in DoS.
+            
+            This makes the attack harder to trace and mitigate.
+        }
+
+        Phishing{
+            Attempts to acquire sensitive information by pretending to be a trustworthy entity, often via email or fake websites.
+
+            Example: A fake email from a bank asking users to update their account details.
+        } 
+
+        Pharming{
+            Linking users to malicious websites by exploiting vulnerabilities in DNS or through malware.
+
+            Example: A user types the URL of their bank but is redirected to a counterfeit site.
+        }
+
+        Cyberterrorism{
+            Using the internet to carry out acts of terrorism, 
+            
+            These include acts like{
+                - spreading propaganda
+                - recruiting for illegal activities
+                - launching cyberattacks to disrupt critical infrastructure
+            }
+
+            Example: A coordinated attack on a power grid through hacking.
+        } 
+
+        Cyberwarfare{
+            Nation authorized cyberattacks against other countries. 
+            
+            Typically targeting military or government infrastructure.
+
+            Example: A country launching malware to disable the communication systems of a rival nation during a conflict.
+        } 
+
+        Click Fraud{
+            Generating fake clicks on online ads to drain an advertiser’s budget or generate fraudulent revenue.
+
+            Example: Bots programmed to click on pay-per-click ads repeatedly.
+        } 
+    }
+
+    Types of Malicious Software used in cyber-attacks/crimes{
+        Malware{
+            A broad term that refers to software designed to harm, exploit, or otherwise compromise computer systems.
+
+            Examples:
+            Viruses: Attach themselves to files or programs and spread when the infected program runs.
+            Worms: Self-replicating malware that spreads through networks without needing a host file.
+            Trojan Horses: Disguise themselves as legitimate programs but perform harmful actions once executed.
+        }
+
+        Spyware{
+            Software that secretly monitors and collects information about users without their knowledge.
+
+            Often used for stealing sensitive data, such as login credentials or credit card information.
+        }
+
+        Ransomware{
+            Locks a user’s files or system, demanding payment (usually in cryptocurrency) for restoring access
+        }
+    }
+}
+
+Ethical Principles{
+    Golden Rule{
+        Do unto others as you would have them do unto you.
+    } 
+
+    Immanuel Kant’s Categorical Imperative{
+        If something isn't okay for everyone to do, then it isn't okay for anyone to do.
+
+        eg You think about cutting in line to save time. What if everyone did this?
+    } 
+
+    Slippery Slope Rule{
+        If an action cannot be taken repeatedly, it is not right to take at all.
+
+        public park with a "No Littering" sign. You think, Throwing one small wrapper on the ground won’t hurt.
+        What if this was done multiple times?
+    } 
+
+    Utilitarian Principle{
+        - Prioritizing majority well-being by putting the outcome of an action over morals, principles or even a persons rights.
+
+        for example the "trolley problem", a well-known ethical thought experiment. Sacrificing one person on a train track to save 
+        5 ppl on another train track. The goal is to maximize the greatest good (saving 5 ppl) even if it means a loss for a 
+        few (killing one person).
+    }
+
+    Risk Aversion Principle{
+        Minimizing risk and avoiding uncertainty.
+
+        basically always picking the safe option.
+        
+        focusing on safety and stability over potentially higher but uncertain rewards.
+
+        for example. Choosing to work a very simple low paying job that is consistent rather than gambling to try and make a large amount 
+        of money quickly.
+    }
+
+    Ethical “No Free Lunch” Rule{
+        Assume that all tangible and intangible objects are owned by someone unless there is a specific declaration otherwise.
+    }
+}
