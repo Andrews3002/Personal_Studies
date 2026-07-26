@@ -64,8 +64,8 @@ Security Controls{
 
             eg{
                 Technical: Restoring from backups can mitigate a ransomware infection,
-                Managerial: Create policies for reporting a security issues
-                Operational: Contact law enforcement to manager criminal activity
+                Managerial: Create policies for reporting security issues
+                Operational: Contact law enforcement to manage criminal activity
                 Physical: Use fire extinguisher
             }
         }
@@ -76,7 +76,7 @@ Security Controls{
             eg{
                 Technical: Firewall blocks a specific compromised application while a patch is being developed,
                 Managerial: Implementing a separation of duties policy so everything doesn't fall onto one person
-                Operational: Require multiple guard on duty simultaneously
+                Operational: Require multiple guards on duty simultaneously
                 Physical: A generator used during a power outage
             }
         }
@@ -120,7 +120,7 @@ CIA Triad{
 
         Methods{
             Hashing{
-                An algorithm that encrypts data into a short string of text and cannot be reverted back into the original data
+                Using an algorithm to encrypt data into a short string of text that cannot be reverted back into the original data
 
                 If the data is changed even slightly the hash of the changed data will be completely different than the hash of the original data
 
@@ -130,7 +130,7 @@ CIA Triad{
             }
 
             Digital Signatures{
-                Using an algorithm on the sender's private key and their hashed message to produce an encrypted value that is sent along with the plain text
+                Using an algorithm that requires the sender's private key and their hashed message to produce an encrypted value that is sent along with the plain text
 
                 This encrypted value when decrypted with the correct public key produces the original hash 
                 
@@ -167,10 +167,6 @@ CIA Triad{
                 Provides proof of integrity, and proof of origin with high assurance of authenticity
 
                 Basically means the sender of a message can't credibly deny they sent it.
-                
-                Once they've signed something with their private key, they can't later say "that wasn't me."
-
-                Digital Signatures provide Non-repudiation
             }
         }
     }
@@ -180,7 +176,7 @@ CIA Triad{
 
         Methods{
             Redundancy{
-                Build services that will always be available
+                Eliminating single points of failure by setting up multiple instances of resources so that if an instance fails its duplicate can takeover and the system remains uninterupted
             }
 
             Fault tolerance{
@@ -219,11 +215,11 @@ AAA Framework{
                 once the VPN Concentrator detects the certificate on the device it is authorized to gain access to the system
             }
 
-            On organization would have its own trusted Certificate Authority(CA)
+            An organization would have its own trusted Certificate Authority(CA)
 
             This is a device or software that is responsible for managing all the certificates in your environment
 
-            Not to be confused with the root CA which digitally signs the intermediate CA above
+            Not to be confused with the root CA which digitally signs the intermediate CAs below it.
 
             On the CA you would create a certificate for each computer you want to authorize (digitally signing the certificate by the CA)
         }
@@ -247,5 +243,60 @@ AAA Framework{
 
     Accounting{
         The system keeping log of access history
+    }
+}
+
+Gap Analysis{
+    The study of where we are verses where we would like to be in IT security
+
+    It requires alot of research to consider all the company's security infrastructure
+
+    The analysis can take weeks or months to complete
+
+    It may involve a study with numerous participants and may require emails, data gathering and technical research to compile the information on what is happening with security in your environment
+
+    Process{
+        Chosing a baseline or goal to work towards{
+            A baseline is an internal set of goals
+
+            Some organizations follow standard baselines specifically created for certain companies
+            eg{
+                - NIST Special Publication 800-171 Revision 2, Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations
+                - ISO/IEC 27001, Information security management systems
+            }
+
+            Organization can also create their own baselines based on their own security needs
+
+            These baselines will evaluate{
+                people in the organization{
+                    - employees formal experience in IT security
+                    - employees current training in IT security
+                    - emplyees knowledge of security policies and procedures
+                }
+
+                the processes used for security{
+                    - researching the existing IT systems
+                    - evaluating the existing security policies
+                }
+            }
+        }
+
+        Analyis{
+            - Comparison of existing systems
+            - Identifying weaknesses of each system
+            - Identifying the most effective processes to compensate for the weaknesses
+            - Detailed baseline objectives and gives a perspective of where we are today verses where we would like to be with each of the objectives
+            - A path or plan to get from the current security to the goal security, this will require time, money and lots of change control
+        }
+        
+        Final Gap Analysis Report{
+            Once this analysis is done for all of our processes, all devices across all locations a document needs to be created to summarize the findings
+
+            Contains{
+                - Information on where the organization is today in terms of its security
+                - Documentation of all analysis findings
+                - Documented recommendations on how to follow the pathway or plan to get to the organization's security goals
+            }
+        }
     }
 }
