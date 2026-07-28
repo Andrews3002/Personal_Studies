@@ -300,3 +300,17 @@ Gap Analysis{
         }
     }
 }
+
+Zero Trust{
+    For many networks once you are past the firewal it is open and free to access any resource
+
+    There very few security controls in place which allows authrorized individuals to easily move through the system but also allows unathorized indivuals to do the same once they find a way past the firewal
+
+    As a result of this vulnarability many organizations are adopting the Zero Trust apporoach where users need to authenticate or prove themselves every time they want to gain access to a resource
+
+    Planes of Operation{
+        One way to to implement zero trust is to break our security devices into separate isolated components
+
+        This is done to physical, virtual and cloud components 
+    }
+}
