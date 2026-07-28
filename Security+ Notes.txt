@@ -308,9 +308,134 @@ Zero Trust{
 
     As a result of this vulnarability many organizations are adopting the Zero Trust apporoach where users need to authenticate or prove themselves every time they want to gain access to a resource
 
+    Controlling Trust{
+        Adaptive Identity{
+            Examining the identity of an individual and applying dynamic security controls based on not just what the user is saying but other information related to this authentication process
+
+            eg{
+                - looking at the source of the request for resources (if someone requesting data from the US is using an IP address in China)
+                - looking at the relationship of the person to the organization (whether they are an employee, contractor, full-time or part-time)
+                - looking at the type of connection
+            }
+
+            and based on these examples making the authentication stronger if needed
+        }
+
+        Threat Scope Reduction{
+            Decrease the number of possible entry points to the network
+
+            eg{
+                - people inside the physical building
+                - people connected to a VPN
+            }
+
+            based on these examples these could be the only means to access the network
+        }
+
+        Policy-driven Access Control{
+            Once all the other methods of controlling trust are chosen and implemeted this will examine all the individual data points, puts them all together and then decides what type of authentication process should be used.
+
+            Combine adaptive identity with a predefined set of rules
+        }
+    }
+
+    Security Zones{
+        Qualifying the identity of a person based on where they are connecting from and where in the system are they going to access resources
+
+        This allows us to make the security more than a one-to-one relationship where a user is logging into a server
+
+        Instead it looks at the overall path of the conversation
+
+        eg{
+            - from an untrusted network to a trusted network
+            - from an internal or external network
+            - creating separate VPN connections (VPN 1, VPN 5, VPN 11) within the organization
+            - creating separate groups (Marketing, IT, Accounting, Human Resources) within the organization
+        }
+
+        This allows you to set rules on what zone has access to which other zones
+
+        This can work like:
+        - denying access to (untrusted to trusted) zone traffic
+        - explicitly trusting (trusted to internal) zone traffic
+    }
+
     Planes of Operation{
-        One way to to implement zero trust is to break our security devices into separate isolated components
+        One way to to implement zero trust is to break our security devices into separate isolated components called functional planes
 
         This is done to physical, virtual and cloud components 
+
+        Data Plane{
+            The part of the device that is performing the actual security process like processing the frames, packets and network data
+             
+            eg{
+                processing
+                forwarding
+                trunking 
+                encrypting
+                NAT
+            }
+
+            In the zero trust security model the data plane contains{
+                Subjects{
+                    Users who utilize systems to access resources
+                }
+
+                Systems{
+                    Devices that actually perform the operations to connect to the network and access resources whether prompted by users or not
+                }
+
+                Policy Enforcement Point(PEP){
+                    This sits as a middle layer between subjecst/systems and the organization's resource server to enforce the different security controls based on the system's zone and the server's zone
+
+                    These subjects or systems can be{
+                        - End users
+                        - Applications
+                        - Non-human entities
+                    }
+
+                    Think of it as a gatekeeper
+
+                    It is an abstraction of multiple devices working together to identify users and the traffic 
+
+                    It DOES NOT make evaluations or decisions
+                }
+
+                Enterprise Resources{
+                    These are the servers that store the organizations resources like data, applications and other resources that subjects and systems want to gain access to
+                }
+            }
+        }
+
+        Control Plane{
+            The part of the device that manages the actions of the data plane
+
+            eg{
+                defining policies and rules
+                determining how packets should be forwarded
+                Routing tables, session tables, NAT tables
+            }
+
+            In the zero trust security model the control plane contains{
+                Policy Decision Point{
+                    The external component that examines the users and traffic data retrieved from the PEP and actually makes the evaluations and decisions
+
+                    It contains{
+                        Policy Engine{
+                            Uses policy and other information resources to make the evaluated decisions (grant, deny or revoke)
+                        }
+
+                        Policy Administrator{
+                            Uses the decision made by the Policy Engine to pass information to the PEP by
+
+                            eg{
+                                - generating access tokens or credentials
+                                - telling the PEP to allow or disallow access
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
