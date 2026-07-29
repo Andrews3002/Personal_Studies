@@ -439,3 +439,75 @@ Zero Trust{
         }
     }
 }
+
+Physical Security{
+    Security Methods{
+        Barricade / bollards{
+            prevent physical access from cars but there is a limit to the prevention because people can walk through
+
+            they can also be a security notice since they can be brighlty colored and striped to identify a high security area
+
+            They can be created as{
+                - concreate barriers / bollards (popular)
+                - moats (surrouning body of water)
+            }
+        }
+
+        Access Control Vestibules{
+            They are modules installed on the walls next to doors that manipulate the automatic locking and unclocking of doors based on identification triggers setup in the configuration
+
+            They can be configured to{
+                - have all doors unlocked by default and when one door is opened the others lock
+                - have all doors locked by default and when you unlock one door the others cannot be unlocked (they are forced to remain locked until the triggered door is locked again)
+                - have one door open and others locked and when you open a door the others cannot be unlocked (they are forced to remain locked until the triggered door is closed again)
+            }
+        }
+
+        Fencing{
+            A physical very obvious barrier that prevents access from humans and cars
+
+            It can be transparent or opague
+
+            They should be robust, difficult to compromise its structural integrity
+
+            They should also have razor wire or be very tall to prevent someone from climbing over
+        }
+
+        Video Surveillance{
+            CCTV(Closed Circuit Television) can replace physical guards
+
+            They should have certain features{
+                - motion recognition to alarm and alert when someone moves
+                - object detection can identiy a license plate or person's face
+            }
+
+            Most organizations setup up multiple cameras networked together and store all their recorded footage in one storage point
+        }
+
+        Guards and Access Badges{
+            Sometimes you may need to have security gaurds to offer physical protection throught the facility that validate identification of existing employees
+
+            There is usually 2 or more security guards on duty to provide two-person integrity / control (Minimizing the exposure to an attack since a single person does not have access to a physical asset)
+
+            The use of access badges is also commonly enforced (picture, name, other details) that must be worn at all times and are also electronical logged commonly with barcodes
+
+            Access Badges are often integrated with Access Control Vestibules
+        }
+
+        Lighting{
+            More light means more security, attacker avoid the light since they can be observed easily and NON-Infrared cameras can see them better
+
+            It is important to ensure the light is strong enough to illuminate the entire area and all the angles are covered(important for facial recognition)
+        }
+
+        Sensors{
+            Infrared sensors can detect infrared radiation heat signatures in both the light and dark, commonly used in motion detectors (it has a limited range)
+
+            Pressure sensors detects the change in force, commonly used as window sensors and floor sensors
+
+            Microwave sensors can detect heat signaturs in a very wide range, commonly used to detect movement in large areas
+
+            Ultrasonic sensors sends ultrasonic signals that deflect off objects and are received again as sound waves, commonly used for motion detection, collision detection etc
+        }
+    }
+}
