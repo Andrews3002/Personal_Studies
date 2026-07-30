@@ -511,3 +511,48 @@ Physical Security{
         }
     }
 }
+
+Deception and Disruption{
+    IT security isn't only about protection, it is also about traping or attacking your attackers
+
+    Methods{
+        Honeypots{
+            Attracts attacker and traps them in a virtual system that is isolated from your real systems.
+
+            It allows you to monitor which attack methods these attackers are utilizing without compromising your real systems.
+        }
+
+        Honeynets{
+            Eventually attackers are able to figure out they are in a honeypot and not a real system
+            
+            In order to keep them from this realization we need to create a honeypot that better simulates a real system
+
+            A real network inculdes more than a single device (servers, workstations, routers, switches, firewalls)
+
+            A Honeynet is a larger deception network that is comprised of one or more honey spots
+        }
+
+        Honeyfiles{
+            Attracks the attackers with bait in the form of files with fake sensitive information
+
+            It is bait for the honeynet for example (password.txt)
+
+            An alert is sent if the file is accessed (A virtual bear trap)
+        }
+
+        Honeytokens{
+            Track the malicious actors by adding traceable data to the honeynet
+
+            If the data is stolen you will know where it came from
+
+            eg{
+                - Fake API credentials (notifications are sent when someone trys to use these fake api credentials)
+                - Fake email addresses (notifications are sent when someone uses this email address on the internet)
+                - Fake Database records
+                - Fake browser cookies
+                - Fake web page pixels
+                etc
+            }
+        }
+    }
+}
