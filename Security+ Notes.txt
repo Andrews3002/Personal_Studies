@@ -701,3 +701,148 @@ Change Management{
         The change control process must be updated over time to make it more efficient and fit best with the requirements of the company
     }
 }
+
+Technical Change Management{
+    This is after change management, it is when the actual change needs to be implemented into the environment by the technical staff
+
+    Making changes to some devices at home is simple but when you are working with alot of devices in an organization, making changes to all the devices becomes a much more difficult process
+
+    So this will be the change control process from the perspective of the technician
+
+    The change control process covers what exactly needs to change and the change is actually done by the technician
+    
+    Allow / Deny List{
+        A list that permits or prevents certain applications from working in your environment
+
+        This is because some application are dangerous{
+            - they may have vulnerablilies
+            - they may have trojan horses
+            - they may have malware
+        }
+
+        The Allow list denies every other application but the ones stated in the list
+
+        The Deny list allows every other application but the ones stated in the list
+    }
+    
+    Restricted Activities{
+        When a change is submitted to a change control board, there is a very specific documented scope for making this change
+
+        As part of this change control, you are limited to only making changes to what is specifically listed in the change control document
+
+        eg{
+            A change control board may schedule a 2 hour window for you to be able to upgrade a series of printer drivers
+
+            But that doesnt mean during that same 2 hour period that you can make other changes to other applications just because the window happens to be available
+        }
+
+        However this does not mean you are limited to only what is listed in the change control documents
+
+        There may be times when you have to make additional updates or expand the scope to be able to complete the primary goal of that particular change
+
+        eg{
+            You may find that the process of upgrading those printer drivers requires a modification to a configuration file on everyone's system
+
+            Although that was not specifically written as part of the scope of this change, this change can only take place if you make that modification
+
+            And if it is a relatively simple modification, there may be policies in place that allow you to make the decision to modifiy that file so that you can complete the overall change control process
+        }
+
+        This is why its important to have a well documented change control process, so that everyone understands the procedures that should occur if you need to change the scope of the change control
+    }
+
+    Downtime{
+        When services are unavailable.
+        
+        The change process can be disruptive and cause some services to be unavailable.
+
+        To mitigate the effects of downtime on productivity the change process is usually scheduled during non-production hours
+
+        If possible, prevent any downtime by switching to a secondary system while the primary is being upgraded and then switchback (like for example in a 24/7 company)
+
+        This also allows you to monitor the change and if you notice that there are problems you can switch back to the secondary system which at this point you have not made any changes too
+
+        This makes it very easy to fallback to a previous configuration by simply pointing all of your users to either the primary or the secondary system
+
+        You must inform persons on the status of the system downtime by emails or calendar updates
+    }
+
+    Restart{
+        It's common to require the system to restart too{
+            - Implement the new configuration
+            - Reboot the OS
+            - Power cycle the switch (power down and power it back on)
+            - Bounce the service (stopping and restarting a service)
+        }
+
+        It also tells you if the system will recovery properly if their happens to be a power outage and everything restarts
+
+        If the change control documentation requires us to restart a service that is relatively simple{
+            It can be done from winodws services, or task manager, or if its Linux we may be able to restart a daemon that is already running in the background
+        }
+
+        If we are updating an executable that is on a system we may require our users to logout of the application, completely close down and exit the app and then restart it with the updated application
+    }
+
+    Legacy Applications{
+        Some application were here before you arrived and will be here when you leave (difficult to change or update)
+
+        Often no longer supported by the developer and you may now be the support team for the legacy system
+
+        There is just usually a fear of the unkown (which is why sometimes it is adviced to not make changes to legacy systems)
+
+        But it is important to face those fears and document the system, it may not be as complex as you think
+
+        It may also be a bit quirky, it may uses specific processes and procedures desgined for older operating systems
+
+        Doing this will make you an expert
+    }
+
+    Dependencies{
+        To complete A, you must complete B
+
+        eg{
+            - A service will not start without other active services
+            - An application may require a specific library version
+        }
+
+        Modifying one component may require changing or restarting other components (complicating the change control process)
+
+        Especially since a resource may have dependencies in another system
+
+        eg{
+            upgrading the firewall code first before you can update the firewall management software itself
+        }
+    }
+
+    Documentation{
+        It can be challenging to keep up with changes because documentation can become outdated very quickly
+
+        So documentation has become required within the change management process
+
+        It may include{
+            Updating Diagrams{
+                - Modifications to network configurations
+                - Address Updates
+            }
+
+            Updating Policies/Procedures{
+                - Adding new systems may require new procedures
+            }
+        }
+    }
+
+    Version Control{
+        Tracks changes to a file or configuration data over time and allows you to easily revert back to a previous setting
+
+        It allows us to continously make changes to detailed documentation covering changes in{
+            - Router configurations
+            - Windows OS patches
+            - Application Registry Entries
+        }
+
+        Some devices and operating systems provide version control features out of the box
+
+        If this is not offered you may need to install a third party version control management system
+    }
+}
