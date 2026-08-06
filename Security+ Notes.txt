@@ -846,3 +846,47 @@ Technical Change Management{
         If this is not offered you may need to install a third party version control management system
     }
 }
+
+Public Key Infrastructure (PKI){
+    Policies, procedures, hardware, software and people responsible for creation, distribution, management, storage and revoking of digital certificates
+
+    PKIs also refers to the binding of public keys to people or devices (ususally involing a certificate authority)
+
+    Cyphertext is encrypted plaintext
+
+    Plaintext is a message that has not been encrypted
+
+    Symmetric Encryption{
+        A single key is used to encrypt and decrypt the message and if theat key is compromised you would need a new key
+
+        Sometimes it is refered to as a secret key algorithm or a shared secret
+
+        Doesn't scale very well because it can be challenging to distribute and manage unique shared keys for communicating with each device
+
+        It is still sometimes used today because it is very fast, due to it having less overhead involved than asymmetric encryption
+
+        It is often used in combination with asymetric encryption
+    }
+
+    Asymmetric Encryption (aka Public Key Cryptography){
+        A system where you use 2 or more keys that are mathematically created to encrypt and decrypt messages
+
+        Private key (kept private and decrypts the message)
+        
+        Public key (exposed publicly and encrypts messages)
+
+        The private key is the ONLY key that can decrypt the data encrypted by the public key
+
+        becuase of how the keys are mathematically created you cannot derive the private key fromth public key
+    }
+
+    The key pair{
+        the public and private keys are built together at the same time using lots of randomization, prime numbers and other mathematicall techniques
+    }
+
+    Key Escrow{
+        Is when someone else holds your decryption keys
+
+        Your private keys can be in the hands of a 3rd-party or given to your organization for you to use when you need it and they keep just incase you are no longer available and they need to be able to still decrypt the information you left behind
+    }
+}
