@@ -890,3 +890,106 @@ Public Key Infrastructure (PKI){
         Your private keys can be in the hands of a 3rd-party or given to your organization for you to use when you need it and they keep just incase you are no longer available and they need to be able to still decrypt the information you left behind
     }
 }
+
+Encrypting Data{
+    Stored Data{
+        Encrypting data on SSDs, HDDs, USB Drive, Cloud Storage etc.
+
+        Encrypting stored data can also be refered to as encrypting data at rest
+
+        Full-Disk{
+            Encrypting everything on a storage device (not just individual files)
+
+            It can be the full disk or a volume/partition
+
+            You can accomplish this using{
+                - Bitlocker for Windows
+                - FileVault for MacOS
+                etc
+            }
+        }
+
+        File Encryption{
+            Encrypting individual files
+
+            You can use tools like{
+                - EFS(Encrypting File System) on Windows
+                etc
+            }
+        }
+    }
+
+    Database Encryption{
+        Transparent Encryption{
+            Encrypting EVERYTHING (columns an rows) in the database with a symmetric key
+        }
+
+        Record Level Encryption{
+            Encrypting individual columns in the database
+
+            Separate symmetric keys will be used for each column
+        }
+    }
+
+    Transport Encryption{
+        Encrypting data that is being transported accross a network
+
+        HTTPS{
+            For browsers to have encrypted communications to request web sites from servers
+        }
+
+        Virtual Private Network{
+            For fully encrypted live network connections between entities(applications, clients or servers)
+
+            Client-based connection would use SSL/TLS
+
+            Website to Website connections would use IPsec
+        }
+    }
+
+    Encryption Algorithms{
+        Once a certain algorithm is used to encrypt data and SAME algorithm MUST be utilized to decrypt it
+
+        Some algorithms have a better security leve, some work faster than others and some have more complex methods of implementation
+    }
+
+    Cyptographic Keys{
+        Encryption algorithms themselves are publicly known but the cryptograhic keys used along with the algorithms are what needs to be kept secret
+
+        The key determines the final output of{
+            - Encrypting data
+            - Hashing Data
+            - Creating a Digital Signature
+        }
+
+        Key Lengths{
+            Brute force technique can be used to eventually determine what your key is
+
+            To reduce the chance of this happened to as low as possible the length of the keys are increased
+
+            This increases the ammount of attempts an attacker would have to carry out to eventually determine the key
+
+            At this point in time a symmetric key of 128 bits of larger is considered secure but this length will change as technology 
+            advances and processors can compute more permutations faster
+
+            Asymmetric Encryption{
+                Even though this uses complex calculations with prime numbers the key length is increased for these keys aswell
+
+                These are given longer key lengths than symmetric keys commonly around 3072 bits or more
+            }
+        }
+
+        Key Stretching{
+            Instead of just relying on very long cryptograhic key lengths multiple encryption processes are carried out
+            consecutively using the key to make the brute force approach take even longer to determine the key
+
+            eg{
+                - hash a password using the key
+                - then hash the hash above
+                - then hash the hashed hash above
+            }
+
+            This is key stretching
+        }
+    }
+}
