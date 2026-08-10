@@ -993,3 +993,43 @@ Encrypting Data{
         }
     }
 }
+
+Key Exchange{
+    How do you share an encryption key accross an insecure medium
+
+    Out-of-band key exchange{
+        transfering the key via any medium other than the internet
+
+        This may be slower
+
+        telephone, courier, in-person etc        
+    }
+
+    In-band key exchange{
+        transfering the key via the internet securely
+
+        This is much faster
+
+        for example using key exchange algorithms that use asymetric encryption to deliver a symmetric key
+            
+        This is commonly used with temporary session keys
+
+        Every session the symmetric key is discarded and the key exchange algorithm is re-used to establish a 
+        new symmetric key for this session
+    }
+
+    Key Exchange Algorithms{
+        RSA Key Exchange{
+            - Client encrypts the symmetric key with the server's public key and sends the encrypted key
+            - The server decrypts the symmetric key with it's own private key
+            - Both the client and the server now have the symmetric key securely
+            - They can now encrypt and decrypt data with this single symmetric key
+        }
+
+        Diffie-Hellman Key Exchange{
+            - Client uses there private key and the server's public key to create a symmetric key
+            - The server uses there own private key and the client's public key to create a symmetric key aswell
+            - Because the public and private keys are mathematically related they generate the same symmetric key
+        }
+    }
+}
