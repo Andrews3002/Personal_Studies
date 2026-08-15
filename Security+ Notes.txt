@@ -1,436 +1,712 @@
-Security Controls{
-    Help prevent security events, minmize the impact and limit the damage to assets
+Entering the System{
+    AAA Framework{
+        Authentication{
+            Proving you are who you say you are
 
-    Assets{
-        Data, 
-        Physical Property, 
-        Computer Systems
-    }
+            Process{
+                The client sends their login credentials via the internet to the Firewall/VPN Concentrator of the intended system
 
-    Control Categories{
-        Technical Controls{
-            Controls implemented using systems (Operating system controls, firewalls, anti-virus etc)  
-        }
-        
-        Managerial Controls{
-            Administrative controls associated with security desgin and implementation (security policies, standard operating procedures etc)
-        }
+                The Firewall/VPN Concentrator sends the credentialls to a tripple A (AAA) Server which stores all the credentials of all the users in a database
 
-        Operational Controls{
-            Controls implemented by people instead of systems (security guards, security awareness programs)
-        }
+                The Tripple A Server sends an approval message if the credials match a record in the database or a rejection message if it doesn't back to the Firewall/VPN Concentrator
 
-        Physical Controls{
-            Limits physical access (guard shack, fences, locks, badge readers etc)
-        }
-    }
-
-    Control Types{
-        Preventative{
-            Blocks accesss to a resource (you shall not pass)
-
-            eg{
-                Technical: firewall rules, 
-                Managerial: on-boarding policy to setup and train new employees while limiting their access to resources before they are ready, 
-                Operational: gaurd shack checking all identification, 
-                Physical: door locks
-            }
-        }
-
-        Deterrent{
-            Discourages an intrusion attempt but does not directly prevent access (its like a warning with clear consequences for moving forward)
-
-            eg{
-                Technical: Application spash screens,
-                Managerial: Threat of demotion,
-                Operational: Front reception desk informing you that you are not permitted to access a particular location or person,
-                Physical: Posted warning signs
-            }
-        }
-
-        Detective{
-            Identify and log an intrusion attempt but may not prevent access
-
-            eg{
-                Technical: Collecting and reviewing system logs,
-                Managerial: Reviewing login reports to check who gained access to the system,
-                Operational: Regularly patrolling the property,
-                Physical: Enabling motion detectors
-            }
-        }
-
-        Corrective{
-            Apply a control after an event has been detected to reverse the impact of the event and continue operating with minimum downtime
-
-            eg{
-                Technical: Restoring from backups can mitigate a ransomware infection,
-                Managerial: Create policies for reporting security issues
-                Operational: Contact law enforcement to manage criminal activity
-                Physical: Use fire extinguisher
-            }
-        }
-
-        Compensating{
-            Control using other means because the exisiting controls aren't sufficient, these may be temporary
-
-            eg{
-                Technical: Firewall blocks a specific compromised application while a patch is being developed,
-                Managerial: Implementing a separation of duties policy so everything doesn't fall onto one person
-                Operational: Require multiple guards on duty simultaneously
-                Physical: A generator used during a power outage
-            }
-        }
-
-        Directive{
-            Directing a subject to something more secure than something less secure, a relatively weak security control
-
-            eg{
-                Technical: Storing sensative files in a protective folder
-                Managerial: Creating compliance policies and procedures
-                Operational: Training users on proper security policies
-                Physical: an "Authorized Personnel Only" sign
-            }
-        }
-    }
-}
-
-CIA Triad{
-    An acronym describing the core fundamental concepts of security
-
-    Confidentiality{
-        Prevent disclosure of information to unauthorized individuals or systems
-
-        Methods{
-            Encryption{
-                Encode messages so only certain people can read it
-            }
-
-            Access Controls{
-                Selectively restrict access to a resource
-            }
-
-            Two-factor Authentication{
-                Additional security confirmation before information is disclosed
-            }
-        }
-    }
-
-    Integrity{
-        Being sure the message that was sent has not been modified between source and destination
-
-        Methods{
-            Hashing{
-                Using an algorithm to encrypt data into a short string of text that cannot be reverted back into the original data
-
-                If the data is changed even slightly the hash of the changed data will be completely different than the hash of the original data
-
-                Its also known as a message digest or a fingerprint
-
-                This proves integrity
-            }
-
-            Digital Signatures{
-                Using an algorithm that requires the sender's private key and their hashed message to produce an encrypted value that is sent along with the plain text
-
-                This encrypted value when decrypted with the correct public key produces the original hash 
-                
-                Hashing the plain text you recieved and comparing it to the original hash decrypted above tells you if the data was altered
-                
-                And since the public key worked you know the sender has the private key that was used to create the digital signature
-
-                This provides non-repudiation
+                And if the Firewall/VPN Concentrator receives an approval message from the Tripple A Server it will then allow the client to gain access to the system's Internal File Server
             }
 
             Digital Certificates{
-                A form of identification that ties public keys to domain identities
+                Ensure you know the public key you are using is from the right device (server, pc, phone etc)
 
                 It contains {
-                    the identity metadata of the sender,
-                    the sender's public key,
+                    the identity metadata of the device,
+                    the device's public key,
                     the digital signature of the issueing certificate authority
                 }
+
+                Let A be the unkown device
+                
+                Let B be the device that A needs to prove themselves too
                     
-                The sender applies for a digital certificate with metadata about themselves to a Certificate Authority
+                A applies for a digital certificate with metadata about themselves to a Certificate Authority
 
                 The Certificate Authority verifies the metadata and if valid provides the digital certificate
                 
-                The sender then instead of sending the public key alone to their intended recipient, they send their digital certificate
+                A then sends their digital certificate to B
 
-                The recipient then verifies the digital certificate by using the certificate authority's public key that is built into their device's OS
+                B then verifies the digital certificate by using the certificate authority's public key 
+                
+                In most cases the CA's public key is built into B's OS
 
-                Once the certificate is verified the recipient then uses the sender's public key to carry on with the rest of the cryptography process.
-
-                This proves the public key belongs to the correct sender.
+                Once the certificate is verified B can now trust A and proceed with confidence
             }
 
-            Non-repudiation{
-                Provides proof of integrity, and proof of origin with high assurance of authenticity
+            Computers Using Certificates for Authentication{
+                How do computer's authenticate themselves without having passwords{
+                    since a system by itself cannot type a password
 
-                Basically means the sender of a message can't credibly deny they sent it.
+                    and you may not want to store a password on the computer
+
+                    you put a digitally signed certificate on the device
+
+                    once the VPN Concentrator detects the certificate on the device it is authorized to gain access to the system
+                }
+
+                An organization would have its own trusted Certificate Authority(CA)
+
+                This is a device or software that is responsible for managing all the certificates in your environment
+
+                Not to be confused with the root CA which digitally signs the intermediate CAs below it.
+
+                On the CA you would create a certificate for each computer you want to authorize (digitally signing the certificate by the CA)
             }
+        }
+
+        Authorization{
+            What system resources do you have access too
+
+            Once a device is authenticated how is it authorized to have access to resources?{
+                Authorization models{
+                    They associate users and services to data and applications in a scalable way
+
+                    Without it you would need to assign permissions/authorizations to each individual user every time they log in or a new user is created
+
+                    So the individual permissions/authorizations are abstracted from the individual users by using groups or roles as a middle man
+
+                    So each user will be assinged to a group or role and each group or role comes along with a set of permissions/authorizations to access resources
+                }
+            }
+        }
+
+        Accounting{
+            The system keeping log of access history
         }
     }
 
-    Availablility{
-        Systems and networks must be up and running at all times
+    Deception and Disruption{
+        IT security isn't only about protection, it is also about traping or attacking your attackers
 
         Methods{
-            Redundancy{
-                Eliminating single points of failure by setting up multiple instances of resources so that if an instance fails its duplicate can takeover and the system remains uninterupted
+            Honeypots{
+                Attracts attacker and traps them in a virtual system that is isolated from your real systems.
+
+                It allows you to monitor which attack methods these attackers are utilizing without compromising your real systems.
             }
 
-            Fault tolerance{
-                System will continue to run even when a failure occurs
+            Honeynets{
+                Eventually attackers are able to figure out they are in a honeypot and not a real system
+                
+                In order to keep them from this realization we need to create a honeypot that better simulates a real system
+
+                A real network inculdes more than a single device (servers, workstations, routers, switches, firewalls)
+
+                A Honeynet is a larger deception network that is comprised of one or more honey spots
             }
 
-            Patching{
-                Fixing issues and resolving problems to ensure stability and close security holes
+            Honeyfiles{
+                Attracks the attackers with bait in the form of files with fake sensitive information
+
+                It is bait for the honeynet for example (password.txt)
+
+                An alert is sent if the file is accessed (A virtual bear trap)
             }
-        }        
+
+            Honeytokens{
+                Track the malicious actors by adding traceable data to the honeynet
+
+                If the data is stolen you will know where it came from
+
+                eg{
+                    - Fake API credentials (notifications are sent when someone trys to use these fake api credentials)
+                    - Fake email addresses (notifications are sent when someone uses this email address on the internet)
+                    - Fake Database records
+                    - Fake browser cookies
+                    - Fake web page pixels
+                    etc
+                }
+            }
+        }
+    }
+
+    Public Key Infrastructure (PKI){
+        Policies, procedures, hardware, software and people responsible for creation, distribution, management, storage and revoking of digital certificates
+
+        PKIs also refers to the binding of public keys to people or devices (ususally involing a certificate authority)
+
+        Cyphertext is encrypted plaintext
+
+        Plaintext is a message that has not been encrypted
+
+        Symmetric Encryption{
+            A single key is used to encrypt and decrypt the message and if theat key is compromised you would need a new key
+
+            Sometimes it is refered to as a secret key algorithm or a shared secret
+
+            Doesn't scale very well because it can be challenging to distribute and manage unique shared keys for communicating with each device
+
+            It is still sometimes used today because it is very fast, due to it having less overhead involved than asymmetric encryption
+
+            It is often used in combination with asymetric encryption
+        }
+
+        Asymmetric Encryption (aka Public Key Cryptography){
+            A system where you use 2 or more keys that are mathematically created to encrypt and decrypt messages
+
+            Private key (kept private and decrypts the message)
+            
+            Public key (exposed publicly and encrypts messages)
+
+            The private key is the ONLY key that can decrypt the data encrypted by the public key
+
+            becuase of how the keys are mathematically created you cannot derive the private key fromth public key
+        }
+
+        The key pair{
+            the public and private keys are built together at the same time using lots of randomization, prime numbers and other mathematicall techniques
+        }
+
+        Key Escrow{
+            Is when someone else holds your decryption keys
+
+            Your private keys can be in the hands of a 3rd-party or given to your organization for you to use when you need it and they keep just incase you are no longer available and they need to be able to still decrypt the information you left behind
+        }
+    }
+
+    Encrypting Data{
+        Stored Data{
+            Encrypting data on SSDs, HDDs, USB Drive, Cloud Storage etc.
+
+            Encrypting stored data can also be refered to as encrypting data at rest
+
+            Full-Disk{
+                Encrypting everything on a storage device (not just individual files)
+
+                It can be the full disk or a volume/partition
+
+                You can accomplish this using{
+                    - Bitlocker for Windows
+                    - FileVault for MacOS
+                    etc
+                }
+            }
+
+            File Encryption{
+                Encrypting individual files
+
+                You can use tools like{
+                    - EFS(Encrypting File System) on Windows
+                    etc
+                }
+            }
+        }
+
+        Database Encryption{
+            Transparent Encryption{
+                Encrypting EVERYTHING (columns an rows) in the database with a symmetric key
+            }
+
+            Record Level Encryption{
+                Encrypting individual columns in the database
+
+                Separate symmetric keys will be used for each column
+            }
+        }
+
+        Transport Encryption{
+            Encrypting data that is being transported accross a network
+
+            HTTPS{
+                For browsers to have encrypted communications to request web sites from servers
+            }
+
+            Virtual Private Network{
+                For fully encrypted live network connections between entities(applications, clients or servers)
+
+                Client-based connection would use SSL/TLS
+
+                Website to Website connections would use IPsec
+            }
+        }
+
+        Encryption Algorithms{
+            Once a certain algorithm is used to encrypt data and SAME algorithm MUST be utilized to decrypt it
+
+            Some algorithms have a better security leve, some work faster than others and some have more complex methods of implementation
+        }
+
+        Cyptographic Keys{
+            Encryption algorithms themselves are publicly known but the cryptograhic keys used along with the algorithms are what needs to be kept secret
+
+            The key determines the final output of{
+                - Encrypting data
+                - Hashing Data
+                - Creating a Digital Signature
+            }
+
+            Key Lengths{
+                Brute force technique can be used to eventually determine what your key is
+
+                To reduce the chance of this happened to as low as possible the length of the keys are increased
+
+                This increases the ammount of attempts an attacker would have to carry out to eventually determine the key
+
+                At this point in time a symmetric key of 128 bits of larger is considered secure but this length will change as technology 
+                advances and processors can compute more permutations faster
+
+                Asymmetric Encryption{
+                    Even though this uses complex calculations with prime numbers the key length is increased for these keys aswell
+
+                    These are given longer key lengths than symmetric keys commonly around 3072 bits or more
+                }
+            }
+
+            Key Stretching{
+                Instead of just relying on very long cryptograhic key lengths multiple encryption processes are carried out
+                consecutively using the key to make the brute force approach take even longer to determine the key
+
+                eg{
+                    - hash a password using the key
+                    - then hash the hash above
+                    - then hash the hashed hash above
+                }
+
+                This is key stretching
+            }
+        }
+    }
+
+    Key Exchange{
+        How do you share an encryption key accross an insecure medium
+
+        Out-of-band key exchange{
+            transfering the key via any medium other than the internet
+
+            This may be slower
+
+            telephone, courier, in-person etc        
+        }
+
+        In-band key exchange{
+            transfering the key via the internet securely
+
+            This is much faster
+
+            for example using key exchange algorithms that use asymetric encryption to deliver a symmetric key
+                
+            This is commonly used with temporary session keys
+
+            Every session the symmetric key is discarded and the key exchange algorithm is re-used to establish a 
+            new symmetric key for this session
+        }
+
+        Key Exchange Algorithms{
+            RSA Key Exchange{
+                - Client encrypts the symmetric key with the server's public key and sends the encrypted key
+                - The server decrypts the symmetric key with it's own private key
+                - Both the client and the server now have the symmetric key securely
+                - They can now encrypt and decrypt data with this single symmetric key
+            }
+
+            Diffie-Hellman Key Exchange{
+                - Client uses there private key and the server's public key to create a symmetric key
+                - The server uses there own private key and the client's public key to create a symmetric key aswell
+                - Because the public and private keys are mathematically related they generate the same symmetric key
+            }
+        }
     }
 }
 
-AAA Framework{
-    Authentication{
-        Proving you are who you say you are
+Operating within a System{
+    CIA Triad{
+        Even though you are authenticated the data in a system still needs to be protected
 
-        Process{
-            The client sends their login credentials via the internet to the Firewall/VPN Concentrator of the intended system
+        The CIA Triad is an acronym describing the core fundamental concepts of security when it comes to protecting data
 
-            The Firewall/VPN Concentrator sends the credentialls to a tripple A (AAA) Server which stores all the credentials of all the users in a database
+        Confidentiality{
+            Prevent disclosure of information to unauthorized individuals or systems
 
-            The Tripple A Server sends an approval message if the credials match a record in the database or a rejection message if it doesn't back to the Firewall/VPN Concentrator
-
-            And if the Firewall/VPN Concentrator receives an approval message from the Tripple A Server it will then allow the client to gain access to the system's Internal File Server
-        }
-
-        Digital Certificates{
-            How do computer's authenticate themselves without having passwords{
-                since a system by itself cannot type a password
-
-                and you may not want to store a password on the computer
-
-                you put a digitally signed certificate on the device
-
-                once the VPN Concentrator detects the certificate on the device it is authorized to gain access to the system
-            }
-
-            An organization would have its own trusted Certificate Authority(CA)
-
-            This is a device or software that is responsible for managing all the certificates in your environment
-
-            Not to be confused with the root CA which digitally signs the intermediate CAs below it.
-
-            On the CA you would create a certificate for each computer you want to authorize (digitally signing the certificate by the CA)
-        }
-    }
-
-    Authorization{
-        What system resources do you have access too
-
-        Once a device is authenticated how is it authorized to have access to resources?{
-            Authorization models{
-                They associate users and services to data and applications in a scalable way
-
-                Without it you would need to assign permissions/authorizations to each individual user every time they log in or a new user is created
-
-                So the individual permissions/authorizations are abstracted from the individual users by using groups or roles as a middle man
-
-                So each user will be assinged to a group or role and each group or role comes along with a set of permissions/authorizations to access resources
-            }
-        }
-    }
-
-    Accounting{
-        The system keeping log of access history
-    }
-}
-
-Gap Analysis{
-    The study of where we are verses where we would like to be in IT security
-
-    It requires alot of research to consider all the company's security infrastructure
-
-    The analysis can take weeks or months to complete
-
-    It may involve a study with numerous participants and may require emails, data gathering and technical research to compile the information on what is happening with security in your environment
-
-    Process{
-        Chosing a baseline or goal to work towards{
-            A baseline is an internal set of goals
-
-            Some organizations follow standard baselines specifically created for certain companies
-            eg{
-                - NIST Special Publication 800-171 Revision 2, Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations
-                - ISO/IEC 27001, Information security management systems
-            }
-
-            Organization can also create their own baselines based on their own security needs
-
-            These baselines will evaluate{
-                people in the organization{
-                    - employees formal experience in IT security
-                    - employees current training in IT security
-                    - emplyees knowledge of security policies and procedures
+            Methods{
+                Encryption{
+                    Encode messages so only certain people can read it
                 }
 
-                the processes used for security{
-                    - researching the existing IT systems
-                    - evaluating the existing security policies
+                Access Controls{
+                    Selectively restrict access to a resource
+                }
+
+                Two-factor Authentication{
+                    Additional security confirmation before information is disclosed
                 }
             }
         }
 
-        Analyis{
-            - Comparison of existing systems
-            - Identifying weaknesses of each system
-            - Identifying the most effective processes to compensate for the weaknesses
-            - Detailed baseline objectives and gives a perspective of where we are today verses where we would like to be with each of the objectives
-            - A path or plan to get from the current security to the goal security, this will require time, money and lots of change control
-        }
-        
-        Final Gap Analysis Report{
-            Once this analysis is done for all of our processes, all devices across all locations a document needs to be created to summarize the findings
+        Integrity{
+            Being sure the message that was sent has not been modified between source and destination
 
-            Contains{
-                - Information on where the organization is today in terms of its security
-                - Documentation of all analysis findings
-                - Documented recommendations on how to follow the pathway or plan to get to the organization's security goals
-            }
-        }
-    }
-}
+            Methods{
+                Digital Signatures{
+                    Hashing{
+                        Using an algorithm to encrypt data into a short string of text
+                        
+                        It cannot be reverted back into the original data
 
-Zero Trust{
-    For many networks once you are past the firewal it is open and free to access any resource
+                        If the data is changed even slightly the hash of the changed data will be completely different 
 
-    There very few security controls in place which allows authrorized individuals to easily move through the system but also allows unathorized indivuals to do the same once they find a way past the firewal
-
-    As a result of this vulnarability many organizations are adopting the Zero Trust apporoach where users need to authenticate or prove themselves every time they want to gain access to a resource
-
-    Controlling Trust{
-        Adaptive Identity{
-            Examining the identity of an individual and applying dynamic security controls based on not just what the user is saying but other information related to this authentication process
-
-            eg{
-                - looking at the source of the request for resources (if someone requesting data from the US is using an IP address in China)
-                - looking at the relationship of the person to the organization (whether they are an employee, contractor, full-time or part-time)
-                - looking at the type of connection
-            }
-
-            and based on these examples making the authentication stronger if needed
-        }
-
-        Threat Scope Reduction{
-            Decrease the number of possible entry points to the network
-
-            eg{
-                - people inside the physical building
-                - people connected to a VPN
-            }
-
-            based on these examples these could be the only means to access the network
-        }
-
-        Policy-driven Access Control{
-            Once all the other methods of controlling trust are chosen and implemeted this will examine all the individual data points, puts them all together and then decides what type of authentication process should be used.
-
-            Combine adaptive identity with a predefined set of rules
-        }
-    }
-
-    Security Zones{
-        Qualifying the identity of a person based on where they are connecting from and where in the system are they going to access resources
-
-        This allows us to make the security more than a one-to-one relationship where a user is logging into a server
-
-        Instead it looks at the overall path of the conversation
-
-        eg{
-            - from an untrusted network to a trusted network
-            - from an internal or external network
-            - creating separate VPN connections (VPN 1, VPN 5, VPN 11) within the organization
-            - creating separate groups (Marketing, IT, Accounting, Human Resources) within the organization
-        }
-
-        This allows you to set rules on what zone has access to which other zones
-
-        This can work like:
-        - denying access to (untrusted to trusted) zone traffic
-        - explicitly trusting (trusted to internal) zone traffic
-    }
-
-    Planes of Operation{
-        One way to to implement zero trust is to break our security devices into separate isolated components called functional planes
-
-        This is done to physical, virtual and cloud components 
-
-        Data Plane{
-            The part of the device that is performing the actual security process like processing the frames, packets and network data
-             
-            eg{
-                processing
-                forwarding
-                trunking 
-                encrypting
-                NAT
-            }
-
-            In the zero trust security model the data plane contains{
-                Subjects{
-                    Users who utilize systems to access resources
-                }
-
-                Systems{
-                    Devices that actually perform the operations to connect to the network and access resources whether prompted by users or not
-                }
-
-                Policy Enforcement Point(PEP){
-                    This sits as a middle layer between subjecst/systems and the organization's resource server to enforce the different security controls based on the system's zone and the server's zone
-
-                    These subjects or systems can be{
-                        - End users
-                        - Applications
-                        - Non-human entities
+                        Its also known as a message digest or a fingerprint
                     }
 
-                    Think of it as a gatekeeper
+                    Non-repudiation{
+                        Provides proof of integrity, and proof of origin with high assurance of authenticity
 
-                    It is an abstraction of multiple devices working together to identify users and the traffic 
+                        Basically means the sender of a message can't credibly deny they sent it.
+                    }
 
-                    It DOES NOT make evaluations or decisions
+                    Use the private key and the hashed message to produce an encrypted value (digital signature)
+
+                    The plain text message is sent aswell
+
+                    The digital signature is then decrypted with the public key to produce the original hash 
+                    
+                    Hashing the plain text and comparing it to the original hash shows if the data was altered (integrity)
+                    
+                    And since the public key worked you know the sender has the private key (non-repudiation)
                 }
 
-                Enterprise Resources{
-                    These are the servers that store the organizations resources like data, applications and other resources that subjects and systems want to gain access to
+                Digital Certificates for Integrity{
+                    Without certificates a man in the middle can alter the message and create a new digital signature
+
+                    They can then send that new signature to the recipient 
+                    
+                    Along with their own public key and their altered plain text
+
+                    The recipient won't know if they are using the imposter's public key or the real sender's public key
+
+                    Accepting the imposter's plain text breaches integrity because the real sender's message was altered
+
+                    Digital Certificates ensure you know the if the public key is from the real sender
                 }
             }
         }
 
-        Control Plane{
-            The part of the device that manages the actions of the data plane
+        Availablility{
+            Systems and networks must be up and running at all times
 
-            eg{
-                defining policies and rules
-                determining how packets should be forwarded
-                Routing tables, session tables, NAT tables
+            Methods{
+                Redundancy{
+                    Setting up multiple instances of resources incase some fail
+                }
+
+                Fault tolerance{
+                    System will continue to run even when a failure occurs
+                }
+
+                Patching{
+                    Fixing issues and resolving problems to ensure stability and close security holes
+                }
+            }        
+        }
+    }
+
+    Security Controls{
+        Help prevent security events, minmize the impact and limit the damage to assets
+
+        Assets{
+            Data, 
+            Physical Property, 
+            Computer Systems
+        }
+
+        Control Categories{
+            Technical Controls{
+                Controls implemented using systems (Operating system controls, firewalls, anti-virus etc)  
+            }
+            
+            Managerial Controls{
+                Administrative controls associated with security desgin and implementation (security policies, standard operating procedures etc)
             }
 
-            In the zero trust security model the control plane contains{
-                Policy Decision Point{
-                    The external component that examines the users and traffic data retrieved from the PEP and actually makes the evaluations and decisions
+            Operational Controls{
+                Controls implemented by people instead of systems (security guards, security awareness programs)
+            }
 
-                    It contains{
-                        Policy Engine{
-                            Uses policy and other information resources to make the evaluated decisions (grant, deny or revoke)
+            Physical Controls{
+                Limits physical access (guard shack, fences, locks, badge readers etc)
+
+                Physical Security{
+                    Security Methods{
+                        Barricade / bollards{
+                            prevent physical access from cars but there is a limit to the prevention because people can walk through
+
+                            they can also be a security notice since they can be brighlty colored and striped to identify a high security area
+
+                            They can be created as{
+                                - concreate barriers / bollards (popular)
+                                - moats (surrouning body of water)
+                            }
                         }
 
-                        Policy Administrator{
-                            Uses the decision made by the Policy Engine to pass information to the PEP by
+                        Access Control Vestibules{
+                            They are modules installed on the walls next to doors that manipulate the automatic locking and unclocking of doors based on identification triggers setup in the configuration
 
-                            eg{
-                                - generating access tokens or credentials
-                                - telling the PEP to allow or disallow access
+                            They can be configured to{
+                                - have all doors unlocked by default and when one door is opened the others lock
+                                - have all doors locked by default and when you unlock one door the others cannot be unlocked (they are forced to remain locked until the triggered door is locked again)
+                                - have one door open and others locked and when you open a door the others cannot be unlocked (they are forced to remain locked until the triggered door is closed again)
+                            }
+                        }
+
+                        Fencing{
+                            A physical very obvious barrier that prevents access from humans and cars
+
+                            It can be transparent or opague
+
+                            They should be robust, difficult to compromise its structural integrity
+
+                            They should also have razor wire or be very tall to prevent someone from climbing over
+                        }
+
+                        Video Surveillance{
+                            CCTV(Closed Circuit Television) can replace physical guards
+
+                            They should have certain features{
+                                - motion recognition to alarm and alert when someone moves
+                                - object detection can identiy a license plate or person's face
+                            }
+
+                            Most organizations setup up multiple cameras networked together and store all their recorded footage in one storage point
+                        }
+
+                        Guards and Access Badges{
+                            Sometimes you may need to have security gaurds to offer physical protection throught the facility that validate identification of existing employees
+
+                            There is usually 2 or more security guards on duty to provide two-person integrity / control (Minimizing the exposure to an attack since a single person does not have access to a physical asset)
+
+                            The use of access badges is also commonly enforced (picture, name, other details) that must be worn at all times and are also electronical logged commonly with barcodes
+
+                            Access Badges are often integrated with Access Control Vestibules
+                        }
+
+                        Lighting{
+                            More light means more security, attacker avoid the light since they can be observed easily and NON-Infrared cameras can see them better
+
+                            It is important to ensure the light is strong enough to illuminate the entire area and all the angles are covered(important for facial recognition)
+                        }
+
+                        Sensors{
+                            Infrared sensors can detect infrared radiation heat signatures in both the light and dark, commonly used in motion detectors (it has a limited range)
+
+                            Pressure sensors detects the change in force, commonly used as window sensors and floor sensors
+
+                            Microwave sensors can detect heat signaturs in a very wide range, commonly used to detect movement in large areas
+
+                            Ultrasonic sensors sends ultrasonic signals that deflect off objects and are received again as sound waves, commonly used for motion detection, collision detection etc
+                        }
+                    }
+                }
+            }
+        }
+
+        Control Types{
+            Preventative{
+                Blocks accesss to a resource (you shall not pass)
+
+                eg{
+                    Technical: firewall rules, 
+                    Managerial: on-boarding policy to setup and train new employees while limiting their access to resources before they are ready, 
+                    Operational: gaurd shack checking all identification, 
+                    Physical: door locks
+                }
+            }
+
+            Deterrent{
+                Discourages an intrusion attempt but does not directly prevent access (its like a warning with clear consequences for moving forward)
+
+                eg{
+                    Technical: Application spash screens,
+                    Managerial: Threat of demotion,
+                    Operational: Front reception desk informing you that you are not permitted to access a particular location or person,
+                    Physical: Posted warning signs
+                }
+            }
+
+            Detective{
+                Identify and log an intrusion attempt but may not prevent access
+
+                eg{
+                    Technical: Collecting and reviewing system logs,
+                    Managerial: Reviewing login reports to check who gained access to the system,
+                    Operational: Regularly patrolling the property,
+                    Physical: Enabling motion detectors
+                }
+            }
+
+            Corrective{
+                Apply a control after an event has been detected to reverse the impact of the event and continue operating with minimum downtime
+
+                eg{
+                    Technical: Restoring from backups can mitigate a ransomware infection,
+                    Managerial: Create policies for reporting security issues
+                    Operational: Contact law enforcement to manage criminal activity
+                    Physical: Use fire extinguisher
+                }
+            }
+
+            Compensating{
+                Control using other means because the exisiting controls aren't sufficient, these may be temporary
+
+                eg{
+                    Technical: Firewall blocks a specific compromised application while a patch is being developed,
+                    Managerial: Implementing a separation of duties policy so everything doesn't fall onto one person
+                    Operational: Require multiple guards on duty simultaneously
+                    Physical: A generator used during a power outage
+                }
+            }
+
+            Directive{
+                Directing a subject to something more secure than something less secure, a relatively weak security control
+
+                eg{
+                    Technical: Storing sensative files in a protective folder
+                    Managerial: Creating compliance policies and procedures
+                    Operational: Training users on proper security policies
+                    Physical: an "Authorized Personnel Only" sign
+                }
+            }
+        }
+    }
+
+    Zero Trust{
+        For many networks once you are past the firewal it is open and free to access any resource
+
+        This allows authorized users to easily move through the system 
+
+        But if an unauthorized person gets in they aswell will be given the same luxury of easy access
+
+        The Zero Trust apporoach is where users need to authenticate or prove themselves every time they want to 
+        gain access to a resource
+
+        Controlling Trust{
+            Adaptive Identity{
+                Examining the identity of an individual and applying dynamic security controls based on not just what the user is saying but other information related to this authentication process
+
+                eg{
+                    - looking at the source of the request for resources (if someone requesting data from the US is using an IP address in China)
+                    - looking at the relationship of the person to the organization (whether they are an employee, contractor, full-time or part-time)
+                    - looking at the type of connection
+                }
+
+                and based on these examples making the authentication stronger if needed
+            }
+
+            Threat Scope Reduction{
+                Decrease the number of possible entry points to the network
+
+                eg{
+                    - people inside the physical building
+                    - people connected to a VPN
+                }
+
+                based on these examples these could be the only means to access the network
+            }
+
+            Policy-driven Access Control{
+                Once all the other methods of controlling trust are chosen and implemeted this will examine all the individual data points, puts them all together and then decides what type of authentication process should be used.
+
+                Combine adaptive identity with a predefined set of rules
+            }
+        }
+
+        Security Zones{
+            Qualifying the identity of a person based on where they are connecting from and where in the system are they going to access resources
+
+            This allows us to make the security more than a one-to-one relationship where a user is logging into a server
+
+            Instead it looks at the overall path of the conversation
+
+            eg{
+                - from an untrusted network to a trusted network
+                - from an internal or external network
+                - creating separate VPN connections (VPN 1, VPN 5, VPN 11) within the organization
+                - creating separate groups (Marketing, IT, Accounting, Human Resources) within the organization
+            }
+
+            This allows you to set rules on what zone has access to which other zones
+
+            This can work like:
+            - denying access to (untrusted to trusted) zone traffic
+            - explicitly trusting (trusted to internal) zone traffic
+        }
+
+        Planes of Operation{
+            One way to to implement zero trust is to break our security devices into separate isolated components called functional planes
+
+            This is done to physical, virtual and cloud components 
+
+            Data Plane{
+                The part of the device that is performing the actual security process like processing the frames, packets and network data
+                
+                eg{
+                    processing
+                    forwarding
+                    trunking 
+                    encrypting
+                    NAT
+                }
+
+                In the zero trust security model the data plane contains{
+                    Subjects{
+                        Users who utilize systems to access resources
+                    }
+
+                    Systems{
+                        Devices that actually perform the operations to connect to the network and access resources whether prompted by users or not
+                    }
+
+                    Policy Enforcement Point(PEP){
+                        This sits as a middle layer between subjecst/systems and the organization's resource server to enforce the different security controls based on the system's zone and the server's zone
+
+                        These subjects or systems can be{
+                            - End users
+                            - Applications
+                            - Non-human entities
+                        }
+
+                        Think of it as a gatekeeper
+
+                        It is an abstraction of multiple devices working together to identify users and the traffic 
+
+                        It DOES NOT make evaluations or decisions
+                    }
+
+                    Enterprise Resources{
+                        These are the servers that store the organizations resources like data, applications and other resources that subjects and systems want to gain access to
+                    }
+                }
+            }
+
+            Control Plane{
+                The part of the device that manages the actions of the data plane
+
+                eg{
+                    defining policies and rules
+                    determining how packets should be forwarded
+                    Routing tables, session tables, NAT tables
+                }
+
+                In the zero trust security model the control plane contains{
+                    Policy Decision Point{
+                        The external component that examines the users and traffic data retrieved from the PEP and actually makes the evaluations and decisions
+
+                        It contains{
+                            Policy Engine{
+                                Uses policy and other information resources to make the evaluated decisions (grant, deny or revoke)
+                            }
+
+                            Policy Administrator{
+                                Uses the decision made by the Policy Engine to pass information to the PEP by
+
+                                eg{
+                                    - generating access tokens or credentials
+                                    - telling the PEP to allow or disallow access
+                                }
                             }
                         }
                     }
@@ -440,596 +716,349 @@ Zero Trust{
     }
 }
 
-Physical Security{
-    Security Methods{
-        Barricade / bollards{
-            prevent physical access from cars but there is a limit to the prevention because people can walk through
+Modifying the System{
+    Gap Analysis{
+        The study of where we are verses where we would like to be in IT security
 
-            they can also be a security notice since they can be brighlty colored and striped to identify a high security area
+        It requires alot of research to consider all the company's security infrastructure
 
-            They can be created as{
-                - concreate barriers / bollards (popular)
-                - moats (surrouning body of water)
-            }
-        }
+        The analysis can take weeks or months to complete
 
-        Access Control Vestibules{
-            They are modules installed on the walls next to doors that manipulate the automatic locking and unclocking of doors based on identification triggers setup in the configuration
+        It may involve a study with numerous participants and may require emails, data gathering and technical research to compile the information on what is happening with security in your environment
 
-            They can be configured to{
-                - have all doors unlocked by default and when one door is opened the others lock
-                - have all doors locked by default and when you unlock one door the others cannot be unlocked (they are forced to remain locked until the triggered door is locked again)
-                - have one door open and others locked and when you open a door the others cannot be unlocked (they are forced to remain locked until the triggered door is closed again)
-            }
-        }
+        Process{
+            Chosing a baseline or goal to work towards{
+                A baseline is an internal set of goals
 
-        Fencing{
-            A physical very obvious barrier that prevents access from humans and cars
+                Some organizations follow standard baselines specifically created for certain companies
+                eg{
+                    - NIST Special Publication 800-171 Revision 2, Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations
+                    - ISO/IEC 27001, Information security management systems
+                }
 
-            It can be transparent or opague
+                Organization can also create their own baselines based on their own security needs
 
-            They should be robust, difficult to compromise its structural integrity
+                These baselines will evaluate{
+                    people in the organization{
+                        - employees formal experience in IT security
+                        - employees current training in IT security
+                        - emplyees knowledge of security policies and procedures
+                    }
 
-            They should also have razor wire or be very tall to prevent someone from climbing over
-        }
-
-        Video Surveillance{
-            CCTV(Closed Circuit Television) can replace physical guards
-
-            They should have certain features{
-                - motion recognition to alarm and alert when someone moves
-                - object detection can identiy a license plate or person's face
+                    the processes used for security{
+                        - researching the existing IT systems
+                        - evaluating the existing security policies
+                    }
+                }
             }
 
-            Most organizations setup up multiple cameras networked together and store all their recorded footage in one storage point
-        }
+            Analyis{
+                - Comparison of existing systems
+                - Identifying weaknesses of each system
+                - Identifying the most effective processes to compensate for the weaknesses
+                - Detailed baseline objectives and gives a perspective of where we are today verses where we would like to be with each of the objectives
+                - A path or plan to get from the current security to the goal security, this will require time, money and lots of change control
+            }
+            
+            Final Gap Analysis Report{
+                Once this analysis is done for all of our processes, all devices across all locations a document needs to be created to summarize the findings
 
-        Guards and Access Badges{
-            Sometimes you may need to have security gaurds to offer physical protection throught the facility that validate identification of existing employees
-
-            There is usually 2 or more security guards on duty to provide two-person integrity / control (Minimizing the exposure to an attack since a single person does not have access to a physical asset)
-
-            The use of access badges is also commonly enforced (picture, name, other details) that must be worn at all times and are also electronical logged commonly with barcodes
-
-            Access Badges are often integrated with Access Control Vestibules
-        }
-
-        Lighting{
-            More light means more security, attacker avoid the light since they can be observed easily and NON-Infrared cameras can see them better
-
-            It is important to ensure the light is strong enough to illuminate the entire area and all the angles are covered(important for facial recognition)
-        }
-
-        Sensors{
-            Infrared sensors can detect infrared radiation heat signatures in both the light and dark, commonly used in motion detectors (it has a limited range)
-
-            Pressure sensors detects the change in force, commonly used as window sensors and floor sensors
-
-            Microwave sensors can detect heat signaturs in a very wide range, commonly used to detect movement in large areas
-
-            Ultrasonic sensors sends ultrasonic signals that deflect off objects and are received again as sound waves, commonly used for motion detection, collision detection etc
+                Contains{
+                    - Information on where the organization is today in terms of its security
+                    - Documentation of all analysis findings
+                    - Documented recommendations on how to follow the pathway or plan to get to the organization's security goals
+                }
+            }
         }
     }
-}
 
-Deception and Disruption{
-    IT security isn't only about protection, it is also about traping or attacking your attackers
+    Change Management{
+        Making a change to a home application or operating system only affects one computer
+        
+        But if you are making a change in a coorporate environment the change will affect 100s or 1000s of systems
 
-    Methods{
-        Honeypots{
-            Attracts attacker and traps them in a virtual system that is isolated from your real systems.
-
-            It allows you to monitor which attack methods these attackers are utilizing without compromising your real systems.
+        Some changes are{
+            - Upgrading software
+            - patching applications
+            - changing firewall configurations
+            - modifying switch ports
         }
 
-        Honeynets{
-            Eventually attackers are able to figure out they are in a honeypot and not a real system
+        As a result of how these changes can affecto so many systems before a change is made you need to go through a complete formal process to ensure the change is carried out safely
+
+        It is also not an option to not update your systems because for example microsoft usually has updates for their operating system every month but not updating your system leaves it less secure
+
+        A method to ensure these changes are made safely is to have clear policies{
+            - Frequency (how often you can make changes)
+            - Duration (how long the changes must take to be made)
+            - Installation process for integrating the change
+            - They type of changes that could be made
+            - rollback procedures incase the change brings problems
+        }
+
+        Without a formal change control process its very difficult to make changes to the cooporate culture
+
+        Change approval process{
+            A formal process for managing change and avoiding downtime, confusion and mistakes
+
+            A typical approval process includes{
+                - Completing request forms
+                - Determining the purpose of the change
+                - Identiying the scope of the change
+                - Schedule showing date and time of the change
+                - The systems that will be affected by the change and the overall impact
+                - The risk associated with the change
+                - Get approval from the change control boarding
+                - Get end user acceptance after the change is complete
+            }
+        }
+
+        Ownership{
+            the process usually starts with the owner of the application or data wanting to make a change
+
+            they dont really control the change process and they arent really the ones carrying out the change to the application or data
+
+            They manage the process, they are kept informed as the process occurs
+
+            And once the change is carried out the owner tests the system and verifying that everything is working properly
+        }
+
+        Stakeholders{
+            These are the indivuals or departments that will be impacted by the change you are proposing
+
+            They would want to have input on the process and some kind of control on when the change occurs
+
+            Identifying stakeholders is not as easy as you would imagine
+
+            Some changes affect many individuals in the organization and some changes affect only one person
+
+            The IT team needs to research and identify any of the stakeholders that would be affected by the change
+        }
+
+        Impact Analysis{
+            Every change has a different potential impact on the organization
+
+            So you need to recognize what risks may be involved when making any particular change
+
+            These can ba a risk value of either (high, medium or low) or they can be also very far researching{
+                for example{
+                    - the fix doesnt fix anything
+                    - the fix breaks something examples
+                    - Operating system failures because of installing an update
+                    - Data corruption which would need backups
+                }
+            }
+
+            There are also risks that may be involved if you dont make the change{
+                for example{
+                    - There might be a Security vulnerablilily and if not fixed it may be exploited by attackers
+                    - Applications may become unavailable if it is not patched
+                    - Unexpected downtime to other services if you don't make a change
+                }
+            }
+        }
+
+        Test Results{
+            Given these risks you may want to do alot of testing before implementing these changes into a production environment
+
+            This calls for something like a sandbox testing environment where you will be able to carry out as many tests as you want without it affecting your real systems
+
+            Essentially a technological safe space where you can make mistakes, try different techniques and perform extensive testing to ensure the update will work
+
+            Inside the sandbox we can load a duplicate environment of our production systems
             
-            In order to keep them from this realization we need to create a honeypot that better simulates a real system
+            And then we can try the upgrade, apply the patch, test and confirm before deployment
 
-            A real network inculdes more than a single device (servers, workstations, routers, switches, firewalls)
-
-            A Honeynet is a larger deception network that is comprised of one or more honey spots
+            This is also a good way to test your contingency plan like your backout procedure if something fails
         }
 
-        Honeyfiles{
-            Attracks the attackers with bait in the form of files with fake sensitive information
+        Backout Plan{
+            There are many issues where people thought a change was harmless, implemented it without planning for failure and the change brought down their network or backfired
 
-            It is bait for the honeynet for example (password.txt)
+            This is why you need a backout plan, A way to revert your changes
 
-            An alert is sent if the file is accessed (A virtual bear trap)
+            In some cases it may be an easy process{
+                - uninstall patches you installed
+                - confirme that the original files are back in place
+            }
+
+            But most cases not as easy as it sounds and very difficult to revert
         }
 
-        Honeytokens{
-            Track the malicious actors by adding traceable data to the honeynet
+        Maintenance Window{
+            When is the change happening?
 
-            If the data is stolen you will know where it came from
+            This might be the most difficult part of the process
+
+            During the workday may not be the best option (potential downtime would affect productivity)
+
+            Have maintenance hours where no one is affected by the changes being made
+
+            This is why you often see IT workers coming in on weekends or holidays or very early in the morning
+
+            This is very difficult if you work in an organization that operates 24/7
+
+            Considering the time of the year is also very important{
+                for example retail companies are usually most busy during hollidays
+
+                so they often freeze their environments during these periods to ensure no changes are allowed
+            }
+        }
+
+        Standard Operating procedure{
+            Change management is critical and affects every one in the organization
+
+            The process must be well documented{
+                - Should be available on the company Intranet
+                - Along with all standard processes and procedures
+            }
+
+            The change control process must be updated over time to make it more efficient and fit best with the requirements of the company
+        }
+    }
+
+    Technical Change Management{
+        This is after change management, it is when the actual change needs to be implemented into the environment by the technical staff
+
+        Making changes to some devices at home is simple but when you are working with alot of devices in an organization, making changes to all the devices becomes a much more difficult process
+
+        So this will be the change control process from the perspective of the technician
+
+        The change control process covers what exactly needs to change and the change is actually done by the technician
+        
+        Allow / Deny List{
+            A list that permits or prevents certain applications from working in your environment
+
+            This is because some application are dangerous{
+                - they may have vulnerablilies
+                - they may have trojan horses
+                - they may have malware
+            }
+
+            The Allow list denies every other application but the ones stated in the list
+
+            The Deny list allows every other application but the ones stated in the list
+        }
+        
+        Restricted Activities{
+            When a change is submitted to a change control board, there is a very specific documented scope for making this change
+
+            As part of this change control, you are limited to only making changes to what is specifically listed in the change control document
 
             eg{
-                - Fake API credentials (notifications are sent when someone trys to use these fake api credentials)
-                - Fake email addresses (notifications are sent when someone uses this email address on the internet)
-                - Fake Database records
-                - Fake browser cookies
-                - Fake web page pixels
-                etc
-            }
-        }
-    }
-}
+                A change control board may schedule a 2 hour window for you to be able to upgrade a series of printer drivers
 
-Change Management{
-    Making a chance to a home application or operating system only affects one computer
-    
-    But if you are making a change in a coorporate environment the change will affect 100s or 1000s of systems
-
-    Some changes are{
-        - Upgrading software
-        - patching applications
-        - changing firewall configurations
-        - modifying switch ports
-    }
-
-    As a result of how these changes can affecto so many systems before a change is made you need to go through a complete formal process to ensure the change is carried out safely
-
-    It is also not an option to not update your systems because for example microsoft usually has updates for their operating system every month but not updating your system leaves it less secure
-
-    A method to ensure these changes are made safely is to have clear policies{
-        - Frequency (how often you can make changes)
-        - Duration (how long the changes must take to be made)
-        - Installation process for integrating the change
-        - They type of changes that could be made
-        - rollback procedures incase the change brings problems
-    }
-
-    Without a formal change control process its very difficult to make changes to the cooporate culture
-
-    Change approval process{
-        A formal process for managing change and avoiding downtime, confusion and mistakes
-
-        A typical approval process includes{
-            - Completing request forms
-            - Determining the purpose of the change
-            - Identiying the scope of the change
-            - Schedule showing date and time of the change
-            - The systems that will be affected by the change and the overall impact
-            - The risk associated with the change
-            - Get approval from the change control boarding
-            - Get end user acceptance after the change is complete
-        }
-    }
-
-    Ownership{
-        the process usually starts with the owner of the application or data wanting to make a change
-
-        they dont really control the change process and they arent really the ones carrying out the change to the application or data
-
-        They manage the process, they are kept informed as the process occurs
-
-        And once the change is carried out the owner tests the system and verifying that everything is working properly
-    }
-
-    Stakeholders{
-        These are the indivuals or departments that will be impacted by the change you are proposing
-
-        They would want to have input on the process and some kind of control on when the change occurs
-
-        Identifying stakeholders is not as easy as you would imagine
-
-        Some changes affect many individuals in the organization and some changes affect only one person
-
-        The IT team needs to research and identify any of the stakeholders that would be affected by the change
-    }
-
-    Impact Analysis{
-        Every change has a different potential impact on the organization
-
-        So you need to recognize what risks may be involved when making any particular change
-
-        These can ba a risk value of either (high, medium or low) or they can be also very far researching{
-            for example{
-                - the fix doesnt fix anything
-                - the fix breaks something examples
-                - Operating system failures because of installing an update
-                - Data corruption which would need backups
-            }
-        }
-
-        There are also risks that may be involved if you dont make the change{
-            for example{
-                - There might be a Security vulnerablilily and if not fixed it may be exploited by attackers
-                - Applications may become unavailable if it is not patched
-                - Unexpected downtime to other services if you don't make a change
-            }
-        }
-    }
-
-    Test Results{
-        Given these risks you may want to do alot of testing before implementing these changes into a production environment
-
-        This calls for something like a sandbox testing environment where you will be able to carry out as many tests as you want without it affecting your real systems
-
-        Essentially a technological safe space where you can make mistakes, try different techniques and perform extensive testing to ensure the update will work
-
-        Inside the sandbox we can load a duplicate environment of our production systems
-        
-        And then we can try the upgrade, apply the patch, test and confirm before deployment
-
-        This is also a good way to test your contingency plan like your backout procedure if something fails
-    }
-
-    Backout Plan{
-        There are many issues where people thought a change was harmless, implemented it without planning for failure and the change brought down their network or backfired
-
-        This is why you need a backout plan, A way to revert your changes
-
-        In some cases it may be an easy process{
-            - uninstall patches you installed
-            - confirme that the original files are back in place
-        }
-
-        But most cases not as easy as it sounds and very difficult to revert
-    }
-
-    Maintenance Window{
-        When is the change happening?
-
-        This might be the most difficult part of the process
-
-        During the workday may not be the best option (potential downtime would affect productivity)
-
-        Have maintenance hours where no one is affected by the changes being made
-
-        This is why you often see IT workers coming in on weekends or holidays or very early in the morning
-
-        This is very difficult if you work in an organization that operates 24/7
-
-        Considering the time of the year is also very important{
-            for example retail companies are usually most busy during hollidays
-
-            so they often freeze their environments during these periods to ensure no changes are allowed
-        }
-    }
-
-    Standard Operating procedure{
-        Change management is critical and affects every one in the organization
-
-        The process must be well documented{
-            - Should be available on the company Intranet
-            - Along with all standard processes and procedures
-        }
-
-        The change control process must be updated over time to make it more efficient and fit best with the requirements of the company
-    }
-}
-
-Technical Change Management{
-    This is after change management, it is when the actual change needs to be implemented into the environment by the technical staff
-
-    Making changes to some devices at home is simple but when you are working with alot of devices in an organization, making changes to all the devices becomes a much more difficult process
-
-    So this will be the change control process from the perspective of the technician
-
-    The change control process covers what exactly needs to change and the change is actually done by the technician
-    
-    Allow / Deny List{
-        A list that permits or prevents certain applications from working in your environment
-
-        This is because some application are dangerous{
-            - they may have vulnerablilies
-            - they may have trojan horses
-            - they may have malware
-        }
-
-        The Allow list denies every other application but the ones stated in the list
-
-        The Deny list allows every other application but the ones stated in the list
-    }
-    
-    Restricted Activities{
-        When a change is submitted to a change control board, there is a very specific documented scope for making this change
-
-        As part of this change control, you are limited to only making changes to what is specifically listed in the change control document
-
-        eg{
-            A change control board may schedule a 2 hour window for you to be able to upgrade a series of printer drivers
-
-            But that doesnt mean during that same 2 hour period that you can make other changes to other applications just because the window happens to be available
-        }
-
-        However this does not mean you are limited to only what is listed in the change control documents
-
-        There may be times when you have to make additional updates or expand the scope to be able to complete the primary goal of that particular change
-
-        eg{
-            You may find that the process of upgrading those printer drivers requires a modification to a configuration file on everyone's system
-
-            Although that was not specifically written as part of the scope of this change, this change can only take place if you make that modification
-
-            And if it is a relatively simple modification, there may be policies in place that allow you to make the decision to modifiy that file so that you can complete the overall change control process
-        }
-
-        This is why its important to have a well documented change control process, so that everyone understands the procedures that should occur if you need to change the scope of the change control
-    }
-
-    Downtime{
-        When services are unavailable.
-        
-        The change process can be disruptive and cause some services to be unavailable.
-
-        To mitigate the effects of downtime on productivity the change process is usually scheduled during non-production hours
-
-        If possible, prevent any downtime by switching to a secondary system while the primary is being upgraded and then switchback (like for example in a 24/7 company)
-
-        This also allows you to monitor the change and if you notice that there are problems you can switch back to the secondary system which at this point you have not made any changes too
-
-        This makes it very easy to fallback to a previous configuration by simply pointing all of your users to either the primary or the secondary system
-
-        You must inform persons on the status of the system downtime by emails or calendar updates
-    }
-
-    Restart{
-        It's common to require the system to restart too{
-            - Implement the new configuration
-            - Reboot the OS
-            - Power cycle the switch (power down and power it back on)
-            - Bounce the service (stopping and restarting a service)
-        }
-
-        It also tells you if the system will recovery properly if their happens to be a power outage and everything restarts
-
-        If the change control documentation requires us to restart a service that is relatively simple{
-            It can be done from winodws services, or task manager, or if its Linux we may be able to restart a daemon that is already running in the background
-        }
-
-        If we are updating an executable that is on a system we may require our users to logout of the application, completely close down and exit the app and then restart it with the updated application
-    }
-
-    Legacy Applications{
-        Some application were here before you arrived and will be here when you leave (difficult to change or update)
-
-        Often no longer supported by the developer and you may now be the support team for the legacy system
-
-        There is just usually a fear of the unkown (which is why sometimes it is adviced to not make changes to legacy systems)
-
-        But it is important to face those fears and document the system, it may not be as complex as you think
-
-        It may also be a bit quirky, it may uses specific processes and procedures desgined for older operating systems
-
-        Doing this will make you an expert
-    }
-
-    Dependencies{
-        To complete A, you must complete B
-
-        eg{
-            - A service will not start without other active services
-            - An application may require a specific library version
-        }
-
-        Modifying one component may require changing or restarting other components (complicating the change control process)
-
-        Especially since a resource may have dependencies in another system
-
-        eg{
-            upgrading the firewall code first before you can update the firewall management software itself
-        }
-    }
-
-    Documentation{
-        It can be challenging to keep up with changes because documentation can become outdated very quickly
-
-        So documentation has become required within the change management process
-
-        It may include{
-            Updating Diagrams{
-                - Modifications to network configurations
-                - Address Updates
+                But that doesnt mean during that same 2 hour period that you can make other changes to other applications just because the window happens to be available
             }
 
-            Updating Policies/Procedures{
-                - Adding new systems may require new procedures
-            }
-        }
-    }
+            However this does not mean you are limited to only what is listed in the change control documents
 
-    Version Control{
-        Tracks changes to a file or configuration data over time and allows you to easily revert back to a previous setting
-
-        It allows us to continously make changes to detailed documentation covering changes in{
-            - Router configurations
-            - Windows OS patches
-            - Application Registry Entries
-        }
-
-        Some devices and operating systems provide version control features out of the box
-
-        If this is not offered you may need to install a third party version control management system
-    }
-}
-
-Public Key Infrastructure (PKI){
-    Policies, procedures, hardware, software and people responsible for creation, distribution, management, storage and revoking of digital certificates
-
-    PKIs also refers to the binding of public keys to people or devices (ususally involing a certificate authority)
-
-    Cyphertext is encrypted plaintext
-
-    Plaintext is a message that has not been encrypted
-
-    Symmetric Encryption{
-        A single key is used to encrypt and decrypt the message and if theat key is compromised you would need a new key
-
-        Sometimes it is refered to as a secret key algorithm or a shared secret
-
-        Doesn't scale very well because it can be challenging to distribute and manage unique shared keys for communicating with each device
-
-        It is still sometimes used today because it is very fast, due to it having less overhead involved than asymmetric encryption
-
-        It is often used in combination with asymetric encryption
-    }
-
-    Asymmetric Encryption (aka Public Key Cryptography){
-        A system where you use 2 or more keys that are mathematically created to encrypt and decrypt messages
-
-        Private key (kept private and decrypts the message)
-        
-        Public key (exposed publicly and encrypts messages)
-
-        The private key is the ONLY key that can decrypt the data encrypted by the public key
-
-        becuase of how the keys are mathematically created you cannot derive the private key fromth public key
-    }
-
-    The key pair{
-        the public and private keys are built together at the same time using lots of randomization, prime numbers and other mathematicall techniques
-    }
-
-    Key Escrow{
-        Is when someone else holds your decryption keys
-
-        Your private keys can be in the hands of a 3rd-party or given to your organization for you to use when you need it and they keep just incase you are no longer available and they need to be able to still decrypt the information you left behind
-    }
-}
-
-Encrypting Data{
-    Stored Data{
-        Encrypting data on SSDs, HDDs, USB Drive, Cloud Storage etc.
-
-        Encrypting stored data can also be refered to as encrypting data at rest
-
-        Full-Disk{
-            Encrypting everything on a storage device (not just individual files)
-
-            It can be the full disk or a volume/partition
-
-            You can accomplish this using{
-                - Bitlocker for Windows
-                - FileVault for MacOS
-                etc
-            }
-        }
-
-        File Encryption{
-            Encrypting individual files
-
-            You can use tools like{
-                - EFS(Encrypting File System) on Windows
-                etc
-            }
-        }
-    }
-
-    Database Encryption{
-        Transparent Encryption{
-            Encrypting EVERYTHING (columns an rows) in the database with a symmetric key
-        }
-
-        Record Level Encryption{
-            Encrypting individual columns in the database
-
-            Separate symmetric keys will be used for each column
-        }
-    }
-
-    Transport Encryption{
-        Encrypting data that is being transported accross a network
-
-        HTTPS{
-            For browsers to have encrypted communications to request web sites from servers
-        }
-
-        Virtual Private Network{
-            For fully encrypted live network connections between entities(applications, clients or servers)
-
-            Client-based connection would use SSL/TLS
-
-            Website to Website connections would use IPsec
-        }
-    }
-
-    Encryption Algorithms{
-        Once a certain algorithm is used to encrypt data and SAME algorithm MUST be utilized to decrypt it
-
-        Some algorithms have a better security leve, some work faster than others and some have more complex methods of implementation
-    }
-
-    Cyptographic Keys{
-        Encryption algorithms themselves are publicly known but the cryptograhic keys used along with the algorithms are what needs to be kept secret
-
-        The key determines the final output of{
-            - Encrypting data
-            - Hashing Data
-            - Creating a Digital Signature
-        }
-
-        Key Lengths{
-            Brute force technique can be used to eventually determine what your key is
-
-            To reduce the chance of this happened to as low as possible the length of the keys are increased
-
-            This increases the ammount of attempts an attacker would have to carry out to eventually determine the key
-
-            At this point in time a symmetric key of 128 bits of larger is considered secure but this length will change as technology 
-            advances and processors can compute more permutations faster
-
-            Asymmetric Encryption{
-                Even though this uses complex calculations with prime numbers the key length is increased for these keys aswell
-
-                These are given longer key lengths than symmetric keys commonly around 3072 bits or more
-            }
-        }
-
-        Key Stretching{
-            Instead of just relying on very long cryptograhic key lengths multiple encryption processes are carried out
-            consecutively using the key to make the brute force approach take even longer to determine the key
+            There may be times when you have to make additional updates or expand the scope to be able to complete the primary goal of that particular change
 
             eg{
-                - hash a password using the key
-                - then hash the hash above
-                - then hash the hashed hash above
+                You may find that the process of upgrading those printer drivers requires a modification to a configuration file on everyone's system
+
+                Although that was not specifically written as part of the scope of this change, this change can only take place if you make that modification
+
+                And if it is a relatively simple modification, there may be policies in place that allow you to make the decision to modifiy that file so that you can complete the overall change control process
             }
 
-            This is key stretching
+            This is why its important to have a well documented change control process, so that everyone understands the procedures that should occur if you need to change the scope of the change control
         }
-    }
-}
 
-Key Exchange{
-    How do you share an encryption key accross an insecure medium
-
-    Out-of-band key exchange{
-        transfering the key via any medium other than the internet
-
-        This may be slower
-
-        telephone, courier, in-person etc        
-    }
-
-    In-band key exchange{
-        transfering the key via the internet securely
-
-        This is much faster
-
-        for example using key exchange algorithms that use asymetric encryption to deliver a symmetric key
+        Downtime{
+            When services are unavailable.
             
-        This is commonly used with temporary session keys
+            The change process can be disruptive and cause some services to be unavailable.
 
-        Every session the symmetric key is discarded and the key exchange algorithm is re-used to establish a 
-        new symmetric key for this session
-    }
+            To mitigate the effects of downtime on productivity the change process is usually scheduled during non-production hours
 
-    Key Exchange Algorithms{
-        RSA Key Exchange{
-            - Client encrypts the symmetric key with the server's public key and sends the encrypted key
-            - The server decrypts the symmetric key with it's own private key
-            - Both the client and the server now have the symmetric key securely
-            - They can now encrypt and decrypt data with this single symmetric key
+            If possible, prevent any downtime by switching to a secondary system while the primary is being upgraded and then switchback (like for example in a 24/7 company)
+
+            This also allows you to monitor the change and if you notice that there are problems you can switch back to the secondary system which at this point you have not made any changes too
+
+            This makes it very easy to fallback to a previous configuration by simply pointing all of your users to either the primary or the secondary system
+
+            You must inform persons on the status of the system downtime by emails or calendar updates
         }
 
-        Diffie-Hellman Key Exchange{
-            - Client uses there private key and the server's public key to create a symmetric key
-            - The server uses there own private key and the client's public key to create a symmetric key aswell
-            - Because the public and private keys are mathematically related they generate the same symmetric key
+        Restart{
+            It's common to require the system to restart too{
+                - Implement the new configuration
+                - Reboot the OS
+                - Power cycle the switch (power down and power it back on)
+                - Bounce the service (stopping and restarting a service)
+            }
+
+            It also tells you if the system will recovery properly if their happens to be a power outage and everything restarts
+
+            If the change control documentation requires us to restart a service that is relatively simple{
+                It can be done from winodws services, or task manager, or if its Linux we may be able to restart a daemon that is already running in the background
+            }
+
+            If we are updating an executable that is on a system we may require our users to logout of the application, completely close down and exit the app and then restart it with the updated application
+        }
+
+        Legacy Applications{
+            Some application were here before you arrived and will be here when you leave (difficult to change or update)
+
+            Often no longer supported by the developer and you may now be the support team for the legacy system
+
+            There is just usually a fear of the unkown (which is why sometimes it is adviced to not make changes to legacy systems)
+
+            But it is important to face those fears and document the system, it may not be as complex as you think
+
+            It may also be a bit quirky, it may uses specific processes and procedures desgined for older operating systems
+
+            Doing this will make you an expert
+        }
+
+        Dependencies{
+            To complete A, you must complete B
+
+            eg{
+                - A service will not start without other active services
+                - An application may require a specific library version
+            }
+
+            Modifying one component may require changing or restarting other components (complicating the change control process)
+
+            Especially since a resource may have dependencies in another system
+
+            eg{
+                upgrading the firewall code first before you can update the firewall management software itself
+            }
+        }
+
+        Documentation{
+            It can be challenging to keep up with changes because documentation can become outdated very quickly
+
+            So documentation has become required within the change management process
+
+            It may include{
+                Updating Diagrams{
+                    - Modifications to network configurations
+                    - Address Updates
+                }
+
+                Updating Policies/Procedures{
+                    - Adding new systems may require new procedures
+                }
+            }
+        }
+
+        Version Control{
+            Tracks changes to a file or configuration data over time and allows you to easily revert back to a previous setting
+
+            It allows us to continously make changes to detailed documentation covering changes in{
+                - Router configurations
+                - Windows OS patches
+                - Application Registry Entries
+            }
+
+            Some devices and operating systems provide version control features out of the box
+
+            If this is not offered you may need to install a third party version control management system
         }
     }
 }
