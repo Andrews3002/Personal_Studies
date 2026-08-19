@@ -1,0 +1,85 @@
+Generative AI terminology{
+    Machine Learning{
+        The development of algorithms to enable computers to learn from data instead of explicit instructions
+
+        Deep Learning{
+            Mimics the human brain using an artificial neural network to analyze data and learn.
+
+            Neural Network{
+                A computer system modeled on the human brain that processes data through interconnected nodes to learn patterns.
+
+                Generative Adversarial Networks (GAN){
+                    A type of neural network that uses two competing models
+                    
+                    a generator and a discriminator to create new data.
+
+                    The generator creates fake data, while the discriminator evaluates it against real data to spot the fake.
+                }                
+            }
+        }
+    }
+
+    Natural language processing (NLP){
+        A field of AI that enables computers to understand, interpret, and generate human language.
+
+        Tokenization: Breaking text into smaller units, like words or subwords, so a computer can process them.
+
+        Word2Vec: Converting words into numerical vectors so computers can understand semantic relationships.
+
+        Transformers{
+            A neural network architecture that processes entire sequences of data at once using attention mechanisms to understand context.
+
+            Generative pre-trained transformers{
+                A type of transformer model pre-trained on vast amounts of text to generate human-like language.
+            }
+
+            BERT: A bidirectional transformer model that reads text in both directions to understand word context deeply.
+        }
+    }
+}
+
+Cloud Computing{
+    Allows businesses to be flexible and effortlessly scale or modify their resources according to their needs
+
+    Core Concepts{
+        Infrastructure as a Service (IaaS){
+            Renting the fundamental building blocks like storage space, network connections, and processing power
+
+            Allowing you to manage resources from scratch and build your own infrastructure
+        }
+
+        Platform as a Service (PaaS){
+            Renting a pre-built development environment where the Infrastructure is already setup
+
+            It comes with pre installed operating systems, databases, and development tools
+        }
+
+        Software as a Service (SaaS){
+            Renting fully developed software applications over the internet
+        }
+    }
+
+    Virtualization{
+        lets one computer run multiple isolated virtual machines at the exact same time using software.
+
+        Virtual Machine{
+            A virtual machine is like a fake, software-based computer that runs inside your real computer.
+
+            Basically each of the isolated systems created using virtualization
+        }
+    }
+
+    Advantages{
+        Cost efficiency - They pay as you go model saves you from upfront hardware and maintenance costs
+        Scalability - Easily adapt resources to your dynamic business needs
+        Increased agility - Cloud computing allows for faster development and deployment cycles
+        Improved collaboration - Cloud-based tools and services facilitate seamless collaboration across teams and locations
+        Security - Leading cloud providers like Microsoft Azure prioritize security, offering robust features and services to safeguard your data and applications
+    }
+
+    Disadvantages{
+        Security concerns - Data security in the cloud can be a concern for some, but reputable providers like Azure offer comprehensive security solutions
+        Vendor lock-in - Reliance on a single cloud provider can raise concerns about vendor lock-in and potential future costs
+        Internet dependency - Consistent and reliable internet connectivity is crucial for accessing and utilizing cloud resources effectively
+    }
+}
