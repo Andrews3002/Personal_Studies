@@ -1,0 +1,725 @@
+Generative AI terminology{
+    Machine Learning{
+        The development of algorithms to enable computers to learn from data instead of explicit instructions
+
+        Deep Learning{
+            Mimics the human brain using an artificial neural network to analyze data and learn.
+
+            Neural Network{
+                A computer system modeled on the human brain that processes data through interconnected nodes to learn patterns.
+
+                Generative Adversarial Networks (GAN){
+                    A type of neural network that uses two competing models
+                    
+                    a generator and a discriminator to create new data.
+
+                    The generator creates fake data, while the discriminator evaluates it against real data to spot the fake.
+                }                
+            }
+        }
+    }
+
+    Natural language processing (NLP){
+        A field of AI that enables computers to understand, interpret, and generate human language.
+
+        Tokenization: Breaking text into smaller units, like words or subwords, so a computer can process them.
+
+        Word2Vec: Converting words into numerical vectors so computers can understand semantic relationships.
+
+        Transformers{
+            A neural network architecture that processes entire sequences of data at once using attention mechanisms to understand context.
+
+            Generative pre-trained transformers{
+                A type of transformer model pre-trained on vast amounts of text to generate human-like language.
+            }
+
+            BERT: A bidirectional transformer model that reads text in both directions to understand word context deeply.
+        }
+    }
+}
+
+Cloud Computing{
+    Allows businesses to be flexible and effortlessly scale or modify their resources according to their needs
+
+    Core Concepts{
+        Cloud Models{
+            Shared Responsibility Model{
+                Under the shared responsibility model, cloud providers secure the physical hardware and data centers, while customers are responsible for securing their own data, applications, and access settings.
+
+                But as the service model changes the amount a shared resoponsibility between the client and the provider changes
+
+                On-prem: the client is fully responsible for everything
+                Iaas: client has most responsibility and provider has the minority
+                PaaS: responsibility is shared between client and provider almoste eventually
+                SaaS: the provider has most resoponsibility and the client has the minority
+            }
+
+            Cloud Deployment Models{
+                Public Cloud{
+                    your infrastructure is in a shared server with other clients renting resources.
+                }
+
+                Private Cloud{
+                    your infrastructure having its own private dedicated servers (on premises or a data center)
+                }
+
+                Hybrid Cloud{
+                    Combining both public and private for flexibility between both benefits
+                }
+
+                Deployment model selection{
+                    Want to avoid high upfront hardware installation and maintenance costs and quick easy scaling for changing demand? - Public Cloud
+
+                    Have the means to invest in your own physical infrastructure and you need complete control over your sensitive data and hardware? - Private Cloud
+
+                    You need to protect sensitive data while also running public app features or you want to partially migrate to the cloud as a backup or to handle high traffic? - Hybrid Cloud
+
+                    You want to avoid vendor lock-in and get the benefits of different providers - Multi-Cloud
+                }
+            }
+
+            Cloud Service Models{
+                SaaS (Software as a service){
+                    This is when you utilize application services your provider has already built and hosts to fullfil your business or development needs
+
+                    eg{
+                        Microsoft 365
+                        Dynamics 365
+                        Power BI
+                        Power Apps
+                    }
+                }
+
+                FaaS (Funciton as a service){
+                    when you just need to write small pieces of code that runs on certain triggers from other services and the cloud provider handles everything else
+                    pertaining to servers and infrastructure scaling and security.
+
+                    eg{
+                        Azure Functions
+                    }
+                }
+
+                PaaS (Platform as a service){
+                    This is when the provider handles all the infrastructure (resources, deployment, scaling and security) and hardware (physical servers 
+                    in their data centers) and you are just responsible for building the application service itself using a tech stack of your choice(python, Flask, 
+                    node.js, react, typesript etc). 
+                    
+                    Its a serverless paradigm where you build the application and just have the provider deploy it and handle everything else from the server side
+
+                    eg{
+                        Azure App Service
+                    }
+                }
+
+                IaaS (Infrastructure as a service){
+                    This is when the provider only handles the hardware(physical servers in their data centers) and you are responsible for everything else like setting up
+                    the infrastructure (creating VMs, creating VNs, configuring resources(ram, cpu, storage), selecting an operating system, handling scaling using docker 
+                    or kubernetes, building CI/CD pipelines for automation) as well as building the application services with your desired tech stack and manually 
+                    deploying it on the created VMs
+
+                    eg{
+                        Azure VM
+                        Entra ID or OAuth
+                        Azure Kubernetes services
+                        Azure Virtual Network
+                    }
+                }
+            }
+        }
+
+        Virtualization{
+            lets one computer run multiple isolated virtual machines at the exact same time using software.
+
+            Virtual Machine{
+                A virtual machine is like a fake, software-based computer that runs inside your real computer.
+
+                Basically each of the isolated systems created using virtualization
+            }
+        }
+    }
+
+    Cloud Engineering{
+        A Cloud Engineer is the person responsible for utilizing cloud service platforms like Azure, AWS and Google Cloud to design, deploy and manage 
+        application services on scalable infrastructure aswell as incorporating automation for security and reliability.
+
+        Microsoft Azure{
+            A cloud service platform provided by Microsoft
+
+            Resource Organization Heirarchy{
+                Management Groups{
+                    Used to organize and control multiple subscriptions at once
+                    you are also able to give users acces too entire groups of subscriptions
+
+                    Subscriptions{
+                        Holds resouce groups and controls billing for all the resources used in those resource groups
+                        It also applies RBAC (roll based access control) to limit which roles can access which Subscriptions
+
+                        Resource Groups{
+                            The containers inside subscriptions that are used to hold and manage the actual resources (VMs, databases, storage etc) 
+
+                            They essentially put things that belong to the same app or system together, isolating that app or system and its resources
+                            from other apps or systems and their resources.
+
+                            If you delete a resource group all the resources it contains gets deleted with it aswell
+
+                            You can also give users access to just a resource group instead of an entire subscription
+
+                            Resources{
+                                The actual services or tools needed to build or run the application
+                                eg{
+                                    Virtual Machines
+                                    Databases
+                                    Storage Accounts
+                                    Web Applicaions themselves
+                                    Virtual Networks
+                                }
+
+                                They provide the functionality for your system needs{
+                                    Compute{
+                                        Running Code in a VM or app service
+                                    }
+
+                                    Storage{
+                                        Store data in files, images or backups
+                                    }
+
+                                    Networking{
+                                        connecting entities via virtual networks and load balancers
+                                    }
+
+                                    Databases{
+                                        managing strucuted data for easy querying/retrieval
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Naming and Tags{
+                    Resouce names cannot be changed after they are created so name things carefully and consistently
+
+                    Tags{
+                        Key value configurations that allow you to structure and organize resources for easy filtering and Management
+
+                        for example for each resource you can set Department = Fianance and then search by Department for all resources
+                        belonging to the finance department
+                    }
+                }
+            }
+
+            Azure Compute Services{
+                Foundation & Security{
+                    Microsoft Entra ID(formerly known as Azure Active Directory){
+                        It controls who can access what
+                        Essentially you use it to assign Roles to Indentities
+                        Also handles Authentication and Authorization
+
+                        Identities{
+                            anything that can be authenticated and given permission to access resources
+
+                            eg{
+                                Users
+                                Groups
+                                Service Principals (Identity used by an application or service)
+                            }
+                        }
+
+                        Roles{
+                            bundles of permissions
+
+                            eg{
+                                Owner
+                                Contributor
+                                Reader
+                            }
+                        }
+
+                        Always follow the Least Privilage Principle (give identites the minimum access to the system as possible, only give them access to what they 
+                        need and nothing more)
+                    }
+
+                    Microsoft Azure Key Vault{
+                        used to store sensitive information like api keys, passwords, environment variables etc
+
+                        the other services will call these values only at runtime so you never store these in the code itself
+                    }
+                }
+
+                Compute & Containers{
+                    Azure Virtual Machine{
+                        provides the ability to create a VM that runs on a specified operating system and utilizes specified resources like ram, cpu, storage
+
+                        then allows you to deploy and host application services on these VMs instead of needing to self host on local servers
+
+                        GPU enabled VMs{
+                            NC series{
+                                When you need raw high performance computing
+
+                                Used for{
+                                    Parallel Processing
+                                    Scientific Simulations
+                                    AI model training
+                                }
+                            }
+
+                            ND series{
+                                When you need high memory GPU workloads for very large datasets
+
+                                Used for{
+                                    Specifically AI model training
+                                }
+                            }
+
+                            NV series{
+                                When you need Graphics and Visualization workloads
+                                Used for{
+                                    Gaming and Streaming
+                                    3D modeling and rendering
+                                }
+                            }
+                        }
+                    }
+
+                    Azure Functions{
+                        a service that allows the user to run small snippets of code in response to certain triggers from other services while letting Azure handle
+                        all the server and infrastructure scaling and configurations.
+                    }
+
+                    Azure Kubernetes Service{
+                        a service that allows you to setup, run and manage containerized applications using kubernetes without having to 
+                        deal with the complexity of using the kubernetes control plane yourself.
+
+                        you still have full control kubernetes concepts(pods, deployments and services), cluster configurations and other infrastructure 
+                        configurations
+                    }
+
+                    Azure Container Apps{
+                        a service that offers serverless containers built using kubernetes, allowing users to just deploy containers and have all the infrastructure
+                        managed by the cloud provider.
+
+                        You just manage your container (docker image)
+
+                        This is capable of scaling to zero (reducing its instances to zero if its not being used)
+                    }
+
+                    Azure Contaner Instances{
+                        Similar to azure container apps but this is just used to build and run a single instance of a container with no scaling and that instance 
+                        ends when its no longer being used
+                    }
+
+                    Azure Apps Service{
+                        service that allows you to write code to build web applications but have the cloud provider handle deployment, hosting, infrastructure
+                        and everyting else
+                    }
+
+                    Azure Batch{
+                        service for running multiple tasks in parallel
+
+                        when you submit a job this service{
+                            creates a pool of VMs
+                            splits the work into individual tasks
+                            runs the tasks in parallel on the VMs
+                            cleans up resources when the job is complete
+                        }
+                    }
+                }
+
+                Storage & Databases{
+                    Unstructured Data{
+                        data that does not follow a strict format or schema
+
+                        Azure Blob Storage{
+                            a service that allows you to store your unstructured data
+
+                            eg{
+                                images
+                                videos
+                                logs
+                                backups
+                            }
+
+                            storage tiers{
+                                Hot{
+                                    frequently access data
+
+                                    Speed & Cost{
+                                        highest storage cost
+                                        lowest access cost
+                                        fastest retrieval time
+                                    }
+                                }
+
+                                Cool{
+                                    data accessed for the most about once per month
+
+                                    Speed & Cost{
+                                        lower storage cost than Hot
+                                        higher access cost than Hot
+                                        slower retrieval time than Hot
+                                    }
+                                }
+
+                                Archive{
+                                    long term storage that contains data that is almost never accessed
+
+                                    Speed & Cost{
+                                        lowest storage cost
+                                        highest access cost
+                                        slowest retrieval time
+                                    }
+                                }
+                            }
+
+                            rehydration{
+                                the process of moving a blob from the Archive tier back into an accessible tier (Hot or Cool) so it can be read or modified again.
+                            }
+                        }
+
+                        Azure Manage Disks{
+                            a service that provides storage specifically for you virtual machines. 
+                            
+                            Disk Types{
+                                Standard HDD{
+                                    used for development and testing
+                                }
+
+                                Standard SSD{
+                                    balanced workloads
+                                }
+
+                                Premium SSD{
+                                    Production databases
+                                }
+
+                                Ultra Disk{
+                                    Highest performance and lowest latency
+                                }
+                            }
+                        }
+
+                        Azure Files{
+                            a services that offers shared files for multiple virtual machines to access simultaneously
+                        }
+
+                        Azure File Sync{
+                            this service allows you to keep a local file server (on-premises) and sync its files with the shared files in Azure Files
+
+                            this allows you to access files from both local servers and the cloud
+                        }
+
+                        Azure NetApp Files{
+                            a service that provides shared files like in Azure Files but mainly for high performance enterprise applications due to its
+                            low latency and high transfer or access speeds.
+
+                            so essentially Azure Files but with better performance for enterprise applications
+                        }
+                    }
+
+                    Structured Data{
+                        Data that is organized in a predifined format, usually tables(rows and columns)
+
+                        Azure SQL Database{
+                            a service where the provider handles all the backgroudn database infrastructure and all you need to do is to store the data and query it
+                        }
+
+                        Azure SQL Managed Instance{
+                            asdfas
+                        }
+
+                        Azure Cosmos DB{
+                            similar the Azure SQL Database but in this case it uses a NoSQL database for very low latency and gloabal scale
+                        }
+
+                        PostgreSQL Server{
+                            fully customizable open source PostgreSQL database where you handle all the infrastructure yourself
+                        }
+
+                        MySQL Server{
+                            fully customizable open source MySQL database where you handle all the infrastructure yourself
+                        }
+
+                        Azure Managed Redis{
+                            Cache database query results so you can store frequently queried results without needing to retrieve the source data in the database 
+                            everytime
+                        }
+                    }
+
+                    Azure AI Search{
+                        a service that helps you index your data and run full text and vector searches
+
+                        heavily used in RAG (Retrieval Augmented Generation) pipelines
+                    }
+
+                    Azure Synaps Analytics{
+                        a service that offers an analytics platform to provides data warehousing and data processing in one service
+
+                        it analyzes large datasets using SQL, Apache Spark and data pipelines
+                    }
+                }
+
+                Networking & Content Delivery{
+                    Network Layers (OSI model){
+                        Applicaion{
+                            what the user interacts with
+
+                            eg{
+                                HTTP(websites)
+                                SMTP(email)
+                                FTP(file transfers)
+                            }
+                        } 
+
+                        Presenter{
+                            data formating, encrytion and compressing
+
+                            eg{
+                                SSL/TSL
+                                data encoding
+                            }
+                        }
+
+                        Session{
+                            manages connections between devices
+
+                            starts maintains and ends connection sessions
+                        }
+
+                        Transport{
+                            how data is delivered (reliable vs fast)
+
+                            eg{
+                                TCP
+                                UDP
+                            }
+                        }
+
+                        Network{
+                            where the data should go (handling addressing and routing) 
+                            
+                            mainly for devices accross different networks
+
+                            eg{
+                                IP (internet protocol)
+                                ICMP
+                            }
+                        }
+
+                        Data Link{
+                            handles the transfer of data between devices on the same network
+
+                            uses MAC addresses
+                        }
+
+                        Physical{
+                            how data physically travels
+
+                            eg{
+                                Ethernet
+                                Wi-Fi
+                            }
+                        }
+                    }
+
+                    Azure Virtual Network(VNet){
+                        a service that allows you to setup a private network for your resources to communicate with eachother
+                    }
+
+                    Load Balancers{
+                        a tool that distributes network traffic accross various resources to ensure your system stays fast, available and reliable
+                        
+                        there are 4 types. some work on different network layers and others provide different services
+
+                        Azure Load Balancer{
+                            works on the transport layer
+
+                            handles TCP and UDP traffic
+                        }
+
+                        Application Gateway{
+                            works on the application layer
+
+                            handles HTTP and HTTPS
+                        }
+
+                        Azure Front Door{
+                            overal entry point for all your resources on azure
+
+                            it combines CDN, global load balancing and security for the applications using it
+                        }
+
+                        Traffic Manager{
+                            handles DNS based routing, directing users to the best endpoint based on things like geography, privacy and network health
+                        }
+                    }
+
+                    Azure Private Endpoint{
+                        ensures your network traffic from your VNet does NOT go through the public internet to get to other services(Blob Storage etc)
+                        
+                        instead it assigns a private IP from your VNet to the service to ensure the traffic stays within your private network
+                    }
+                }
+
+                DevOps & Automation{
+                    Azure Bicep{
+                        azure's own infrastructure code language
+                    }
+
+                    Terraform on Azure{
+                        a multi cloud infrastructure coding language that can be used within azure
+                    }
+
+                    Azure DevOps Pipelines{
+                        CI/CD service used to build, test and deploy applications automatically
+                    }
+
+                    Github Actions{
+                        the same use case as Azure DevOps Pipelines but depends on the companies preference
+                    }
+
+                    Azure Service Bus{
+                        a service that allows other services to send messages and communicate to eachother
+                    }
+
+                    Azure Event Grids{
+                        a services that detects infrastructure changes and sends triggers to initiate further actions
+                    }
+
+                    Azure Event Hubs{
+                        a service that detects and processes large amounts of changes or events in real time
+
+                        mainly used for{
+                            IoT devices
+                            logs and monitoring
+                            real-time analytics
+                        }
+                    }
+
+                    Azure Logic Apps{
+                        a service that lets you build automated workflows that connect various apps, services and data sources without 
+                        writing much code
+                    }
+
+                    Azure Container Registry{
+                        a service that offers private storage and management for your container images (docker images)
+                    }
+                }
+
+                AI & Machine Learning{
+                }
+
+                Monitoring & Cost{
+                    Azure Monitor{
+                        a service that watches everything (all other services) in your system and alert you when something goes wrong
+
+                        it allows you too{
+                            track performance of apps and resources
+                            collect logs and metrics
+                            detect problems and failures
+                            set alerts and even take action automatically
+                        }
+
+                        Application Insights{
+                            a feature of azure monitor that hanles the monitoring of your applications and not just infrastructure
+
+                            tracks{
+                                application latency
+                                application requests
+                                applicaion failures
+                            }
+                        }
+                    }
+
+                    Microsoft Sentinel (was known as Azure Sentinel){
+                        a service that provides a central security control center that watches for cyber threats and responds to them
+
+                        it provides SIEM (Security Information and Event Management) and SOAR (Security, Orchestration, Automation and Response)
+
+                        What it does{
+                            collects security data accross your environment
+                            detects threats and suspicious activity
+                            automate responses to attacks
+                        } 
+                    }
+
+                    Microsoft Defender{
+                        a service that scans for misconfigurations and system threats and vulnerabilities in your could infrastructure
+
+                        it also provides security recommendations based on its findings
+                    }
+
+                    Microsoft Cost Management{
+                        a service for monitoring and controling your cloud spending
+
+                        what it does{
+                            tracks your Subscriptions
+                            tracks your services
+                            tracks your resources
+                            helps creates cost analysis dashboards
+                            helps setup budget alerts
+                            provides cost optimization recommendations
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Cloud Trends and Innovations{
+        Hybrid and multi-cloud strategies{
+            Using multiple cloud platforms for their individual strengths
+            
+            Benifits{
+                Enhanced flexibility and agility: Using mixed cloud setups lets companies easily move their work around whenever they need to.
+                Reduced vendor lock-in: Using multiple cloud providers stops companies from fully relying on one provider.
+                Leveraging specialized services: Using different cloud companies lets businesses pick the best tools for their specific needs.
+            }
+        }
+
+        AI and ML integration{
+            Automated provisioning and scaling: Smart AI programs can automatically change your cloud resources to save money and keep everything running smoothly.
+            Predictive maintenance: These smart tools track your system to fix tech problems before they can actually break anything.
+            Improved security: AI security tools can instantly spot and block hackers to keep your cloud data safe.
+        }
+
+        Edge computing{
+            Edge computing processes data right where it's collected instead of sending it far away to a main server.
+
+            It is beneficial for applications that require low latency like{
+                Internet of Things (IoT) applications
+                Autonomous vehicles
+                Augmented reality (AR) and virtual reality (VR)
+            }
+        }
+
+        Serverless computing{
+            You basically just focus on writing your code and the cloud provider automatically handles all the server stuff behind the scenes.
+
+            It is a type of PaaS where you only pay when your code runs on the servers instead of paying for the server to be running all the time
+
+            It leads to{
+                Reduced operational overhead: Serverless setup handles all server tasks so developers can just focus on writing code.
+                Improved scalability: Serverless apps automatically grow or shrink based on traffic, keeping them fast while saving money.
+                Faster development and deployment: Serverless computing speeds up building and launching apps because you don't have to waste time managing servers.
+            }
+        }
+
+        Security and compliance{
+            Enhanced security features: Cloud companies build super strong security tools like locks and encryption to keep all your stuff safe from hackers.
+            Compliance certifications: Cloud companies follow strict rules and get official approval to make sure they legally protect private user data.
+            Shared responsibility model: Cloud companies secure the main setup, while you protect your own app and data inside it.
+        }
+
+        Quantum computing{
+            Quantum computing uses the strange properties of physics to process complex data at speeds impossible for normal computers.
+
+            key implications{
+                Unprecedented processing speeds: Quantum computing uses quantum rules to solve complex math super fast, creating major breakthroughs in security, organization, and science.
+                Optimization of complex problems: Quantum computing can quickly solve complex problems in fields like delivery routes, medicine, and money matters that regular computers can't handle.
+                Cloud integration challenges: Quantum hardware is delicate and sensitive to enironmental factors. Cloud providers are researching and trying to eventually provide quantum computing services (QCaaS)
+                Hybrid quantum-cloud architectures: Hybrid cloud setups let you use regular computers for everyday tasks while sending heavy math over to quantum processors.
+                Security and cryptography: Quantum computing can break old passwords and security, but it can also be used to build stronger encryption tools.
+            }
+        }
+    }
+}
