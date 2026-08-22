@@ -209,8 +209,8 @@ Cloud Computing{
             }
 
             Azure Compute Services{
-                Foundation & Security{
-                    Microsoft Entra ID(formerly known as Azure Active Directory){
+                Security{
+                    Microsoft Entra ID(formerly known as Azure Active Directory)(To enforce RBAC){
                         It controls who can access what
                         Essentially you use it to assign Roles to Indentities
                         Also handles Authentication and Authorization
@@ -239,7 +239,7 @@ Cloud Computing{
                         need and nothing more)
                     }
 
-                    Microsoft Azure Key Vault{
+                    Microsoft Azure Key Vault(to store sensitive values){
                         used to store sensitive information like api keys, passwords, environment variables etc
 
                         the other services will call these values only at runtime so you never store these in the code itself
@@ -247,7 +247,7 @@ Cloud Computing{
                 }
 
                 Compute & Containers{
-                    Azure Virtual Machine{
+                    Azure Virtual Machine (to create and manage VMs){
                         provides the ability to create a VM that runs on a specified operating system and utilizes specified resources like ram, cpu, storage
 
                         then allows you to deploy and host application services on these VMs instead of needing to self host on local servers
@@ -281,12 +281,12 @@ Cloud Computing{
                         }
                     }
 
-                    Azure Functions{
+                    Azure Functions (to create functions that are triggered by other services){
                         a service that allows the user to run small snippets of code in response to certain triggers from other services while letting Azure handle
                         all the server and infrastructure scaling and configurations.
                     }
 
-                    Azure Kubernetes Service{
+                    Azure Kubernetes Service (to manage containers with kubernetes but with less complexity){
                         a service that allows you to setup, run and manage containerized applications using kubernetes without having to 
                         deal with the complexity of using the kubernetes control plane yourself.
 
@@ -294,7 +294,7 @@ Cloud Computing{
                         configurations
                     }
 
-                    Azure Container Apps{
+                    Azure Container Apps (to build containerized apps serverlessly){
                         a service that offers serverless containers built using kubernetes, allowing users to just deploy containers and have all the infrastructure
                         managed by the cloud provider.
 
@@ -303,17 +303,17 @@ Cloud Computing{
                         This is capable of scaling to zero (reducing its instances to zero if its not being used)
                     }
 
-                    Azure Contaner Instances{
+                    Azure Container Instances (to build temporary non-scaling servless containerized apps){
                         Similar to azure container apps but this is just used to build and run a single instance of a container with no scaling and that instance 
                         ends when its no longer being used
                     }
 
-                    Azure Apps Service{
+                    Azure Apps Service (to build autodeployed apps, you pay monthly even with no traffic, can scale up but not down to zero){
                         service that allows you to write code to build web applications but have the cloud provider handle deployment, hosting, infrastructure
                         and everyting else
                     }
 
-                    Azure Batch{
+                    Azure Batch (to run multiple tasks simultaneously){
                         service for running multiple tasks in parallel
 
                         when you submit a job this service{
@@ -329,7 +329,7 @@ Cloud Computing{
                     Unstructured Data{
                         data that does not follow a strict format or schema
 
-                        Azure Blob Storage{
+                        Azure Blob Storage (to store data){
                             a service that allows you to store your unstructured data
 
                             eg{
@@ -376,7 +376,7 @@ Cloud Computing{
                             }
                         }
 
-                        Azure Manage Disks{
+                        Azure Manage Disks (to store data in a VM){
                             a service that provides storage specifically for you virtual machines. 
                             
                             Disk Types{
@@ -398,17 +398,17 @@ Cloud Computing{
                             }
                         }
 
-                        Azure Files{
+                        Azure Files (to share data between VMs){
                             a services that offers shared files for multiple virtual machines to access simultaneously
                         }
 
-                        Azure File Sync{
+                        Azure File Sync (to backup Azure Files data on local servers){
                             this service allows you to keep a local file server (on-premises) and sync its files with the shared files in Azure Files
 
                             this allows you to access files from both local servers and the cloud
                         }
 
-                        Azure NetApp Files{
+                        Azure NetApp Files (to share data between high perfomance apps that need low latency){
                             a service that provides shared files like in Azure Files but mainly for high performance enterprise applications due to its
                             low latency and high transfer or access speeds.
 
@@ -419,39 +419,39 @@ Cloud Computing{
                     Structured Data{
                         Data that is organized in a predifined format, usually tables(rows and columns)
 
-                        Azure SQL Database{
-                            a service where the provider handles all the backgroudn database infrastructure and all you need to do is to store the data and query it
+                        Azure SQL Database (to create, query and manage SQL databases){
+                            a service where the provider handles all the background database infrastructure and all you need to do is to store the data and query it
                         }
 
-                        Azure SQL Managed Instance{
+                        Azure SQL Managed Instance (to migrate an existing SQL database to Azure){
                             asdfas
                         }
 
-                        Azure Cosmos DB{
+                        Azure Cosmos DB (to create, query and manage NoSQL databases){
                             similar the Azure SQL Database but in this case it uses a NoSQL database for very low latency and gloabal scale
                         }
 
-                        PostgreSQL Server{
+                        PostgreSQL Server (to create query and manage PostgreSQL databases){
                             fully customizable open source PostgreSQL database where you handle all the infrastructure yourself
                         }
 
-                        MySQL Server{
+                        MySQL Server (to create query and manage MySQL databases){
                             fully customizable open source MySQL database where you handle all the infrastructure yourself
                         }
 
-                        Azure Managed Redis{
+                        Azure Managed Redis (to cache frequently requested database records){
                             Cache database query results so you can store frequently queried results without needing to retrieve the source data in the database 
                             everytime
                         }
                     }
 
-                    Azure AI Search{
+                    Azure AI Search (to query yor databases much easier and faster){
                         a service that helps you index your data and run full text and vector searches
 
                         heavily used in RAG (Retrieval Augmented Generation) pipelines
                     }
 
-                    Azure Synaps Analytics{
+                    Azure Synaps Analytics (to perform analysis on large pools of data){
                         a service that offers an analytics platform to provides data warehousing and data processing in one service
 
                         it analyzes large datasets using SQL, Apache Spark and data pipelines
@@ -521,39 +521,39 @@ Cloud Computing{
                         }
                     }
 
-                    Azure Virtual Network(VNet){
+                    Azure Virtual Network(VNet)(to create and manage private networks){
                         a service that allows you to setup a private network for your resources to communicate with eachother
                     }
 
-                    Load Balancers{
+                    Load Balancers (to distribute newtork traffic between server instances){
                         a tool that distributes network traffic accross various resources to ensure your system stays fast, available and reliable
                         
                         there are 4 types. some work on different network layers and others provide different services
 
-                        Azure Load Balancer{
+                        Azure Load Balancer (handles TCP and UDP traffic for your VN){
                             works on the transport layer
 
                             handles TCP and UDP traffic
                         }
 
-                        Application Gateway{
+                        Application Gateway (handles HTTP and HTTPS traffic for your VN){
                             works on the application layer
 
                             handles HTTP and HTTPS
                         }
 
-                        Azure Front Door{
+                        Azure Front Door (Router, Gloabal CDN and firewall for HTTP and HTTPS traffic){
                             overal entry point for all your resources on azure
 
                             it combines CDN, global load balancing and security for the applications using it
                         }
 
-                        Traffic Manager{
+                        Traffic Manager (Global DNS router for directing traffic to certain endpoints){
                             handles DNS based routing, directing users to the best endpoint based on things like geography, privacy and network health
                         }
                     }
 
-                    Azure Private Endpoint{
+                    Azure Private Endpoint (ensures your VN traffic does touch the public internet){
                         ensures your network traffic from your VNet does NOT go through the public internet to get to other services(Blob Storage etc)
                         
                         instead it assigns a private IP from your VNet to the service to ensure the traffic stays within your private network
@@ -605,11 +605,8 @@ Cloud Computing{
                     }
                 }
 
-                AI & Machine Learning{
-                }
-
                 Monitoring & Cost{
-                    Azure Monitor{
+                    Azure Monitor (to watch and inspect all your services){
                         a service that watches everything (all other services) in your system and alert you when something goes wrong
 
                         it allows you too{
@@ -630,7 +627,7 @@ Cloud Computing{
                         }
                     }
 
-                    Microsoft Sentinel (was known as Azure Sentinel){
+                    Microsoft Sentinel (was known as Azure Sentinel)(to monitor and respond to cyber threats){
                         a service that provides a central security control center that watches for cyber threats and responds to them
 
                         it provides SIEM (Security Information and Event Management) and SOAR (Security, Orchestration, Automation and Response)
@@ -642,13 +639,13 @@ Cloud Computing{
                         } 
                     }
 
-                    Microsoft Defender{
+                    Microsoft Defender (to scan your system for threats or vulnerabilities){
                         a service that scans for misconfigurations and system threats and vulnerabilities in your could infrastructure
 
                         it also provides security recommendations based on its findings
                     }
 
-                    Microsoft Cost Management{
+                    Microsoft Cost Management (to manage, plan and control cloud spending){
                         a service for monitoring and controling your cloud spending
 
                         what it does{
