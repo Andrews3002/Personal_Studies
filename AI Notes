@@ -1,0 +1,39 @@
+Generative AI terminology{
+    Machine Learning{
+        The development of algorithms to enable computers to learn from data instead of explicit instructions
+
+        Deep Learning{
+            Mimics the human brain using an artificial neural network to analyze data and learn.
+
+            Neural Network{
+                A computer system modeled on the human brain that processes data through interconnected nodes to learn patterns.
+
+                Generative Adversarial Networks (GAN){
+                    A type of neural network that uses two competing models
+                    
+                    a generator and a discriminator to create new data.
+
+                    The generator creates fake data, while the discriminator evaluates it against real data to spot the fake.
+                }                
+            }
+        }
+    }
+
+    Natural language processing (NLP){
+        A field of AI that enables computers to understand, interpret, and generate human language.
+
+        Tokenization: Breaking text into smaller units, like words or subwords, so a computer can process them.
+
+        Word2Vec: Converting words into numerical vectors so computers can understand semantic relationships.
+
+        Transformers{
+            A neural network architecture that processes entire sequences of data at once using attention mechanisms to understand context.
+
+            Generative pre-trained transformers{
+                A type of transformer model pre-trained on vast amounts of text to generate human-like language.
+            }
+
+            BERT: A bidirectional transformer model that reads text in both directions to understand word context deeply.
+        }
+    }
+}
