@@ -3,7 +3,17 @@ Cloud Computing{
 
     Core Concepts{
         Cloud Models{
-            Shared Responsibility Model (Cloud companies secure the main setup, while you protect your own app and data inside it){
+            Cloud Service Models{
+                SaaS (Software as a service)(Applications fully built and hosted by the cloud provider)
+
+                FaaS (Funciton as a service)(Small pieces of code that runs on certain triggers from other services)
+
+                PaaS (Platform as a service)(A development and deployment environment fully built by the provider for clients to just build their apps in)
+
+                IaaS (Infrastructure as a service)(Hardware providers rent to clients for them to fully manage their virtual resources on)
+            }
+
+            Shared Responsibility Model (Cloud companies secure the main hardware setup, while you protect your own app and data inside it){
                 On-prem (The client is fully responsible for everything)
 
                 Iaas (The client has most responsibility and provider has the minority)
@@ -21,16 +31,6 @@ Cloud Computing{
                 Hybrid Cloud (Combining both public and private for flexibility between both benefits)
 
                 Multi-Cloud (Using multiple cloud platforms for their individual strengths)
-            }
-
-            Cloud Service Models{
-                SaaS (Software as a service)(Applications fully built and hosted by the cloud provider)
-
-                FaaS (Funciton as a service)(Small pieces of code that runs on certain triggers from other services)
-
-                PaaS (Platform as a service)(A development and deployment environment fully built by the provider for clients to just build their apps in)
-
-                IaaS (Infrastructure as a service)(Hardware providers rent to clients for them to fully manage their virtual resources on)
             }
         }
 
@@ -60,6 +60,28 @@ Cloud Engineering{
             Resources (The actual services or applications and the tools needed to build or run them)
         }
 
+        High Availablility Infrastructure{
+            Azure Region (A geographic location containing multiple interconnected azure data centers)
+
+            Azure Availablility Zones (Each of the interconnected data centers in an azure region)
+
+            Fault Domain (The physically isolated rack that stores the hardware your VM runs on)
+
+            Azure Availablility Set (Your virtual resources after they are spread accross different fault domains in the same data center)
+        }
+
+        Terminal Utilization{
+            Azure CLI (To quickly create, manage, and automate all your Azure resources right from your terminal){
+                Azure CLI command structure (az <command-group> <command> [<arguments] [--options])
+
+                Interactive mode (to make the experience with the terminal easier by providing recommendations and hints in the interface)
+
+                Idempotency (ensuring no matter how many times an operation is run the result is the same as running it once)
+            }
+
+            Azure Powershell (The same as azure cli but using cmdlets format instead of commands "Verb-Noun [-Parameter] [<Arguments>]")
+        }
+
         Azure Services{
             Azure Resource Manager(ARM) (To deploy and manage all your resources){
                 ARM template (A simple JSON file where you write down the exact Azure resources you want, so Azure can build them for you automatically.)
@@ -76,7 +98,7 @@ Cloud Engineering{
             }
 
             Azure Policy (to ensure resource compliance to regulations and rules){
-                Policy Definition (Conditions and rules written in Azure that resources much meet)
+                Policy Definition (Conditions and rules written in Azure that resources must meet)
 
                 Effects (Actions taken if a resource violates a rule)
 
@@ -94,21 +116,70 @@ Cloud Engineering{
             }
 
             Microsoft Entra ID (formerly known as Azure Active Directory)(To enforce Authentication, Autorization(RBAC)){
+                Tenant (The representation of a single organization's cloud portfolio, it holds management groups, user accounts and policies)
 
                 Identities (Anything that can be authenticated and authorized to access resources)
+
+                User Identities (A type of identity for human users)
+
+                Managed Identities (A type of identity that is automatically created and managed by Azure)
+
+                Service Principles (A type of identity for applications)
+
+                Device Identities (A type of identity for devices)
 
                 Roles (Bundles of permissions to be assigned to identites)
 
                 Least Privilage Principle (Give identites access to what they need and nothing more)
+
+                Zero Trust security model (Requiring identities to be constantly verified for every time they try to access resources)
             }
 
             Microsoft Azure Key Vault (To store sensitive values that can be accessed securely by other services)
 
-            Azure Virtual Machine (To create and manage VMs)
+            Azure Virtual Machine (To create and manage VMs){
+                Image (A template containing the OS and pre-installed software to spin up a VM with)
+
+                Disk encryption (Encrypts your VM's disk data using BitLocker or dm-crypt)
+
+                Shared disks (Lets multiple VMs attach to the same disk at the same time)
+
+                Ultra disks (A super-fast storage option designed for heavy workloads)
+
+                Virtual Machine Scale Sets (Automatically adds or removes identical VMs to handle changes in website traffic)
+
+                Proximity placement groups (Forces your VMs to be physically close to each other in the same data center)
+
+                Sysprep configuration (Removes unique system details like the computer name and SID)
+
+                Group Policy management (Lets administrators control and enforce settings)
+
+                Cloud-init (To automatically configure Linux VMs when they boot up for the first time)
+            }
+
+            Azure Bastion (lets you connect to your VMs without exposing them to the public internet)
 
             Azure Functions (To create functions that are triggered by other services)
 
-            Azure Kubernetes Service (To manage deployent and scaling for containerized apps with kubernetes but with less complexity)
+            Azure Kubernetes Service (To manage deployent and scaling for containerized apps with kubernetes but with less complexity){
+                Cluster (A group of Node Pools)
+
+                Node Pool (A group of Nodes)
+
+                Node (A VM containing pods)
+
+                Pod (A group of containers)
+
+                Kubernetes Master Node (Control Plane)(The main brain of the system in a cluster that tells all the other nodes what to do)
+
+                Kubernetes Worker Nodes (The worker bees of the system that actually run your app's code and do the heavy lifting)   
+
+                Blue Deployment (Running the current version of your application)
+
+                Green Deployment (Running the new version of your application)
+
+                Blue-Green Deployment (Running a new version alongside the old for testing, all traffic can be switched over if tests pass)          
+            }
 
             Azure Red Hat OpenShift (To manage deployment, scaling and CI/CD for containerized apps with Red Hat OpenShift)
 
@@ -116,9 +187,9 @@ Cloud Engineering{
 
             Azure Container Instances (To build temporary non-scaling servless containerized apps, automatically stops when it is not being used)
 
-            Azure Apps Service (to build autodeployed apps, you pay monthly even with no traffic, can scale up but not down to zero)
+            Azure Apps Service (To build autodeployed apps, you pay monthly even with no traffic, can scale up but not down to zero)
 
-            Azure Spring Apps (to automaically deploy and scale java your java applications)
+            Azure Spring Apps (to automatically deploy and scale your java applications)
 
             Azure Service Fabric (to build autodeployed and autoscaled stateful microservices)
 
@@ -126,7 +197,25 @@ Cloud Engineering{
 
             Unstructured Data (data that does not follow a strict format or schema) 
 
-            Azure Blob Storage (to store unstructured data){
+            Azure Blob Storage (To store unstructured data){
+                Local Redundant Storage(LRS)(keeps backups within one datacenter)
+
+                Zone-redundant storage (ZRS)(keeps backups accross datacenters but within one region)
+
+                Geo-redundant storage (GRS)(keeps backups accross different datacenters in different regions)
+
+                Read-access geo-redundant storage ((RA-)GRS) (same as GRS but lets you read the data at any time)
+
+                Geo-Zone redundant storage (GZRS)(combines the benifits of ZRS and GRS)
+
+                Shared access signatures (SAS)(for temporary access to external collaborators)
+
+                Storage Account (To store storage containers)
+
+                Storage Containers (To store blobs)
+
+                Blobs (the actual unstructured data)
+
                 Hot (Frequently accessed data)
 
                 Cool (Data accessed at most monthly)
@@ -152,6 +241,42 @@ Cloud Engineering{
                 Ultra Disk (Highest performance and lowest latency)
             }
 
+            Azure Data Lake (To store huge amounts of any type of data in one place for easy analysis later)
+
+            Azure Synapse (To analyze all your stored data in the data lake)
+
+            Azure Cognitive Services (To get ready-to-use AI tools so you dont have to train your own models)
+
+            Azure Backup (To automatically backup your cloud and on-premesis resources){
+                Full Backup (a complete copy of all your data)
+
+                Incramental Backups (only copies the data that has changed since the last backup of any kind)
+
+                Differential Backups (a complete copy of all the changes made since the last FULL backup)
+
+                Off-Site Backups (a copy of data in a different location incase of physical infrastructure failures)
+
+                Crash Consistent Backups (a backup that catches the system state in a specific point of time regardless of changes still in progress)
+
+                Application Consistent Backups (a backup that catches in-flight transactions or data that was still in the process of changing)
+
+                3-2-1 Backup Rule (keep 3 copies of data on two different media with one copy stored off-site)
+
+                GDPR (regulation to ensure the security of data to citizens of the EU)
+
+                HIPPA (regulation to ensure the secutity of healthcare data to Americans)
+
+                SOC 2 (regulation to ensure the security of sensitive customer data)
+
+                Recovery Services Vault (storage location for all your backups)
+            }
+
+            Azure Update Manager (To track, schedule, and install software updates across all your cloud or on-premises machines){
+                automatic VM guest patching (automatically installs safe, critical security updates on your virtual machines)
+            }
+
+            Azure Site Recovery (To ensure high availability by automaically setting up backup resources or infrastructure in different locations)
+
             Azure Files (to share unstructured data between VMs)
 
             Azure File Sync (to backup Azure Files data on local servers)
@@ -176,7 +301,7 @@ Cloud Engineering{
 
             Network Layers (OSI model){
                 All People Seem To Need Data Processing
-                
+
                 Applicaion (HTTP(websites), SMTP(email), FTP(file transfer))(You hit send on an app like your browser or email)
 
                 Presentation (SSL/TLS(encryption), compression)(The data gets formatted, encrypted, or compressed)
@@ -192,9 +317,27 @@ Cloud Engineering{
                 Physical (Ethernet, WiFi)(Everything is converted into binary bits (1s and 0s) and sent across the medium)
             }
 
-            Azure Virtual Network(VNet)(to create and manage private networks)
+            Azure Virtual Network(VNet)(to create and manage private networks){
+                Virtual Network Peering (connects two separate virtual networks)
 
-            Azure Load Balancer (To distribute newtork traffic between VMs, handles TCP and UDP traffic)
+                Subnet (A smaller piece of a bigger cloud network)
+
+                Network Security Groups(Blocks or allows traffic to specific stuff inside certain VMs or subnets)   
+            }
+
+            Azure Firewall (Controls and blocks sketchy internet traffic coming into or out of your entire VN)
+
+            Azure Load Balancer (To distribute newtork traffic between VMs, handles TCP and UDP traffic){
+                Backend Pool (Group of VMs that actually receive and process the incoming traffic)
+
+                Network Virtual Appliances (VMs fully dedicated to managing and securing your cloud traffic, like firewalls)
+
+                Gateway Load Balancer (To deploy, scale and manage NVAs)
+
+                Cross-region Load Balancer (Routes traffic to the closest healthy load balancer accross regions)
+
+                Session Persistance (ensures repeated requests from the same end user is routed to the same VM)
+            }
 
             Application Gateway (To distribute newtork traffic between VMs, handles HTTP and HTTPS traffic)
 
@@ -225,24 +368,28 @@ Cloud Engineering{
             Azure Container Registry (Offers private storage and management for your container images (docker images))
 
             Azure Monitor (to watch and inspect all your services){
+                Metrics (numerical values reflecting the performance of a resource over time)
+
+                Logs (timestamped files describing operations or events related to resources)
+
+                Alerts (to inform you based on certain conditions set on metrics of logs)
+
                 Application Insights (a feature of azure monitor that hanles the monitoring of your applications and not just infrastructure)
+
+                Network Insights (to monitor traffic flow)
             }
 
-            Microsoft Sentinel (was known as Azure Sentinel)(to monitor and respond to cyber threats)
+            Microsoft Sentinel (was known as Azure Sentinel)(to monitor and respond to cyber threats){
+                Security Information and Event Management(SIEM) System (A tool that helps organizations keep their computer systems safe) 
+
+                Data Connectors (To ingest log data into sentinel)
+
+                Azure Log Analytics (Stores ingested logs and allows anlysis on it using KQL queries and other methods)
+            }
 
             Microsoft Defender (to scan your system for threats or vulnerabilities)
 
             Microsoft Cost Management (to manage, plan and control cloud spending)
-        }
-
-        High Availablility{
-            Azure Region (A geographic location containing multiple interconnected azure data centers)
-
-            Azure Availablility Zones (Each of the interconnected data centers in an azure region)
-
-            Fault Domain (The physically isolated rack that stores the hardware your VM runs on)
-
-            Azure Availablility Set (Your virtual resources after they are spread accross different fault domains in the same data center)
         }
     }
 }
