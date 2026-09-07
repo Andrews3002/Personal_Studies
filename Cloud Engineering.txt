@@ -41,11 +41,13 @@ Cloud Computing{
         Virtual Machine (A fake, software-based computer that runs inside your real computer)
 
         Serverless computing (The cloud provider handles all the server operations, you build apps and only pay when your code is running on the servers)
+
+        Colocation (Renting space in a third party data center to put your own physical servers, cooling and network infrastructure)
     }
 }
 
-Cloud Engineering{
-    Utilizing cloud service platforms to design, deploy and manage application services on scalable, reliable and secure infrastructure.
+Cloud Platforms{
+    Cloud service platforms are to design, deploy and manage cloud application services on scalable, reliable and secure infrastructure.
 
     Microsoft Azure{
         A cloud service platform provided by Microsoft
@@ -61,13 +63,21 @@ Cloud Engineering{
         }
 
         High Availablility Infrastructure{
-            Azure Region (A geographic location containing multiple interconnected azure data centers)
+            SLA (High Availablility depends on this)
+
+            Geography (A country or continent eg "USA or Europe" containing Azure Regions)
+
+            Azure Region (A part of a geography containing multiple interconnected azure availability zones)
+
+            Region Pairs (Allows the replication of Azure resources across regions in a single geography)
 
             Azure Availablility Zones (Each of the interconnected data centers in an azure region)
 
+            Geo-Location (A feature to deploy resources to any availability zone worldwide)
+
             Fault Domain (The physically isolated rack that stores the hardware your VM runs on)
 
-            Azure Availablility Set (Your virtual resources after they are spread accross different fault domains in the same data center)
+            Azure Availablility Set (Your virtual resources after they are spread accross different fault domains in the same data center)            
         }
 
         Terminal Utilization{
@@ -84,7 +94,9 @@ Cloud Engineering{
 
         Azure Services{
             Security Services{
-                Microsoft Entra ID (formerly known as Azure Active Directory)(To enforce Authentication, Autorization(RBAC)){
+                Microsoft Entra ID (formerly known as Azure Active Directory)(To enforce Authentication, Autorization(IAM, RBAC)){
+                    IAM (Identity Access Management)
+
                     Tenant (The representation of a single organization's cloud portfolio, it holds management groups, user accounts and policies)
 
                     Identities (Anything that can be authenticated and authorized to access resources)
@@ -102,24 +114,46 @@ Cloud Engineering{
                     Least Privilage Principle (Give identites access to what they need and nothing more)
 
                     Zero Trust security model (Requiring identities to be constantly verified for every time they try to access resources)
+
+                    Microsoft Entra Domain Services (provides traditional Active Directory features to run legacy apps in the cloud)
+
+                    Microsoft Entra Connect sync (To automatically create hybrid identities(accounts that can access both the on-prem and cloud servers) under a tenant)
                 }
+
+                Shared access signatures (SAS)(for providing temporary access priveleges to external collaborators)
 
                 Microsoft Azure Key Vault (To store sensitive values that can be accessed securely by other services)
 
                 Azure Bastion (Lets you connect to your VMs without exposing them to the public internet)
 
-                Microsoft Sentinel (was known as Azure Sentinel)(to monitor and respond to cyber threats){
-                    Security Information and Event Management(SIEM) System (A tool that helps organizations keep their computer systems safe) 
-
-                    Data Connectors (To ingest log data into sentinel)
-
-                    Azure Log Analytics (Stores ingested logs and allows anlysis on it using KQL queries and other methods)
-                }
+                Microsoft Sentinel (was known as Azure Sentinel)(to monitor and respond to cyber threats)
 
                 Microsoft Defender (to scan your system for threats or vulnerabilities)
+
+                Azure Policy (to ensure resource compliance to regulations and rules){
+                    Policy Definition (Conditions and rules written in Azure that resources must meet)
+
+                    Initiative Definition (A group of multiple policy definitions bundled together)
+
+                    Effects (Actions taken if a resource violates a rule)
+
+                    Policy Assignment (To enforce a policy definition over a group or scope)
+
+                    Remediation (Automatically fixes or updates resources that are breaking your policy rules to make them compliant again)
+
+                    Policy Parameters (Variables that let you swap out specific values in a policy rule easily)
+
+                    Policy Function (Functions the rules contains and executes that help achieve its purpose)
+                }
+
+                Microsoft Intune Compliance Policy (to ensure device compliance to regulations and rules)
+
+                defense in depth (multiple layers of security to reduce the chance of a breach)
+
+                SSH (A secure way to log into another computer over the internet using terminal commands)
             }
 
-            Resource Management Services{
+            Compute Management Services{
                 Azure Resource Manager(ARM) (To deploy and manage all your resources){
                     ARM template (A simple JSON file where you write down the exact Azure resources you want, so Azure can build them for you automatically.)
 
@@ -136,24 +170,6 @@ Cloud Engineering{
 
                 Azure Bicep (Azure's own infrastructure code language instead of using json in ARM templates)
 
-                Azure Policy (to ensure resource compliance to regulations and rules){
-                    Policy Definition (Conditions and rules written in Azure that resources must meet)
-
-                    Effects (Actions taken if a resource violates a rule)
-
-                    Policy Assignment (To enforce a policy definition over a group or scope)
-
-                    Remediation (Automatically fixes or updates resources that are breaking your policy rules to make them compliant again)
-
-                    Azure Arc (To manage cloud resources from other providers or your own data centers with Azure tools)    
-
-                    Policy Parameters (Variables that let you swap out specific values in a policy rule easily)
-
-                    Initiative Definition (A group of multiple policy definitions bundled together)
-
-                    Policy Function (Functions the rules contains and executes that help achieve its purpose)
-                }
-
                 Azure Virtual Machine (To create and manage VMs){
                     Image (A template containing the OS and pre-installed software to spin up a VM with)
 
@@ -162,8 +178,6 @@ Cloud Engineering{
                     Shared disks (Lets multiple VMs attach to the same disk at the same time)
 
                     Ultra disks (A super-fast storage option designed for heavy workloads)
-
-                    Virtual Machine Scale Sets (Automatically adds or removes identical VMs to handle changes in website traffic)
 
                     Proximity placement groups (Forces your VMs to be physically close to each other in the same data center)
 
@@ -174,6 +188,18 @@ Cloud Engineering{
                     Cloud-init (To automatically configure Linux VMs when they boot up for the first time)
                 }
 
+                Azure Virtual Machine Scale Sets (To deploy and manage a set of identical virtual machines)
+
+                Terraform on Azure (A multi cloud infrastructure coding language that can be used within azure)
+
+                Resource Lock (Prevents resources from being accidentally deleted or changed)
+
+                Azure Virtual Desktop (To run a Windows OS in the cloud from any device connected to the internet)
+
+                Azure Arc (To manage cloud resources from other providers or your own data centers with Azure tools)
+            }
+
+            Network Management Services{
                 Azure Virtual Network(VNet)(to create and manage private networks){
                     Virtual Network Peering (connects two separate virtual networks)
 
@@ -181,84 +207,56 @@ Cloud Engineering{
 
                     Network Security Groups(Blocks or allows traffic to specific stuff inside certain VMs or subnets)   
                 }
+                
+                Network Layers (OSI model){
+                    All People Seem To Need Data Processing
 
-                Terraform on Azure (A multi cloud infrastructure coding language that can be used within azure)
-            }
+                    Applicaion (HTTP(websites), SMTP(email), FTP(file transfer))(You hit send on an app like your browser or email)
 
-            Development Services{
-                Azure Functions (To create functions that are triggered by other services)
+                    Presentation (SSL/TLS(encryption), compression)(The data gets formatted, encrypted, or compressed)
 
-                Azure Kubernetes Service (To manage deployent and scaling for containerized apps with kubernetes but with less complexity){
-                    Cluster (A group of Node Pools)
+                    Session (starts maintains and ends connection sessions)(A connection (session) is opened and managed)
 
-                    Node Pool (A group of Nodes)
+                    Transport (TCP, UDP)(The data is chopped into smaller segments and packaged for reliable or fast transmission)
 
-                    Node (A VM containing pods)
+                    Network (IP(addressing), ICMP(routing))(IP addresses (sender and receiver) are attached to the package)
+                    
+                    Data Link (Mac addresses)(Physical MAC addresses are attached to create frames so local switches can move the data locally.)
 
-                    Pod (A group of containers)
-
-                    Kubernetes Master Node (Control Plane)(The main brain of the system in a cluster that tells all the other nodes what to do)
-
-                    Kubernetes Worker Nodes (The worker bees of the system that actually run your app's code and do the heavy lifting)   
-
-                    Blue Deployment (Running the current version of your application)
-
-                    Green Deployment (Running the new version of your application)
-
-                    Blue-Green Deployment (Running a new version alongside the old for testing, all traffic can be switched over if tests pass)          
+                    Physical (Ethernet, WiFi)(Everything is converted into binary bits (1s and 0s) and sent across the medium)
                 }
 
-                Azure Red Hat OpenShift (To manage deployment, scaling and CI/CD for containerized apps with Red Hat OpenShift)
+                Azure Load Balancer (To distribute newtork traffic between VMs, handles TCP and UDP traffic) (use for your network){
+                    Backend Pool (Group of VMs that actually receive and process the incoming traffic)
 
-                Azure Container Apps (To build containerized apps serverlessly, It can autoscale to zero during downtime)
+                    Network Virtual Appliances (VMs fully dedicated to managing and securing your cloud traffic, like firewalls)
 
-                Azure Container Instances (To build temporary non-scaling servless containerized apps, automatically stops when it is not being used)
+                    Gateway Load Balancer (To deploy, scale and manage NVAs)
 
-                Azure Apps Service (To build autodeployed apps, you pay monthly even with no traffic, can scale up but not down to zero)
+                    Cross-region Load Balancer (Routes traffic to the closest healthy load balancer accross regions)
 
-                Azure Spring Apps (to automatically deploy and scale your java applications)
+                    Session Persistance (ensures repeated requests from the same end user is routed to the same VM)
+                }
 
-                Azure Service Fabric (to build autodeployed and autoscaled stateful microservices)
+                Azure Firewall (Controls and blocks sketchy internet traffic of all kinds coming into or out of your entire VN) (use for your network)
 
-                Azure Cognitive Services (To get ready-to-use AI tools so you dont have to train your own models)
+                Application Gateway (To distribute newtork traffic between VMs, handles HTTP and HTTPS traffic) (user for web API requests)
 
-                Azure API Management (to create and manage API lifecycles)
-            }
+                Azure Front Door (Router, Gloabal CDN and firewall for HTTP and HTTPS traffic) (use for web aps)
 
-            Workflow Automation Services{
-                Azure Batch (to run multiple tasks simultaneously)
+                Traffic Manager (Global DNS router for directing traffic to certain endpoints)
 
-                Azure AI Search (to query yor databases much easier and faster with indexing and vector searches features)
+                Azure Private Endpoint (Ensures your VN traffic does touch the public internet)
 
-                Azure DevOps Pipelines (CI/CD service used to build, test and deploy applications automatically)
+                ExpressRoute & Azure VPN Gateway (To establish network connectivity between an on-premises network and Azure cloud resources)
 
-                Github Actions (the same use case as Azure DevOps Pipelines, the choice to use it depends on the companies preference)
+                A Point to Site VPN (A secure connection that lets a single device safely join a private cloud network from anywhere over the internet)
+            }   
 
-                Azure Service Bus (To allow your services to send messages to eachother, ususally for important information)
-
-                Azure Event Grids (To allow your services to send messages to eachother, ususally for quick alerts that something happened)
-
-                Azure Event Hubs (To detect and processes large amounts of changes or events in real time)
-
-                Azure Logic Apps (to automate workflows involving services and resources)
-            }
-            
             Storage Services{
                 Unstructured Data (data that does not follow a strict format or schema) 
 
-                Azure Blob Storage (To store unstructured data){
-                    Local Redundant Storage(LRS)(keeps backups within one datacenter)
-
-                    Zone-redundant storage (ZRS)(keeps backups accross datacenters but within one region)
-
-                    Geo-redundant storage (GRS)(keeps backups accross different datacenters in different regions)
-
-                    Read-access geo-redundant storage ((RA-)GRS) (same as GRS but lets you read the data at any time)
-
-                    Geo-Zone redundant storage (GZRS)(combines the benifits of ZRS and GRS)
-
-                    Shared access signatures (SAS)(for temporary access to external collaborators)
-
+                Azure Blob Storage (To store unstructured data mainly for web apps){
                     Storage Account (To store storage containers)
 
                     Storage Containers (To store blobs)
@@ -280,132 +278,172 @@ Cloud Engineering{
                     Rehydration (Moving a blob from the Archive tier back into an accessible tier (Hot or Cool))
                 }
 
-                Azure Manage Disks (to store unstructured data in a VM){
-                    Standard HDD (Used for development and testing)
-
+                Azure Disk Storage (To store structured and unstructured data for VMs or Kubernetes){
+                    Standard HDD (Used for archival storage)
+                    
                     Standard SSD (Used for balanced workloads)
 
                     Premium SSD (Used for production databases)
-
+                        
                     Ultra Disk (Highest performance and lowest latency)
                 }
 
+                Azure Queue Storage (Holds large amounts of small messages in line until your app background workers are ready to process them)
+
+                Azure Table Storage (Holds massive amounts of structured, non-relational data like app logs)
+
                 Azure Data Lake (To store huge amounts of any type of data in one place for easy analysis later)
+
+                Recovery Services Vault (Storage location for all your backups)
 
                 Azure Files (to share unstructured data between VMs)
 
-                Azure File Sync (to backup Azure Files data on local servers)
-
                 Azure NetApp Files (to share unstructured data between high perfomance apps that need low latency)
 
-                Azure SQL Database (to create, query and manage SQL databases serverlessly)
+                Azure SQL Database (to create, query and manage SQL databases)
 
                 Azure SQL Managed Instance (to migrate an existing SQL database to Azure)
 
-                Azure Cosmos DB (to create, query and manage NoSQL databases serverlessly)
+                Azure Cosmos DB (to create, query and manage NoSQL databases)
 
-                PostgreSQL Server (to create query and manage PostgreSQL databases, you handle the infrastructure manually)
+                PostgreSQL Server (to create query and manage PostgreSQL databases)
 
-                MySQL Server (to create query and manage MySQL databases, you handle the infrastructure manually)
+                MySQL Server (to create query and manage MySQL databases)
 
                 Azure Managed Redis (to cache frequently requested database query results)
 
                 Azure Container Registry (Offers private storage and management for your container images (docker images))
             }
+
+            Development Services{
+                Azure Functions (To create functions that are triggered by other services)
+
+                Azure Kubernetes Service (To manage deployment and scaling for containerized apps with kubernetes but with less complexity){
+                    Cluster (A group of Node Pools)
+
+                    Node Pool (A group of Nodes)
+
+                    Node (A VM containing pods)
+
+                    Pod (A group of containers)
+
+                    Kubernetes Master Node (Control Plane)(The main brain of the system in a cluster that tells all the other nodes what to do)
+
+                    Kubernetes Worker Nodes (The worker bees of the system that actually run your app's code and do the heavy lifting)   
+
+                    Blue Deployment (Running the current version of your application)
+
+                    Green Deployment (Running the new version of your application)
+
+                    Blue-Green Deployment (Running a new version alongside the old for testing, all traffic can be switched over if tests pass)          
+                }
+
+                Azure Red Hat OpenShift (The same as AKS but using Red Hat OpenShift tools and offering CI/CD functionality aswell)
+
+                Azure Container Apps (To build containerized apps serverlessly, It can autoscale to zero during downtime)
+
+                Azure Container Instances (The same as ACA but for single use, non-scaling apps.)
+
+                Azure Apps Service (To build autodeployed apps, you pay monthly even with no traffic, can scale up but not down to zero)
+
+                Azure Spring Apps (to automatically deploy and scale your java applications)
+
+                Azure Service Fabric (to build autodeployed and autoscaled stateful microservices)
+
+                Azure Cognitive Services (To get ready-to-use AI tools so you dont have to train your own models)
+
+                Azure API Management (to create and manage API lifecycles)
+            }
+
+            Workflow Automation Services{
+                Azure Batch (To run multiple tasks simultaneously)
+
+                Azure AI Search (To query your databases much easier and faster with indexing and vector search features)
+
+                Azure DevOps Pipelines (CI/CD service used to build, test and deploy applications automatically)
+
+                Github Actions (The same use case as Azure DevOps Pipelines, the choice to use it depends on the companies preference)
+
+                Azure Service Bus (To allow your services to send messages to eachother, ususally for important information)
+
+                Azure Event Grids (To allow your services to send messages to eachother, ususally for quick alerts that something happened)
+
+                Azure Event Hubs (To detect and processes large amounts of changes or events in real time)
+
+                Azure Logic Apps (To automate workflows involving services and resources)
+            }
             
             Monitoring and Analysis Services{
                 Azure Synapse (To analyze all your stored data in the data lake)
 
-                Azure Synaps Analytics (to perform analysis on large pools of data)
+                Azure Log Analytics Workspace (Stores all your logs of all kinds using data connectors)
+
+                Azure Log Analytics (To analyze your stored logs in the log anaytics workspace using KQL queries and other methods)
 
                 Azure Monitor (to watch and inspect all your services){
-                    Metrics (numerical values reflecting the performance of a resource over time)
+                    Metrics (Numerical values reflecting the performance of a resource over time)
 
-                    Logs (timestamped files describing operations or events related to resources)
+                    Logs (Timestamped files describing operations or events related to resources)
 
-                    Alerts (to inform you based on certain conditions set on metrics of logs)
+                    Alerts (To inform you based on certain conditions set on metrics or logs)
 
-                    Application Insights (a feature of azure monitor that hanles the monitoring of your applications and not just infrastructure)
+                    Application Insights (A feature of azure monitor that handles the monitoring of your applications and not just infrastructure)
 
-                    Network Insights (to monitor traffic flow)
+                    Network Insights (To monitor traffic flow)
                 }
 
-                Microsoft Cost Management (to manage, plan and control cloud spending)
+                Microsoft Cost Management (To manage, plan and control cloud spending, after resources are already deployed)
+
+                Azure Pricing Calculator (To predict and manage cloud spending before resources are deployed)
+
+                Azure Reservations (Offers discounted prices on certain Azure services)
+
+                Azure Advisor (Evaluates Azure resources and makes recommendations to help improve perfomance and reduce cost)
+
+                Azure Service Health (Provides official incident reports called root cause analysis (RCA) after an outage, provides plans for resolving outages)
             }
             
             Update and Recovery Services{
                 Azure Backup (To automatically backup your cloud and on-premesis resources){
-                    Full Backup (a complete copy of all your data)
+                    Full Backup (A complete copy of all your data)
 
-                    Incramental Backups (only copies the data that has changed since the last backup of any kind)
+                    Incramental Backups (Only copies the data that has changed since the last backup of any kind)
 
-                    Differential Backups (a complete copy of all the changes made since the last FULL backup)
+                    Differential Backups (A complete copy of all the changes made since the last FULL backup)
 
-                    Off-Site Backups (a copy of data in a different location incase of physical infrastructure failures)
+                    Off-Site Backups (A copy of data in a different location incase of physical infrastructure failures)
 
-                    Crash Consistent Backups (a backup that catches the system state in a specific point of time regardless of changes still in progress)
+                    Crash Consistent Backups (A backup that catches the system state in a specific point of time regardless of changes still in progress)
 
-                    Application Consistent Backups (a backup that catches in-flight transactions or data that was still in the process of changing)
+                    Application Consistent Backups (A backup that catches in-flight transactions or data that was still in the process of changing)
 
-                    3-2-1 Backup Rule (keep 3 copies of data on two different media with one copy stored off-site)
+                    3-2-1 Backup Rule (Keep 3 copies of data on two different media with one copy stored off-site)
 
-                    GDPR (regulation to ensure the security of data to citizens of the EU)
+                    GDPR (Regulation to ensure the security of data to citizens of the EU)
 
-                    HIPPA (regulation to ensure the secutity of healthcare data to Americans)
+                    HIPPA (Regulation to ensure the secutity of healthcare data to Americans)
 
-                    SOC 2 (regulation to ensure the security of sensitive customer data)
+                    SOC 2 (Regulation to ensure the security of sensitive customer data)
 
-                    Recovery Services Vault (storage location for all your backups)
+                    Local Redundant Storage(LRS)(Keeps backups within one datacenter)
+
+                    Zone-redundant storage (ZRS)(Keeps backups accross datacenters but within one region)
+
+                    Geo-redundant storage (GRS)(Keeps backups accross different datacenters in different regions within one geography)
+
+                    Read-access geo-redundant storage ((RA-)GRS) (Same as GRS but lets you read the data at any time)
+
+                    Geo-Zone redundant storage (GZRS)(Combines the benifits of ZRS and GRS)
                 }
 
-                Azure Update Manager (To track, schedule, and install software updates across all your cloud or on-premises machines){
-                    automatic VM guest patching (automatically installs safe, critical security updates on your virtual machines)
-                }
+                Azure File Sync (To backup Azure Files data on local servers)
 
+                Azure Update Manager (To track, schedule, and install software updates across all your cloud or on-premises machines)
+                
                 Azure Site Recovery (To ensure high availability by automaically setting up backup resources or infrastructure in different locations)
-            }
-            
-            Network Management Services{
-                Network Layers (OSI model){
-                    All People Seem To Need Data Processing
 
-                    Applicaion (HTTP(websites), SMTP(email), FTP(file transfer))(You hit send on an app like your browser or email)
-
-                    Presentation (SSL/TLS(encryption), compression)(The data gets formatted, encrypted, or compressed)
-
-                    Session (starts maintains and ends connection sessions)(A connection (session) is opened and managed)
-
-                    Transport (TCP, UDP)(The data is chopped into smaller segments and packaged for reliable or fast transmission)
-
-                    Network (IP(addressing), ICMP(routing))(IP addresses (sender and receiver) are attached to the package)
-                    
-                    Data Link (Mac addresses)(Physical MAC addresses are attached to create frames so local switches can move the data locally.)
-
-                    Physical (Ethernet, WiFi)(Everything is converted into binary bits (1s and 0s) and sent across the medium)
-                }
-
-                Azure Firewall (Controls and blocks sketchy internet traffic coming into or out of your entire VN)
-
-                Azure Load Balancer (To distribute newtork traffic between VMs, handles TCP and UDP traffic){
-                    Backend Pool (Group of VMs that actually receive and process the incoming traffic)
-
-                    Network Virtual Appliances (VMs fully dedicated to managing and securing your cloud traffic, like firewalls)
-
-                    Gateway Load Balancer (To deploy, scale and manage NVAs)
-
-                    Cross-region Load Balancer (Routes traffic to the closest healthy load balancer accross regions)
-
-                    Session Persistance (ensures repeated requests from the same end user is routed to the same VM)
-                }
-
-                Application Gateway (To distribute newtork traffic between VMs, handles HTTP and HTTPS traffic)
-
-                Azure Front Door (Router, Gloabal CDN and firewall for HTTP and HTTPS traffic)
-
-                Traffic Manager (Global DNS router for directing traffic to certain endpoints)
-
-                Azure Private Endpoint (ensures your VN traffic does touch the public internet)
-            }            
+                Cloud Adoption Framework (A guide from providers on how to migrate to the cloud)
+            }          
         }
     }
 }
