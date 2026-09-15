@@ -90,6 +90,8 @@ Cloud Platforms{
             }
 
             Azure Powershell (The same as azure cli but using cmdlets format instead of commands "Verb-Noun [-Parameter] [<Arguments>]")
+
+            Azure Cloud Shell (To remotely via any browser, utilize a shell of your choice bash or powershell to manage resources)
         }
 
         Azure Services{
@@ -248,9 +250,13 @@ Cloud Platforms{
 
                 Azure Private Endpoint (Ensures your VN traffic does touch the public internet)
 
-                ExpressRoute & Azure VPN Gateway (To establish network connectivity between an on-premises network and Azure cloud resources)
-
                 A Point to Site VPN (A secure connection that lets a single device safely join a private cloud network from anywhere over the internet)
+
+                A Site to Site VPN (A secure connection that lets your on prem network connect to your cloud private network)
+
+                ExpressRoute (facilitates Site to Site connections)
+
+                Azure VPN Gateway (facilitates Site to Site and Point to Site connections)                
             }   
 
             Storage Services{
@@ -396,7 +402,7 @@ Cloud Platforms{
 
                 Azure Pricing Calculator (To predict and manage cloud spending before resources are deployed)
 
-                Azure Reservations (Offers discounted prices on certain Azure services)
+                Azure Reservations (Offers discounted prices on certain Azure resources)
 
                 Azure Advisor (Evaluates Azure resources and makes recommendations to help improve perfomance and reduce cost)
 
@@ -421,7 +427,7 @@ Cloud Platforms{
 
                     GDPR (Regulation to ensure the security of data to citizens of the EU)
 
-                    HIPPA (Regulation to ensure the secutity of healthcare data to Americans)
+                    HIPPA (Regulation to ensure the security of healthcare data to Americans)
 
                     SOC 2 (Regulation to ensure the security of sensitive customer data)
 
