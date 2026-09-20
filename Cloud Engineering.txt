@@ -53,6 +53,8 @@ Cloud Platforms{
         A cloud service platform provided by Microsoft
 
         Resource Heirarchy{
+            Tenant (The representation of a single organization's cloud portfolio, it holds management groups, user accounts and policies)
+
             Management Groups (Groups of Subscriptions)
 
             Subscriptions (Groups of Resource Groups)
@@ -96,10 +98,32 @@ Cloud Platforms{
 
         Azure Services{
             Security Services{
-                Microsoft Entra ID (formerly known as Azure Active Directory)(To enforce Authentication, Autorization(IAM, RBAC)){
-                    IAM (Identity Access Management)
+                IAM (Identity Access Management)
 
-                    Tenant (The representation of a single organization's cloud portfolio, it holds management groups, user accounts and policies)
+                Least Privilage Principle (Give identites access to what they need and nothing more)
+
+                Zero Trust security model (Requiring identities to be constantly verified for every time they try to access resources)
+
+                defense in depth (multiple layers of security to reduce the chance of a breach)
+
+                Microsoft Entra ID (formerly known as Azure Active Directory)(To enforce Authentication, Autorization(IAM, RBAC)){
+                    Each Subscription must be assigned to 1 and only 1 entra tenant but each entra tenant can serve multiple subscriptions
+
+                    Entra Tenant/Entra Instance (stores a directory of Entra Objects, permissions, and policies)
+
+                    Entra Objects{
+                        Group Object (A collection of users, devices or other groups)
+
+                        User Object (Stores directory data on a User that can be granted access to resources)
+
+                        Device Object (Stores directory data on a device that can be granted access to resources)
+
+                        Application (A registered application with a description and a generated service principle)
+                    }
+
+                    Directory (A database that stores records of directory data)
+                        
+                    Directory Data (Usernames, Hashed Passwords etc)
 
                     Identities (Anything that can be authenticated and authorized to access resources)
 
@@ -113,13 +137,53 @@ Cloud Platforms{
 
                     Roles (Bundles of permissions to be assigned to identites)
 
-                    Least Privilage Principle (Give identites access to what they need and nothing more)
+                    Entra ID Free{
+                        manage users
+                        group users manually
+                        enable SSO
+                        basic multi-factor authentication
+                    }
 
-                    Zero Trust security model (Requiring identities to be constantly verified for every time they try to access resources)
+                    Entra ID P1{
+                        everything else
+                    }
 
-                    Microsoft Entra Domain Services (provides traditional Active Directory features to run legacy apps in the cloud)
+                    Entra ID P2{
+                        enhanced monitoring and user protection
+                        privileged identity management (specific to administrators)
+                    }
 
-                    Microsoft Entra Connect sync (To automatically create hybrid identities(accounts that can access both the on-prem and cloud servers) under a tenant)
+                    Entra ID manages individual devices whereas AD DS manages an entire connected network of computers(servers) using organizational units (OUs) and group policy objects(GPOs)
+
+                    Active Directory Domain Services(old version of Entra ID){
+                        Forest (A group of related Domains)
+
+                        Domain (Contains a directory along with one or more domain controllers)
+
+                        Domain Controller (A server that runs AD DS, it recieves login requests and checks them againts the data in it's domain for authentication and authorization)
+
+                        group policy objects (security policies for connected computers/servers in a network)
+
+                        Organizational Units (A logical container of computers that group policy objects are scoped over)
+
+                        It uses Kerberos for authentication
+                        
+                        It uses LDAP for querying
+                    }
+
+                    Entra Domain Services (provides traditional AD features to run legacy apps on-premises or in the cloud, only one GPO for all computers, no OUs)
+
+                    Microsoft Entra Connect Sync (To automatically create hybrid identities(accounts that can access both the on-prem and cloud servers) under a tenant)
+
+                    Microsoft Entra Cloud Sync (The same as Connect Sync but much more lightweight and does not offer as much granular control)
+
+                    External Microsoft Entra Directory / Microsoft Entra External ID (lets external users sign into your apps using their own accounts without joining your selected directory)
+
+                    Microsoft Entra Registered Devices (to manage conditional access for device identities)
+
+                    Microsoft Entra Joined Devices (same as Entra Registered Devices but specifically for cloud first or cloud only organizations)
+
+                    Hybrid Microsoft Entra Joined Devices (same as Entra Regisgterd Devices but specifically for hybrid (on-prem AD and cloud Entra ID) organizations)
                 }
 
                 Shared access signatures (SAS)(for providing temporary access priveleges to external collaborators)
@@ -150,20 +214,22 @@ Cloud Platforms{
 
                 Microsoft Intune Compliance Policy (to ensure device compliance to regulations and rules)
 
-                defense in depth (multiple layers of security to reduce the chance of a breach)
-
                 SSH (A secure way to log into another computer over the internet using terminal commands)
             }
 
             Compute Management Services{
-                Azure Resource Manager(ARM) (To deploy and manage all your resources){
-                    ARM template (A simple JSON file where you write down the exact Azure resources you want, so Azure can build them for you automatically.)
+                Terraform on Azure (A multi cloud infrastructure coding language that can be used within azure)
 
+                Resource Lock (Prevents resources from being accidentally deleted or changed)
+
+                Azure Resource Manager(ARM) (To deploy and manage all your resources){
+                    ARM template (A simple JSON file where you write down the exact Azure resources you want (using declarative sytax), so Azure can build them for you automatically.)
+
+                    Declarative Syntax (Writing the end result you want as human readable text instead of all the steps to do it in code)
+                    
                     Bicep File (An easier-to-read version of an ARM template that lets you set up your resources using simpler text)
 
                     Azure Resource Providers (Bundles or categories of related resources, eg Microsoft.Compute holds VMs)
-
-                    Declarative Syntax (Writing the end result you want as human readable text instead of all the steps to do it in code)
 
                     Names (The names you give to resources that cannot be changed after creation)
 
@@ -191,10 +257,6 @@ Cloud Platforms{
                 }
 
                 Azure Virtual Machine Scale Sets (To deploy and manage a set of identical virtual machines)
-
-                Terraform on Azure (A multi cloud infrastructure coding language that can be used within azure)
-
-                Resource Lock (Prevents resources from being accidentally deleted or changed)
 
                 Azure Virtual Desktop (To run a Windows OS in the cloud from any device connected to the internet)
 
@@ -225,17 +287,17 @@ Cloud Platforms{
                     
                     Data Link (Mac addresses)(Physical MAC addresses are attached to create frames so local switches can move the data locally.)
 
-                    Physical (Ethernet, WiFi)(Everything is converted into binary bits (1s and 0s) and sent across the medium)
+                    Physical (Ethernet, WiFi)(Everything is converted into binary bits (1s and 0s) and sent across the appropriate medium)
                 }
 
                 Azure Load Balancer (To distribute newtork traffic between VMs, handles TCP and UDP traffic) (use for your network){
                     Backend Pool (Group of VMs that actually receive and process the incoming traffic)
 
-                    Network Virtual Appliances (VMs fully dedicated to managing and securing your cloud traffic, like firewalls)
+                    Network Virtual Appliances (NVAs) (VMs fully dedicated to managing and securing your cloud traffic, like firewalls)
 
                     Gateway Load Balancer (To deploy, scale and manage NVAs)
 
-                    Cross-region Load Balancer (Routes traffic to the closest healthy load balancer accross regions)
+                    Cross-region Load Balancer (Routes traffic to the closest healthy load balancer across regions)
 
                     Session Persistance (ensures repeated requests from the same end user is routed to the same VM)
                 }
@@ -244,7 +306,7 @@ Cloud Platforms{
 
                 Application Gateway (To distribute newtork traffic between VMs, handles HTTP and HTTPS traffic) (user for web API requests)
 
-                Azure Front Door (Router, Gloabal CDN and firewall for HTTP and HTTPS traffic) (use for web aps)
+                Azure Front Door (Router, Gloabal CDN and firewall for HTTP and HTTPS traffic) (use for web apps)
 
                 Traffic Manager (Global DNS router for directing traffic to certain endpoints)
 
@@ -350,7 +412,7 @@ Cloud Platforms{
 
                 Azure Container Instances (The same as ACA but for single use, non-scaling apps.)
 
-                Azure Apps Service (To build autodeployed apps, you pay monthly even with no traffic, can scale up but not down to zero)
+                Azure Apps Service (To build autodeployed apps, you pay monthly even with no traffic, can scale but not down to zero)
 
                 Azure Spring Apps (to automatically deploy and scale your java applications)
 
