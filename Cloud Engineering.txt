@@ -315,7 +315,7 @@ Cloud Platforms{
 
                     Load Balancing rule (To forward traffic sent to a load balancer (public or private IP) through to the backend pool (private IP))
 
-                    Inbound NAT rule (To forward traffic from a load balancer (public or private IP) through to a specific VM (private IP))
+                    Inbound NAT rule (To forward traffic sent to a load balancer (public or private IP) through to a specific VM (private IP))
                 }
 
                 Azure Firewall (Controls and blocks sketchy internet traffic of all kinds coming into or out of your entire VN) (use for your network)
@@ -560,12 +560,6 @@ Cloud Platforms{
                     Application Consistent Backups (A backup that catches in-flight transactions or data that was still in the process of changing)
 
                     3-2-1 Backup Rule (Keep 3 copies of data on two different media with one copy stored off-site)
-
-                    GDPR (Regulation to ensure the security of data to citizens of the EU)
-
-                    HIPPA (Regulation to ensure the security of healthcare data to Americans)
-
-                    SOC 2 (Regulation to ensure the security of sensitive customer data)
 
                     Local Redundant Storage(LRS)(Keeps backups within one datacenter)
 
