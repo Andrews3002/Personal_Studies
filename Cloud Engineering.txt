@@ -83,7 +83,7 @@ Cloud Platforms{
         }
 
         Terminal Utilization{
-            Azure CLI (To quickly create, manage, and automate all your Azure resources right from your terminal){
+            Azure CLI (To quickly create, manage, and automate all your Azure resources right from your terminal)(for using JSON){
                 Azure CLI command structure (az <command-group> <command> [<arguments] [--options])
 
                 Interactive mode (To make the experience with the terminal easier by providing recommendations and hints in the interface)
@@ -91,7 +91,7 @@ Cloud Platforms{
                 Idempotency (Ensuring no matter how many times an operation is run the result is the same as running it once)
             }
 
-            Azure Powershell (The same as azure cli but using cmdlets format instead of commands "Verb-Noun [-Parameter] [<Arguments>]")
+            Azure Powershell (The same as azure cli but using cmdlets format "Verb-Noun [-Parameter] [<Arguments>]")(for using Objects with properties)
 
             Azure Cloud Shell (To remotely via any browser, utilize a shell of your choice bash or powershell to manage resources)
         }
@@ -183,7 +183,7 @@ Cloud Platforms{
 
                     Microsoft Entra Joined Devices (same as Entra Registered Devices but specifically for cloud first or cloud only organizations)
 
-                    Hybrid Microsoft Entra Joined Devices (same as Entra Regisgterd Devices but specifically for hybrid (on-prem AD and cloud Entra ID) organizations)
+                    Hybrid Microsoft Entra Joined Devices (same as Entra Registered Devices but specifically for hybrid (on-prem AD and cloud Entra ID) organizations)
                 }
 
                 Shared access signatures (SAS)(for providing temporary access priveleges to external collaborators)
@@ -249,27 +249,39 @@ Cloud Platforms{
 
                     Proximity placement groups (Forces your VMs to be physically close to each other in the same data center)
 
-                    Sysprep configuration (Removes unique system details like the computer name and SID)
-
-                    Group Policy management (Lets administrators control and enforce settings)
-
-                    Cloud-init (To automatically configure Linux VMs when they boot up for the first time)
+                    Azure Spot Instance (A VM you can deploy at a massive discount that uses the remaining compute Azure has available, it can be de-provisioned by azure at any time and it only uses compute that reaches your budget limit never over)
                 }
 
-                Azure Virtual Machine Scale Sets (To deploy and manage a set of identical virtual machines)
+                Azure Virtual Machine Scale Sets (To deploy and manage a set of identical virtual machines that can auto-scale its instances)
 
                 Azure Virtual Desktop (To run a Windows OS in the cloud from any device connected to the internet)
 
                 Azure Arc (To manage cloud resources from other providers or your own data centers with Azure tools)
+
+                Azure VMAccess extension (provides solutions to help you log into your Linux VM if you're locked out and can't log in)
+
+                Custom Script Extension Version 2 (helps you make changes to your VM after it is deployed)
+
+                DSC extension for Linux (helps maintain the state of your Linux enviroment despite updates and changes)
+
+                Azure Monitor agent for Linux (collects logs, metrix and security data from your Linux VM and sends them to Azure Monitor for tracking)
             }
 
             Network Management Services{
                 Azure Virtual Network(VNet)(to create and manage private networks){
                     Virtual Network Peering (connects two separate virtual networks)
 
+                    Network Brigde (a device that connects two separate physical networks)
+
                     Subnet (A smaller piece of a bigger cloud network)
 
-                    Network Security Groups(Blocks or allows traffic to specific stuff inside certain VMs or subnets)   
+                    Network Interface (used to connect a VM to a subnet, one for each VM)
+
+                    Application Security Group (to group Network Interfaces from multiple VMs and use the group as a single source destination)
+
+                    IP Group (bundle of IP addresses to scope network security rules over)
+
+                    Network Security Groups(Blocks or allows traffic to specific stuff inside certain VMs or subnets)
                 }
                 
                 Network Layers (OSI model){
@@ -295,11 +307,15 @@ Cloud Platforms{
 
                     Network Virtual Appliances (NVAs) (VMs fully dedicated to managing and securing your cloud traffic, like firewalls)
 
-                    Gateway Load Balancer (To deploy, scale and manage NVAs)
+                    Gateway Load Balancer (to distribute and recieve traffic to and from available NVAs)
 
                     Cross-region Load Balancer (Routes traffic to the closest healthy load balancer across regions)
 
                     Session Persistance (ensures repeated requests from the same end user is routed to the same VM)
+
+                    Load Balancing rule (To forward traffic sent to a load balancer (public or private IP) through to the backend pool (private IP))
+
+                    Inbound NAT rule (To forward traffic from a load balancer (public or private IP) through to a specific VM (private IP))
                 }
 
                 Azure Firewall (Controls and blocks sketchy internet traffic of all kinds coming into or out of your entire VN) (use for your network)
@@ -310,7 +326,7 @@ Cloud Platforms{
 
                 Traffic Manager (Global DNS router for directing traffic to certain endpoints)
 
-                Azure Private Endpoint (Ensures your VN traffic does touch the public internet)
+                Azure Private Endpoint (Ensures your VN traffic does not touch the public internet)
 
                 A Point to Site VPN (A secure connection that lets a single device safely join a private cloud network from anywhere over the internet)
 
@@ -318,7 +334,59 @@ Cloud Platforms{
 
                 ExpressRoute (facilitates Site to Site connections)
 
-                Azure VPN Gateway (facilitates Site to Site and Point to Site connections)                
+                Azure VPN Gateway (facilitates Site to Site and Point to Site connections)   
+
+                IP flow verfity (tests if traffic is allowed based on NSG rules)
+
+                VN flow logs (records all IP traffic details, who communicated with who and was it allowed, basically IP flow verify but with more granularity)
+
+                packet capture (records the actual raw network data in the packets)
+
+                Domain name (any human readable name that follows the DNS Namespace structure)(from  "." to "dev.apple.tree.contoso.com.")
+
+                DNS Namespace (the Heirarchal tree structure that every single domain name must follow){
+                    the domain name is read from right to left for example dev.contoso.com.
+
+                    root (".", encompasses everything)
+
+                    top-level domains (com, org, net)
+
+                    second-level domains (contoso, microsoft, youtube, etc)
+
+                    subdomain/hosts (www, dev)(eg dev.contoso.com)(its a host when it maps to its own server)
+                    
+                    all hosts are subdomains but not all subdomains are hosts
+                }
+
+                Domain names are resolved to DNS records
+
+                DNS records{
+                    a record can be an address, another DNS name or data
+                    
+                    A (Maps a domain name directly to a specific IPv4 address)
+
+                    AAAA (Maps a domain name to an IPv6 address)
+
+                    CNAME (Creates an alias that points one domain name to another domain name instead of an IP.)
+
+                    MX (Mail exchange routing, translates a domain name to it's mail server host name eg mail.contoso.com)
+
+                    SOA Start of Authority (metadata about the zone itself (primary name server, refresh/update intervals, etc.))
+
+                    NS (Name server records, declare which servers are authoritative for the zone)
+
+                    SRV (Specifies the location (hostname and port) for specific services like VoIP or messaging.)
+
+                    TXT (Holds plain text information)
+                }
+
+                DNS Zone (a container that holds DNS records for a domain name(now an apex domain))
+                
+                Apex Domain (the domain name at the top of a DNS zone (matching the zone's name), which can have its own records just like any other domain name)
+
+                DNS Authoritative name server (hosts one or more DNS zones of records and, when queried, returns the matching record(s) stored in those zones for the domain name asked about)
+
+                Recursive Resolver (Does not store its own zones but queries other authoritative name servers to get the requested record)
             }   
 
             Storage Services{
@@ -337,11 +405,11 @@ Cloud Platforms{
 
                     Archive (Data that is almost never accessed)
                     
-                    Storage Cost (Cost for storing data, increases as data is more frequently accessed)
+                    Storage Cost (increases as data is more frequently accessed)
 
-                    Access Cost (Cost for accessing data, decreases as data is more frequently accessed)
+                    Access Cost (decreases as data is more frequently accessed)
 
-                    Retrieval Time (Time it takes for data to be provided from storage, decreases as data is more frequently accessed)
+                    Retrieval Time (decreases as data is more frequently accessed)
 
                     Rehydration (Moving a blob from the Archive tier back into an accessible tier (Hot or Cool))
                 }
@@ -421,6 +489,12 @@ Cloud Platforms{
                 Azure Cognitive Services (To get ready-to-use AI tools so you dont have to train your own models)
 
                 Azure API Management (to create and manage API lifecycles)
+
+                Init Container (a temporary container for just running setup tasks before the real app is ran in another container)
+
+                Privileged Container (A container granted root-level administrative access to the system)
+
+                Sidecar Container(A secondary container ran alongside the real app container to handle supporting tasks like refreshing cache)
             }
 
             Workflow Automation Services{
@@ -451,7 +525,7 @@ Cloud Platforms{
                 Azure Monitor (to watch and inspect all your services){
                     Metrics (Numerical values reflecting the performance of a resource over time)
 
-                    Logs (Timestamped files describing operations or events related to resources)
+                    Logs / Diagnostic Logs (Timestamped files describing operations or events related to resources)
 
                     Alerts (To inform you based on certain conditions set on metrics or logs)
 
@@ -508,7 +582,18 @@ Cloud Platforms{
 
                 Azure Update Manager (To track, schedule, and install software updates across all your cloud or on-premises machines)
                 
-                Azure Site Recovery (To ensure high availability by automaically setting up backup resources or infrastructure in different locations)
+                Azure Site Recovery (To ensure high availability by automaically setting up backup resources or infrastructure in different locations){
+                    Starting failover (the swap from primary to secondary site is initiated)
+                    Committing failover (all final states of the primary's data are being saved to the secondary site)
+                    Failover confirmed (the secondary site is up and running)
+                    Failover committed (the primary site is now shut down or ready to be the new backup/secondary site)
+
+                    failover is the 4 phase process (primary to secondary)
+
+                    then reprotection is initiated so the primary stays up to date with the secondary as it is being used as the new primary
+
+                    then failback is the 4 phase process again (secondary back to primary) 
+                }
 
                 Cloud Adoption Framework (A guide from providers on how to migrate to the cloud)
             }          
