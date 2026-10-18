@@ -1,0 +1,335 @@
+Components{
+    MAC Address Table{
+        For mapping of a Switchport to a MAC Address
+
+        It is populated Dynamically as frames flow through the network
+    }
+
+    ARP Table/ ARP Cache{
+        For mapping of an IP Address to a MAC Address
+
+        It is populated Dynamically as frames flow through the network
+    }
+
+    Routing Table {
+        For mapping of an IP Network to an Interface or Next Router
+
+        routing tables use 3 types of routes, directly connected, static and dynamic
+
+        directly connected routes{
+            mapping network groups that are directly connected to one of the interfaces on a specific router
+
+            an interface is each of the ports on a router
+
+            so the each DC route maps a network group to a single interface on the router
+        }
+
+        static routes{
+            since DC routes only allow you to communicate between networks connected directly to the same router
+
+            if you want to communicate with another network that is not directly connected to your router
+
+            static routes are needed
+
+            static routes map network groups to IP addresses of specific routers
+
+            static routes are manually added to routing tables by network admins
+        }
+
+        dynamic routes{
+            the exact same as static routes except they are automatically added instead of manually
+
+            so since each router has DC routes that map network groups to their own interfaces
+
+            they can use dynamic routing protocals to share their individual IP address along with a network group IP address that they are directly connected too
+
+            so other routers will be able to know which router's ip address to send packets too if the destination is within a certain network group
+        }
+    }
+
+    NIC(network interface card){
+        Identifies a device on a network
+
+        They each have a MAC address to allow other network components to refer to it
+
+        They also have an IP Address assigned to it that is within its current connected network's IP Range
+    }
+
+    Host/Client{
+        laptop, phone or any other device
+
+        They have{
+            a NIC
+            an ARP Table
+            a Routing Table
+        }
+    }
+
+    Switch{
+        to control data traffic between devices
+
+        switches use Switchports to connect multiple devices to the swtich each having their own switch port
+
+        this allows frames to be easily transfered from one Swtichport to another ie one NIC to another
+
+        They have{
+            a NIC
+            a MAC Address Table
+        }
+
+        since data is ususally sent through a switch and not too or from a switch its MAC and/or IP Address in the network is irrelivant
+    }
+
+    Router{
+        They have{
+            a NIC
+            an ARP Table
+            a Routing Table
+        }
+    }
+}
+
+Network Layers (OSI model){
+    All People Seem To Need Data Processing (7 to 1)
+
+    Please Do Not Throw Sausage Pizza Away (1 to 7)
+
+    7 - Applicaion (HTTP(websites), SMTP(email), FTP(file transfer))(You hit send on an app like your browser or email)
+
+    6 - Presentation (SSL/TLS(encryption), compression)(The data gets formatted, encrypted, or compressed)
+
+    5 - Session (starts maintains and ends connection sessions)(A connection (session) is opened and managed)
+
+    4 - Transport (TCP, UDP)(The data is chopped into smaller segments and packaged for reliable or fast transmission)
+
+    3 - Network (IP(addressing), ICMP(routing))(IP addresses (sender and receiver) are attached to the package)
+    
+    2 - Data Link (Mac addresses)(Physical MAC addresses are attached to create frames so local switches can move the data locally.)
+
+    1 - Physical (Ethernet, WiFi)(Everything is converted into binary bits (1s and 0s) and sent across the appropriate medium)
+}
+
+Network Flow{
+    Hosts' Routing Tables Populated{
+        The IP address of the network's designated router is added to every host's routing table, This IP address is called the default gateway
+
+        This tells the host to use this router's address any time its trying to communicate with another device on a foreign network
+    }
+
+    Routers' Routing Table Populated{
+        Then the router's routing table will be populated with 2 routes
+
+        The DC(directly connected) route/s for the network/s it is attached to
+
+        //TODO: address this
+        And then a default route pointing to the internet (more specifically to certain router's IP Address somewhere else on the internet)
+    }
+
+    Host A to Router 1{
+        Network Layer Header{
+            so the host A wants to send data to host B in a foreign network
+
+            first host B is selected to send the data too via an interface (layer 7)
+
+            the data will just be in the form of raw binary
+
+            then it encrypts the data using SSL or TLS encryption (layer 6)
+
+            then host A choses the layer 4 transport protocal of the data (UDP/TCP)
+
+            if TCP, it is split into segments and each segment goes through the following steps in this document before reasembling at the final destination
+
+            if UDP, it is all contained within a datagram (which may be fragmented but still witin a datagram), then goes through the following steps in this document before being processed at once at the final destination
+
+            So the layer 4 header is chosen and the data becomes a datagram or individual segments
+
+            then host A adds a layer 3 (network layer) header which makes it a packet that holds the payload (in this case the datagram or segment)
+
+            this header contains the source and destination IP address for the data
+
+            the destination IP address is determined from layer 7 the application layer when you chose who to send the data too
+
+            then the host compares the destination address of the header to its own IP Address and network IP range to determine if the destination host is on a foreign network
+
+            if it is on a foreign network then the packet must be sent to host A's network default gateway (Router 1)
+
+            so Host A checks it's pre populated router table to find Router 1's IP address
+
+            it then tries to check it's ARP table to find the MAC address of Router 1 associated with it's IP Address
+
+            but at this point host A's ARP table is empty which means it does not know Router 1's MAC address
+
+            Therefore it is unable to create the required layer 2 (Data Link Layer) header that helps take the payload(in this case the packet) to Router 1
+        }
+
+        ARP Request{
+            so host A will pause the data preping process and carry out the ARP process to find the MAC address of Router 1
+
+            host A then sends an ARP request
+
+            then a layer 2 header that contains the source MAC address of the host and the destination MAC address of all fs "ffffff" (broadcast address) 
+            
+            this means to send the frame to every other device on the network
+
+            the ARP request is then sent to the switch
+
+            the ARP request contains the source IP, source MAC address, Target MAC address (empty until the response) and the Target IP address
+
+            so the IP and MAC address of host A's NIC is in the request aswell as the IP address of Router 1
+            
+            anytime the switch recives any frames it takes note of recieving switchport and the source MAC address on the layer 2 header of the frame
+            
+            the combination of the recieving switchport and source MAC address is then either added or updated on the switch's MAC address table
+
+            this ensures that the switch knows which device's NIC is connected to which port on the switch.
+
+            then the switch looks at the destination MAC address on the frame
+
+            since the destination MAC address is the broadcast address it does the flooding action and sends the message out through all the switchports
+
+            all the connected devices will recieve the ARP request and check to see if the target IP was theirs
+
+            if it wasn't for them and they don't already have an ARP mapping for that sender in their table nothing is done
+
+            if wasn't for them and they DO have an ARP mapping for the sender's IP in their table they will update the mapping and do nothing else
+
+            if it IS for them the ARP mapping of the sender is either added or updated to the ARP table and an ARP response is sent back    
+        }
+
+        ARP Response{
+            the intended recipient in this case was Router 1
+
+            so it will strip the ARP request frame's layer 2 header since it served its purpose
+
+            then it will read the payload which is the data itself and add the new entry of host A's ARP mapping to their ARP table
+            
+            Once this is done it will send back an ARP response
+
+            the ARP response will have the source IP of Router 1, source MAC of Router 1(THE REQUIRED DATA), Target IP of Host A and the Target MAC of Host A
+
+            a layer 2 header is added making it a frame that holds the payload (the response)
+
+            the frame then goes to the switch first
+
+            when the switch receives the frame and refreshes that port's assigned MAC address refering to Router 1
+
+            then it reads the layer 2 header of the frame for the destination MAC address
+
+            it then uses its MAC address table to find the switchport associated with the destination MAC address
+
+            it then sends the frame out through that switchport
+
+            once Host A receives the frame it strips the layer 2 header of the frame to read the payload (the response)
+            
+            then it updates its ARP table with Router 1's MAC address
+        }
+
+        Sending through its first Hop{
+            now the Host A's ARP table contains Router 1's MAC address it can continue with the process of sending the data to Host B
+
+            it creates the required Layer 2 header for the frame the holds the payload (the packet) 
+            
+            this allows it to perform the necessary next hop to reach Router 1
+
+            the Layer 2 header contains the source MAC address of Host A and the destination MAC address of Router 1
+
+            the frame is then sent to the switch
+
+            the switch updates the MAC address table to associate the switchport that recieved the frame to the source MAC address of the frame
+
+            then the switch reads the layer 2 header of the frame for the destination MAC address
+
+            it then uses the MAC address table to find the switchport associated with the found destination MAC address and sends the frame out through that switchport
+
+            The frame then arrives at Router 1
+        }
+    }
+
+    Router 1 to Router 2{
+        note that router to router connections are considered their own networks with their own network group IP ranges
+
+        so some DC routes map a router to another router by referencing their shared network group
+
+        note each router has an IP address and Mac Address pair for each network it is directly connected to
+
+        once Router 1 recieves the frame it strips the layer 2 header because it achieved its purpose
+
+        this leaves the payload of the frame in this case the packet
+
+        it then reads the layer 3 header of the packet to find the desination IP address
+
+        it then looks through its Routing table to find the IP address range that contains the desination IP address
+
+        this will be either a DC route that directs the packet to be forwarded through one of Router 1's interfaces into another network
+
+        Or in this case a static or dynamic route that directs the packet to be forwarded to Router 2's IP address
+
+        so it then checks to see which network range Router 2's IP address falls into
+
+        Since Router 1 and Router 2 are directly connected to one another (having thier own network) this means Router 1 has a DC route that maps to one of it's interfaces that Router 2 is connected too
+
+        So Router 1 now knows to send the packet through that interface for it to reach Router 2
+
+        Now for it to carry out this next hop it must add a layer 2 header
+
+        the layer 2 header must contain the source MAC address of Router 1 and the destination MAC address of Router 2
+
+        since Router 1's ARP table is empty at this point, Router 2's MAC address is unkown
+        
+        therefore and ARP request and response must be exchanged just as explained earlier
+
+        Router 1 will be able to specifiy the target IP because the dynamic or static route used earlier contained the IP address of Router 2
+
+        once the ARP process is complete, Router 1 will be able to add the necessary layer 2 header for the packet, making it a frame
+
+        it then carries out eh next hop to Router 2
+
+        note that this process can be chained across numerous routers before reaching the final router which is basically the internet
+    }
+
+    Router 2 to Host B{
+        Once Router 2 recieves the frame it strips the layer 2 header revealing the payload (in this case the packet)
+
+        it then reads the layer 3 header for the destination IP address
+
+        it then checks its routing table to see where the data must be forwarded too
+
+        in this case the destination IP address of the packet falls within a DC route's network group, which means we are at the final hop
+
+        so Router 2 knows which interface to forward the packet through for it to get into the network
+
+        so in order to carry out this final hop to Host B, Router 2 searches its ARP table to find the MAC address of Host B
+
+        Since Router 2's ARP table is empty it cannot translate the destination IP address to the MAC address of Host B
+
+        So it pauses the data prep process and sends an ARP request to every other device via the switch exactly as stated earlier
+
+        Once Host B receives the ARP request it sends back an ARP response to Router 2 allowing it to populate its ARP table with Host B's MAC address
+
+        Now it can add the necessary layer 2 header to the packet that states the source MAC address of Router 2 and the destination MAC address of Host B
+
+        It then sends the frame to the switch which forwards the frame to Host B just as stated earier
+
+        Once Host B recieves the frame it then strips the layer 2 header since it has achieved its purpose
+
+        Then it strips the layer 3 header of packet, which also achieved its purpose, in this case to handle the END to END delivery of the data
+
+        Then it strips the layer 4 header of the datagram or segment, re-constructing the datagram if it was fragmented or reasembling the individual segments
+
+        Then it ends the connection session (layer 5)
+
+        Then it decryps the SSL/TLS encryption (layer 6)
+
+        Then it presents the data via an interface to the user (layer 7)
+    }
+
+    Host B back to Host A{
+        Once Host B has processed the data it can now generate a response
+
+        The response will go through the same process in reverse
+
+        Only this time the ARP tables are already populated with the necessary entries
+
+        So the process in much faster because the layer 2 headers can be added immediately without needing the ARP protocol before each next hop
+    }
+}

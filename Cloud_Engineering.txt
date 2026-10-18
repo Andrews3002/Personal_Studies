@@ -13,15 +13,7 @@ Cloud Computing{
                 IaaS (Infrastructure as a service)(Hardware providers rent to clients for them to fully manage their virtual resources on)
             }
 
-            Shared Responsibility Model (Cloud companies secure the main hardware setup, while you protect your own app and data inside it){
-                On-prem (The client is fully responsible for everything)
-
-                IaaS (The client has most responsibility and provider has the minority)
-
-                PaaS (Responsibility is shared between client and provider almost evenly)
-
-                SaaS (The provider has most of the resoponsibility and the client has the minority)
-            }
+            Shared Responsibility Model (Cloud companies secure the main hardware setup, while you protect your own app and data inside it)
 
             Cloud Deployment Models{
                 Public Cloud (Your infrastructure is in a shared server with other clients renting resources.)
@@ -43,6 +35,8 @@ Cloud Computing{
         Serverless computing (The cloud provider handles all the server operations, you build apps and only pay when your code is running on the servers)
 
         Colocation (Renting space in a third party data center to put your own physical servers, cooling and network infrastructure)
+
+        SKU (Stock Keeping Units) (The available tiers for certain resources indicating perks and price for each tier)
     }
 }
 
@@ -78,6 +72,8 @@ Cloud Platforms{
             Geo-Location (A feature to deploy resources to any availability zone worldwide)
 
             Fault Domain (The physically isolated rack that stores the hardware your VM runs on)
+
+            Update Domain (A group of VMs and hardware that are upgraded together in isolation from other VMs and hardware in the datacenter)
 
             Azure Availablility Set (Your virtual resources after they are spread accross different fault domains in the same data center)            
         }
@@ -160,7 +156,7 @@ Cloud Platforms{
 
                         Domain (Contains a directory along with one or more domain controllers)
 
-                        Domain Controller (A server that runs AD DS, it recieves login requests and checks them againts the data in it's domain for authentication and authorization)
+                        Domain Controller (A server that runs AD DS, it recieves login requests and checks them againts the directory in it's domain for authentication and authorization)
 
                         group policy objects (security policies for connected computers/servers in a network)
 
@@ -209,7 +205,7 @@ Cloud Platforms{
 
                     Policy Parameters (Variables that let you swap out specific values in a policy rule easily)
 
-                    Policy Function (Functions the rules contains and executes that help achieve its purpose)
+                    Policy Function (Functions the rules contain and execute that help achieve its purpose)
                 }
 
                 Microsoft Intune Compliance Policy (to ensure device compliance to regulations and rules)
@@ -249,10 +245,42 @@ Cloud Platforms{
 
                     Proximity placement groups (Forces your VMs to be physically close to each other in the same data center)
 
-                    Azure Spot Instance (A VM you can deploy at a massive discount that uses the remaining compute Azure has available, it can be de-provisioned by azure at any time and it only uses compute that reaches your budget limit never over)
-                }
+                    Azure Spot Instance (A VM you can deploy at a massive discount that uses the remaining compute Azure has available, it can be de-provisioned by azure if they need more compute for other services or it surpases the maximum price limit you specified)
+                    
+                    Reprovisioning (removing an existing VM and replacing it with a new VM)
 
-                Azure Virtual Machine Scale Sets (To deploy and manage a set of identical virtual machines that can auto-scale its instances)
+                    Azure Virtual Machine Scale Sets (To deploy and manage a set of identical virtual machines that can auto-scale its instances){
+                        When creating a VM Scale Set you must configure the following
+
+                        Orchestration{
+                            Uniform Orchestration Mode (all virtual machine instances are created with the same base operating system image and configuration)
+
+                            Flexible Orchestration Mode (VMs can use different images, sizes, or configurations within the same scale sets)
+                        }
+
+                        Image (The base Operating System of the VM)
+
+                        VM Architecture{
+                            x64 (is compatible with more software)
+
+                            Arm64 (provide up to 50% better price per performance unit)
+                        }
+
+                        Size (processing power, memory and storage capacity)
+
+                        an hourly price is charged based on the size and OS chosen
+
+                        in the advanced tab your can configure one more setting (Spreading Algorithm)
+
+                        Spreading Algorithm{
+                            Max spreading (your VMs are spread across as much fault domains as possible)
+
+                            Fixed spreading (your VMs are spread across strictly 5 fault domains)
+
+                            if an Availablility zone has less than 5 fault domains then Fixed spreading will fail so Microsoft recommends using Max spreading
+                        }
+                    }
+                }
 
                 Azure Virtual Desktop (To run a Windows OS in the cloud from any device connected to the internet)
 
@@ -268,38 +296,43 @@ Cloud Platforms{
             }
 
             Network Management Services{
-                Azure Virtual Network(VNet)(to create and manage private networks){
+                Azure Virtual Network(VNet)(to virtually create and manage your azure hosted remote networks){
                     Virtual Network Peering (connects two separate virtual networks)
 
                     Network Brigde (a device that connects two separate physical networks)
 
-                    Subnet (A smaller piece of a bigger cloud network)
+                    Subnet (A smaller piece of a bigger cloud network){
+                        each subnet contains a range of IP addresses in CIDR notation within its VN address space
+                        
+                        the range must not overlap with other subnets ranges, 
+                        
+                        In the the range it reserves 5 adresses, the first 4 and the last 1
 
-                    Network Interface (used to connect a VM to a subnet, one for each VM)
+                        Reserved Addresses (address range 192.168.1.0/24){
+                            192.168.1.0 (identifies the subnet address aka host address)
+                            192.168.1.1 (this is the default gateway, basically a VM in the subnet dedicated to forwarding data from other resources in the subnet to all external destinations outside the subnet)
+                            192.168.1.2 and 192.168.1.3 (for DNS mapping)
+                            192.168.1.255 (the subnet's broadcast address, basically an address than recieves data on befalf of all the resources in the network and forwards the data to every resource in the network)
+                        }
+                    }
+
+                    Network Interface (used to connect a VM to a subnet, a VM can have many network interfaces one for each subnet it needs to connect too)
 
                     Application Security Group (to group Network Interfaces from multiple VMs and use the group as a single source destination)
 
                     IP Group (bundle of IP addresses to scope network security rules over)
 
                     Network Security Groups(Blocks or allows traffic to specific stuff inside certain VMs or subnets)
-                }
-                
-                Network Layers (OSI model){
-                    All People Seem To Need Data Processing
 
-                    Applicaion (HTTP(websites), SMTP(email), FTP(file transfer))(You hit send on an app like your browser or email)
+                    IP Address space (the full range of IP addresses you can assign to a VNet on creation, subnets take portions of this address space)
 
-                    Presentation (SSL/TLS(encryption), compression)(The data gets formatted, encrypted, or compressed)
+                    Azure Private IP address (for communicating within an azure VNet or an on-prem network)
 
-                    Session (starts maintains and ends connection sessions)(A connection (session) is opened and managed)
+                    Azure Public IP address (for commmunicating with a resource thats in a VNet from the public internet)
 
-                    Transport (TCP, UDP)(The data is chopped into smaller segments and packaged for reliable or fast transmission)
+                    Static IP (locking in a fixed IP of your choice to be assigned to a resource)
 
-                    Network (IP(addressing), ICMP(routing))(IP addresses (sender and receiver) are attached to the package)
-                    
-                    Data Link (Mac addresses)(Physical MAC addresses are attached to create frames so local switches can move the data locally.)
-
-                    Physical (Ethernet, WiFi)(Everything is converted into binary bits (1s and 0s) and sent across the appropriate medium)
+                    Dynamic IP (having azure pick the next available IP for you to use)
                 }
 
                 Azure Load Balancer (To distribute newtork traffic between VMs, handles TCP and UDP traffic) (use for your network){
@@ -336,7 +369,7 @@ Cloud Platforms{
 
                 Azure VPN Gateway (facilitates Site to Site and Point to Site connections)   
 
-                IP flow verfity (tests if traffic is allowed based on NSG rules)
+                IP flow verify (tests if traffic is allowed based on NSG rules)
 
                 VN flow logs (records all IP traffic details, who communicated with who and was it allowed, basically IP flow verify but with more granularity)
 
@@ -387,8 +420,8 @@ Cloud Platforms{
                 DNS Authoritative name server (hosts one or more DNS zones of records and, when queried, returns the matching record(s) stored in those zones for the domain name asked about)
 
                 Recursive Resolver (Does not store its own zones but queries other authoritative name servers to get the requested record)
-            }   
-
+            }
+            
             Storage Services{
                 Unstructured Data (data that does not follow a strict format or schema) 
 
@@ -397,13 +430,21 @@ Cloud Platforms{
 
                     Storage Containers (To store blobs)
 
-                    Blobs (the actual unstructured data)
+                    Blobs (the actual unstructured data){
+                        block blobs (default type, text and binary data like files, images and videos)
+
+                        append blobs (block blobs that can easily grow in length if needed)
+
+                        page blobs (up to 8TB in size, for frequently read/write computational operations, for OS disks and data disks used by VMs)
+                    }
 
                     Hot (Frequently accessed data)
 
-                    Cool (Data accessed at most monthly)
+                    Cool (Data accessed at most monthly 30 days)
 
-                    Archive (Data that is almost never accessed)
+                    Cold (Data accessed at most every 90 days)
+
+                    Archive (Data that is almost never accessed, about 180 days)
                     
                     Storage Cost (increases as data is more frequently accessed)
 
@@ -411,7 +452,23 @@ Cloud Platforms{
 
                     Retrieval Time (decreases as data is more frequently accessed)
 
-                    Rehydration (Moving a blob from the Archive tier back into an accessible tier (Hot or Cool))
+                    Rehydration (Moving a blob from the Archive tier back into an accessible tier (Hot, Cool or Cold))
+
+                    Lifecycle Management Rules (to move blobs to different access tiers based on conditions and to delete blobs after a long enough time)
+
+                    the rules can be scoped to storage accounts, containers or the blobs themselves
+
+                    Object Replication (Sending copies of your blobs to other locations(Paired Regions) asyncronously(in the background) based on rules you specify){
+                        It requires blob versioning to be enabled on the source and destination accounts
+
+                        Blob snapshots cannot be replicated, they stay in the accounts they were created in
+
+                        The source and destination accounts must not be in the Archive tier
+                    }
+
+                    Geo-Replication (To save a copy of your entire storage account to a backup location far away)
+
+                    Object replication allows you to chose the specific container for replication, whereas geo-replication replicates all data in the storage account automatically.
                 }
 
                 Azure Disk Storage (To store structured and unstructured data for VMs or Kubernetes){
@@ -504,7 +561,7 @@ Cloud Platforms{
 
                 Azure DevOps Pipelines (CI/CD service used to build, test and deploy applications automatically)
 
-                Github Actions (The same use case as Azure DevOps Pipelines, the choice to use it depends on the companies preference)
+                Github Actions (The same use case as Azure DevOps Pipelines, the choice to use it depends on the company's preference)
 
                 Azure Service Bus (To allow your services to send messages to eachother, ususally for important information)
 
@@ -547,6 +604,8 @@ Cloud Platforms{
             
             Update and Recovery Services{
                 Azure Backup (To automatically backup your cloud and on-premesis resources){
+                    Backup Center (Central UI console for easily managing all your backup needs across all your services)
+
                     Full Backup (A complete copy of all your data)
 
                     Incramental Backups (Only copies the data that has changed since the last backup of any kind)
@@ -570,6 +629,46 @@ Cloud Platforms{
                     Read-access geo-redundant storage ((RA-)GRS) (Same as GRS but lets you read the data at any time)
 
                     Geo-Zone redundant storage (GZRS)(Combines the benifits of ZRS and GRS)
+
+                    Recovery Time Objective (RTO) (The desired time for the system to be restored to avoid unwanted consequences)
+
+                    Recovery Point Objective (RPO) (The maximum amount of data loss in time that your company can take){
+                        so if you have an RPO of one hour, you should perform backups every hour to ensure that if an hour's worth of data is lost
+                        in a disaster, you can recover all that data, but if more than an hour's worth of data is lost you can only restore the data up
+                        to 1 hour's worth of changes, the rest is permanantely lost and unrecoverable.
+                    }
+
+                    Microsoft Azure Recovery Services (MARS) agent (to backup files, folders or system states to Recovery Service Vault without needing an external backup server)
+
+                    Microsoft Azure Backup Server (to manage a full backup server that can store entire resources not just files, and later back it up to Recovery Services Vault)
+
+                    Workload Integration Layer(retrieving the backup data to be transfered to the data plane in Azure Service Recovery Vault){
+                        Backup Extension (a service that installs an extension for each of your workload services like VMs and Blobs so that they can be backed up)
+                    }
+
+                    Recovery Service Vault (to store backups of all kinds){
+                        Data Plane (storing the backup data){
+                            Access Tiers (sections where data can be stored based on their different access frequencies){
+                                Snapshot Tier (a quick, temporary copy stored right next to the disk in your own subscription. Fastest to restore from)
+
+                                Standard Tier (the main storage inside the vault itself. This is where most of your backups live day-to-day.)
+
+                                Archive Tier (cheap, long-term cold storage for old backups you rarely need, Slowest to restore)
+
+                                all tiers offer different RTOs and are priced differently
+                            }
+
+                            Availablility and Security (replicating the backups across zones or regions based on the redundancy setting the user chose)
+                        }
+                    }  
+
+                    Management Plane (viewing and manipulating the stored backup data){
+                        Recovery Service Vault
+
+                        Backup Vault
+
+                        Backup Center
+                    }                  
                 }
 
                 Azure File Sync (To backup Azure Files data on local servers)
