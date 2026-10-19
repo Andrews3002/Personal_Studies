@@ -102,6 +102,20 @@ Cloud Platforms{
 
                 defense in depth (multiple layers of security to reduce the chance of a breach)
 
+                Shared access signatures (SAS)(for providing temporary access priveleges to external collaborators)
+
+                Microsoft Azure Key Vault (To store sensitive values that can be accessed securely by other services)
+
+                Azure Bastion (Lets you connect to your VMs without exposing them to the public internet)
+
+                Microsoft Sentinel (was known as Azure Sentinel)(to monitor and respond to cyber threats)
+
+                Microsoft Defender (to scan your system for threats or vulnerabilities)
+
+                Microsoft Intune Compliance Policy (to ensure device compliance to regulations and rules)
+
+                SSH (A secure way to log into another computer over the internet using terminal commands)
+
                 Microsoft Entra ID (formerly known as Azure Active Directory)(To enforce Authentication, Autorization(IAM, RBAC)){
                     Each Subscription must be assigned to 1 and only 1 entra tenant but each entra tenant can serve multiple subscriptions
 
@@ -149,8 +163,6 @@ Cloud Platforms{
                         privileged identity management (specific to administrators)
                     }
 
-                    Entra ID manages individual devices whereas AD DS manages an entire connected network of computers(servers) using organizational units (OUs) and group policy objects(GPOs)
-
                     Active Directory Domain Services(old version of Entra ID){
                         Forest (A group of related Domains)
 
@@ -182,16 +194,6 @@ Cloud Platforms{
                     Hybrid Microsoft Entra Joined Devices (same as Entra Registered Devices but specifically for hybrid (on-prem AD and cloud Entra ID) organizations)
                 }
 
-                Shared access signatures (SAS)(for providing temporary access priveleges to external collaborators)
-
-                Microsoft Azure Key Vault (To store sensitive values that can be accessed securely by other services)
-
-                Azure Bastion (Lets you connect to your VMs without exposing them to the public internet)
-
-                Microsoft Sentinel (was known as Azure Sentinel)(to monitor and respond to cyber threats)
-
-                Microsoft Defender (to scan your system for threats or vulnerabilities)
-
                 Azure Policy (to ensure resource compliance to regulations and rules){
                     Policy Definition (Conditions and rules written in Azure that resources must meet)
 
@@ -207,10 +209,6 @@ Cloud Platforms{
 
                     Policy Function (Functions the rules contain and execute that help achieve its purpose)
                 }
-
-                Microsoft Intune Compliance Policy (to ensure device compliance to regulations and rules)
-
-                SSH (A secure way to log into another computer over the internet using terminal commands)
             }
 
             Compute Management Services{
@@ -245,7 +243,7 @@ Cloud Platforms{
 
                     Proximity placement groups (Forces your VMs to be physically close to each other in the same data center)
 
-                    Azure Spot Instance (A VM you can deploy at a massive discount that uses the remaining compute Azure has available, it can be de-provisioned by azure if they need more compute for other services or it surpases the maximum price limit you specified)
+                    Azure Spot Instance (A VM you can deploy at a massive discount that uses the remaining compute Azure has available, it can be de-provisioned by azure if they need more compute for other services or if it surpases the maximum price limit you specified)
                     
                     Reprovisioning (removing an existing VM and replacing it with a new VM)
 
@@ -326,7 +324,7 @@ Cloud Platforms{
 
                     IP Address space (the full range of IP addresses you can assign to a VNet on creation, subnets take portions of this address space)
 
-                    Azure Private IP address (for communicating within an azure VNet or an on-prem network)
+                    Azure Private IP address (for communicating within an azure VNet or within an on-prem network)
 
                     Azure Public IP address (for commmunicating with a resource thats in a VNet from the public internet)
 
@@ -335,10 +333,12 @@ Cloud Platforms{
                     Dynamic IP (having azure pick the next available IP for you to use)
                 }
 
+                Network Virtual Appliances (NVAs) (VMs fully dedicated to managing and securing your cloud traffic, like firewalls)
+
+                Azure Firewall (Controls and blocks sketchy internet traffic of all kinds coming into or out of your entire VN) (use for your network)
+
                 Azure Load Balancer (To distribute newtork traffic between VMs, handles TCP and UDP traffic) (use for your network){
                     Backend Pool (Group of VMs that actually receive and process the incoming traffic)
-
-                    Network Virtual Appliances (NVAs) (VMs fully dedicated to managing and securing your cloud traffic, like firewalls)
 
                     Gateway Load Balancer (to distribute and recieve traffic to and from available NVAs)
 
@@ -346,12 +346,10 @@ Cloud Platforms{
 
                     Session Persistance (ensures repeated requests from the same end user is routed to the same VM)
 
-                    Load Balancing rule (To forward traffic sent to a load balancer (public or private IP) through to the backend pool (private IP))
+                    Load Balancing rule (To forward traffic sent to a load balancer through to the backend pool)
 
-                    Inbound NAT rule (To forward traffic sent to a load balancer (public or private IP) through to a specific VM (private IP))
+                    Inbound NAT rule (To forward traffic sent to a load balancer through to a specific VM)
                 }
-
-                Azure Firewall (Controls and blocks sketchy internet traffic of all kinds coming into or out of your entire VN) (use for your network)
 
                 Application Gateway (To distribute newtork traffic between VMs, handles HTTP and HTTPS traffic) (user for web API requests)
 
@@ -375,6 +373,7 @@ Cloud Platforms{
 
                 packet capture (records the actual raw network data in the packets)
 
+                //TODO: delve into this more
                 Domain name (any human readable name that follows the DNS Namespace structure)(from  "." to "dev.apple.tree.contoso.com.")
 
                 DNS Namespace (the Heirarchal tree structure that every single domain name must follow){
@@ -435,7 +434,7 @@ Cloud Platforms{
 
                         append blobs (block blobs that can easily grow in length if needed)
 
-                        page blobs (up to 8TB in size, for frequently read/write computational operations, for OS disks and data disks used by VMs)
+                        page blobs (up to 8TB in size, for frequently read/write computational operations, or for OS disks and data disks used by VMs)
                     }
 
                     Hot (Frequently accessed data)
@@ -505,7 +504,7 @@ Cloud Platforms{
 
                 Azure Managed Redis (to cache frequently requested database query results)
 
-                Azure Container Registry (Offers private storage and management for your container images (docker images))
+                Azure Container Registry (Offers private storage and management for your docker container images)
             }
 
             Development Services{
@@ -632,8 +631,8 @@ Cloud Platforms{
 
                     Recovery Time Objective (RTO) (The desired time for the system to be restored to avoid unwanted consequences)
 
-                    Recovery Point Objective (RPO) (The maximum amount of data loss in time that your company can take){
-                        so if you have an RPO of one hour, you should perform backups every hour to ensure that if an hour's worth of data is lost
+                    Recovery Point Objective (RPO) (The maximum amount of data loss measured in time that your company can take){
+                        so if you have a RPO of one hour, you should perform backups every hour to ensure that if an hour's worth of data is lost
                         in a disaster, you can recover all that data, but if more than an hour's worth of data is lost you can only restore the data up
                         to 1 hour's worth of changes, the rest is permanantely lost and unrecoverable.
                     }
@@ -642,33 +641,21 @@ Cloud Platforms{
 
                     Microsoft Azure Backup Server (to manage a full backup server that can store entire resources not just files, and later back it up to Recovery Services Vault)
 
-                    Workload Integration Layer(retrieving the backup data to be transfered to the data plane in Azure Service Recovery Vault){
-                        Backup Extension (a service that installs an extension for each of your workload services like VMs and Blobs so that they can be backed up)
-                    }
+                    Backup Extension (a service that installs an extension for each of your workload services like VMs and Blobs so that they can be backed up)
 
                     Recovery Service Vault (to store backups of all kinds){
-                        Data Plane (storing the backup data){
-                            Access Tiers (sections where data can be stored based on their different access frequencies){
-                                Snapshot Tier (a quick, temporary copy stored right next to the disk in your own subscription. Fastest to restore from)
+                        Access Tiers (sections where data can be stored based on their different access frequencies){
+                            Snapshot Tier (a quick, temporary copy stored right next to the disk in your own subscription. Fastest to restore from)
 
-                                Standard Tier (the main storage inside the vault itself. This is where most of your backups live day-to-day.)
+                            Standard Tier (the main storage inside the vault itself. This is where most of your backups live day-to-day.)
 
-                                Archive Tier (cheap, long-term cold storage for old backups you rarely need, Slowest to restore)
+                            Archive Tier (cheap, long-term cold storage for old backups you rarely need, Slowest to restore)
 
-                                all tiers offer different RTOs and are priced differently
-                            }
-
-                            Availablility and Security (replicating the backups across zones or regions based on the redundancy setting the user chose)
+                            all tiers offer different RTOs and are priced differently
                         }
-                    }  
 
-                    Management Plane (viewing and manipulating the stored backup data){
-                        Recovery Service Vault
-
-                        Backup Vault
-
-                        Backup Center
-                    }                  
+                        Availablility and Security (replicating the backups across zones or regions based on the redundancy setting the user choses)
+                    }    
                 }
 
                 Azure File Sync (To backup Azure Files data on local servers)
