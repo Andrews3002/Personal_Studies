@@ -351,7 +351,7 @@ Cloud Platforms{
                     Inbound NAT rule (To forward traffic sent to a load balancer through to a specific VM)
                 }
 
-                Application Gateway (To distribute newtork traffic between VMs, handles HTTP and HTTPS traffic) (user for web API requests)
+                Application Gateway (To distribute newtork traffic between VMs, handles HTTP and HTTPS traffic) (use for web API requests)
 
                 Azure Front Door (Router, Gloabal CDN and firewall for HTTP and HTTPS traffic) (use for web apps)
 

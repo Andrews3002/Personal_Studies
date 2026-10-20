@@ -147,7 +147,7 @@ Network Flow{
 
             if UDP, it is all contained within a datagram (which may be fragmented), then goes through the following steps in this document before being processed at once at the final destination
 
-            So the layer 4 header is chosen and the data becomes a datagram or individual segments
+            So the layer 4 protocal is chosen and the data becomes a datagram or individual segments
 
             then host A adds a layer 3 (network layer) header which makes it a packet that holds the payload (in this case the datagram or segment)
 
