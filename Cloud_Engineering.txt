@@ -191,7 +191,7 @@ Cloud Platforms{
 
                     Microsoft Entra Joined Devices (same as Entra Registered Devices but specifically for cloud first or cloud only organizations)
 
-                    Hybrid Microsoft Entra Joined Devices (same as Entra Registered Devices but specifically for hybrid (on-prem AD and cloud Entra ID) organizations)
+                    Hybrid Microsoft Entra Joined Devices (same as Entra Registered Devices but specifically for hybrid organizations)
                 }
 
                 Azure Policy (to ensure resource compliance to regulations and rules){
@@ -203,7 +203,7 @@ Cloud Platforms{
 
                     Policy Assignment (To enforce a policy definition over a group or scope)
 
-                    Remediation (Automatically fixes or updates resources that are breaking your policy rules to make them compliant again)
+                    Remediation (fixing or updating resources that are breaking your policy rules to make them compliant again)
 
                     Policy Parameters (Variables that let you swap out specific values in a policy rule easily)
 
@@ -217,7 +217,7 @@ Cloud Platforms{
                 Resource Lock (Prevents resources from being accidentally deleted or changed)
 
                 Azure Resource Manager(ARM) (To deploy and manage all your resources){
-                    ARM template (A simple JSON file where you write down the exact Azure resources you want (using declarative sytax), so Azure can build them for you automatically.)
+                    ARM template (A simple JSON file where you write down the exact Azure resources you want (using declarative sytax))
 
                     Declarative Syntax (Writing the end result you want as human readable text instead of all the steps to do it in code)
                     
@@ -268,7 +268,7 @@ Cloud Platforms{
 
                         an hourly price is charged based on the size and OS chosen
 
-                        in the advanced tab your can configure one more setting (Spreading Algorithm)
+                        in the advanced tab you can configure one more setting (Spreading Algorithm)
 
                         Spreading Algorithm{
                             Max spreading (your VMs are spread across as much fault domains as possible)
@@ -299,12 +299,14 @@ Cloud Platforms{
 
                     Network Brigde (a device that connects two separate physical networks)
 
+                    IP Address space (the full range of IP addresses you can assign to a VNet on creation, subnets take portions of this address space)
+
                     Subnet (A smaller piece of a bigger cloud network){
                         each subnet contains a range of IP addresses in CIDR notation within its VN address space
                         
                         the range must not overlap with other subnets ranges, 
                         
-                        In the the range it reserves 5 adresses, the first 4 and the last 1
+                        In the range it reserves 5 adresses, the first 4 and the last 1
 
                         Reserved Addresses (address range 192.168.1.0/24){
                             192.168.1.0 (identifies the subnet address aka host address)
@@ -321,8 +323,6 @@ Cloud Platforms{
                     IP Group (bundle of IP addresses to scope network security rules over)
 
                     Network Security Groups(Blocks or allows traffic to specific stuff inside certain VMs or subnets)
-
-                    IP Address space (the full range of IP addresses you can assign to a VNet on creation, subnets take portions of this address space)
 
                     Azure Private IP address (for communicating within an azure VNet or within an on-prem network)
 

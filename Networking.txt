@@ -130,7 +130,7 @@ Network Flow{
     }
 
     Host A to Router 1{
-        Network Layer Header{
+        Data Prep for First Hop{
             so host A wants to send data to host B in a foreign network
 
             first host B is selected to send the data too via an interface (layer 7)
@@ -159,7 +159,7 @@ Network Flow{
 
             if it is on a foreign network then the packet must be sent to host A's network default gateway (Router 1)
 
-            so Host A checks it's pre populated router table to find Router 1's IP address
+            so Host A checks it's pre populated routing table to find Router 1's IP address
 
             it then tries to check it's ARP table to find the MAC address of Router 1 associated with it's IP Address
 
@@ -195,9 +195,9 @@ Network Flow{
 
             all the connected devices will recieve the ARP request and check to see if the target IP was theirs
 
-            if it wasn't for them and they don't already have an ARP mapping for that sender in their table nothing is done
+            if it wasn't for them and they don't already have an ARP mapping for that sender in their ARP table nothing is done
 
-            if wasn't for them and they DO have an ARP mapping for the sender's IP in their table they will update the mapping and do nothing else
+            if wasn't for them and they DO have an ARP mapping for the sender's IP in their ARP table they will update the mapping and do nothing else
 
             if it IS for them the ARP mapping of the sender is either added or updated to the ARP table and an ARP response is sent back    
         }
@@ -217,7 +217,7 @@ Network Flow{
 
             the frame then goes to the switch first
 
-            then the switch receives the frame and refreshes that port's assigned MAC address refering to Router 1
+            then the switch receives the frame and adds or refreshes that switchport's assigned MAC address refering to Router 1
 
             then it reads the layer 2 header of the frame for the destination MAC address
 
@@ -270,7 +270,7 @@ Network Flow{
 
         Or in this case a static or dynamic route that directs the packet to be forwarded to Router 2's IP address
 
-        This is because in this scenario Router 1 and Router 2 are directly connected and Router 2 is then directly connected to the network that contains host B
+        This is because in this scenario Router 1 and Router 2 are directly connected but Router 2 alone is directly connected to the network that contains host B
 
         since a dynamic or static route was selected, it still must be translated into a DC route
 
